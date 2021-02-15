@@ -5,20 +5,21 @@ using UnityEngine.AI;
 public class Enemy : MonoBehaviour
 {
     [SerializeField]
-    private GameObject _destination;
-
+    private Transform _destination;
+    [SerializeField]
+    private int _health;
+    [SerializeField]
+    private int _warFund;
+    
     private NavMeshAgent _navMeshAgent;
     
-    // Start is called before the first frame update
     void Start()
     {
         _navMeshAgent = GetComponent<NavMeshAgent>();
-
     }
 
-    // Update is called once per frame
     void Update()
     {
-        _navMeshAgent.SetDestination(_destination.transform.position);
+        _navMeshAgent.SetDestination(_destination.position);
     }
 }
