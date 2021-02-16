@@ -363,6 +363,7 @@ GameObject:
   - component: {fileID: 4628475265953764}
   - component: {fileID: 95460924271877448}
   - component: {fileID: -2559570041657645952}
+  - component: {fileID: 6092053388483512020}
   m_Layer: 0
   m_Name: Mech2
   m_TagString: Untagged
@@ -427,6 +428,21 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &6092053388483512020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1079767520691416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 998fd66e56acd42f2ae8738e6e64e362, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _health: 0
+  _warFund: 0
+  _unitType: 0
 --- !u!1 &1088550950582580
 GameObject:
   m_ObjectHideFlags: 0
