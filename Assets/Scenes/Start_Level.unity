@@ -5708,8 +5708,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d19df89b1fe8a477a8a67a88dff701d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemyWaves: []
   inProgress: 1
   isDelayed: 1
+  waves:
+  - {fileID: 11400000, guid: a1cc5719637364d15bd0b7e3d5496039, type: 2}
+  - {fileID: 11400000, guid: 18fd6c14d3e6c444d8f0d9bed32cc1a0, type: 2}
+  - {fileID: 11400000, guid: 7bcd74aceccac4843b633414cd8568d5, type: 2}
+  - {fileID: 11400000, guid: 4c7b186dc689c457ea2b0cba7de0a74f, type: 2}
+  - {fileID: 11400000, guid: 8ad96455e3c48408cb55c66fa5fa8e7b, type: 2}
 --- !u!1 &779600058
 GameObject:
   m_ObjectHideFlags: 0

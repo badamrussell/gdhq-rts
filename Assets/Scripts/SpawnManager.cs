@@ -20,9 +20,6 @@ public class SpawnManager : MonoBehaviour
     
     [SerializeField]
     private List<GameObject> _enemyPool = new List<GameObject>();
-
-    public List<EnemyWave> waves = new List<EnemyWave>();
-    private int _currentWaveIndex = 0;
     
     void Start()
     {

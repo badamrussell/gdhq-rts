@@ -4,25 +4,26 @@ using UnityEngine;
 
 public class WaveManager : MonoBehaviour
 {
-    public List<EnemyWave> _enemyWaves = new List<EnemyWave>();
+    public List<WaveConfig> _enemyWaves = new List<WaveConfig>();
 
     private float _spawnTime;
     
-    private EnemyWave _currentWave;
+    private WaveConfig _currentWave;
 
     private List<UnitType> _remainingEnemies = new List<UnitType>();
 
     public bool inProgress = true;
     public bool isDelayed = true;
-    
+
+    public WaveConfig[] waves;
+
     private int _waveIndex = 0;
     void Start()
     {
-        _enemyWaves.Add(new EnemyWave(5f, 1f, 4, new UnitType[] { UnitType.Infantry }));
-        _enemyWaves.Add(new EnemyWave(6f, 10f, 8, new UnitType[] { UnitType.Heavy }));
-        _enemyWaves.Add(new EnemyWave(7f, 20f, 4, new UnitType[] { UnitType.Infantry, UnitType.Heavy }));
-        _enemyWaves.Add(new EnemyWave(8f, 20f, 4, new UnitType[] { UnitType.Infantry, UnitType.Infantry, UnitType.Heavy }));
-        _enemyWaves.Add(new EnemyWave(9f, 20f, 6, new UnitType[] { UnitType.Infantry, UnitType.Heavy, UnitType.Heavy }));
+        foreach(WaveConfig wc in waves)
+        {
+            _enemyWaves.Add(wc);
+        }
         LoadNextWave();
     }
 
