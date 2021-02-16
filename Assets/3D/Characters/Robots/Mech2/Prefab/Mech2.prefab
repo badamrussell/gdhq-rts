@@ -364,6 +364,7 @@ GameObject:
   - component: {fileID: 95460924271877448}
   - component: {fileID: -2559570041657645952}
   - component: {fileID: 6092053388483512020}
+  - component: {fileID: 734157077287231690}
   m_Layer: 0
   m_Name: Mech2
   m_TagString: Untagged
@@ -442,7 +443,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _health: 0
   _warFund: 0
-  _unitType: 0
+  unitType: 0
+--- !u!135 &734157077287231690
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1079767520691416}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 2
+  m_Center: {x: 0, y: 3, z: 0}
 --- !u!1 &1088550950582580
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,7 +20,7 @@ public class Enemy : MonoBehaviour
     
     private NavMeshAgent _navMeshAgent;
 
-    [SerializeField] private UnitType _unitType;
+    public UnitType unitType;
     
     void Start()
     {
@@ -34,5 +35,13 @@ public class Enemy : MonoBehaviour
     public void SetDestination(Vector3 targetPos)
     {
         _destination = targetPos;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "goal")
+        {
+            SpawnManager.Instance.EnemyReachedTarget(this.gameObject);
+        }
     }
 }
