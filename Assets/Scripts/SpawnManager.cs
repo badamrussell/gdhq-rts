@@ -20,7 +20,11 @@ public class SpawnManager : MonoBehaviour
     
     [SerializeField]
     private List<GameObject> _enemyPool = new List<GameObject>();
-    
+
+
+    [SerializeField]
+    private WaveConfig[] _waves;
+
     void Start()
     {
 
@@ -29,22 +33,30 @@ public class SpawnManager : MonoBehaviour
             SpawnManager.Instance = this;
             Time.timeScale = 8f;
         }
+
+        StartCoroutine(StartWaves());
     }
 
-    private UnitType GetRandomUnitType()
+    private IEnumerator StartWaves()
     {
-        int randomInt = Random.Range(0, 10);
+        foreach (WaveConfig wc in _waves)
+        {
+            yield return new WaitForSeconds(wc.initialDelay);
 
-        if (randomInt < 5)
-        {
-            return UnitType.Infantry;
+            for (int i = 0; i < wc.loops; i++)
+            {
+                foreach (UnitType unitType in wc._enemyPattern)
+                {
+                    SpawnUnit(unitType);
+                    yield return new WaitForSeconds(wc.spawnRate);
+                }
+            }
+
         }
-        else
-        {
-            return UnitType.Heavy;
-        }
+
+        Debug.Log("Wave Complete");
     }
-    
+
     private GameObject GetEnemyPrefab(UnitType unitType)
     {
         int index = 0;
