@@ -20,6 +20,9 @@ public class SpawnManager : MonoBehaviour
     
     [SerializeField]
     private List<GameObject> _enemyPool = new List<GameObject>();
+
+    public List<EnemyWave> waves = new List<EnemyWave>();
+    private int _currentWaveIndex = 0;
     
     void Start()
     {
@@ -28,18 +31,6 @@ public class SpawnManager : MonoBehaviour
         {
             SpawnManager.Instance = this;
             Time.timeScale = 8f;
-        }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        _spawnTime += Time.deltaTime;
-
-        if (_spawnTime >= _spawnRate)
-        {
-            GetPooledOrNewEnemy(GetRandomUnitType());
-            _spawnTime = 0f;
         }
     }
 
@@ -111,5 +102,10 @@ public class SpawnManager : MonoBehaviour
     {
         goEnemy.SetActive(false);
         _enemyPool.Add(goEnemy);
+    }
+
+    public void SpawnUnit(UnitType unitType)
+    {
+        GetPooledOrNewEnemy(unitType);
     }
 }

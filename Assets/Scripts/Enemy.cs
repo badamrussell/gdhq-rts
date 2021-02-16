@@ -7,7 +7,8 @@ using UnityEngine.AI;
 public enum UnitType
 {
     Heavy,
-    Infantry
+    Infantry,
+    None
 }
 
 public class Enemy : MonoBehaviour
