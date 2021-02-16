@@ -14,8 +14,10 @@ public enum UnitType
 public class Enemy : MonoBehaviour
 {
     private Vector3 _destination;
+
     [SerializeField]
     private int _health;
+
     [SerializeField]
     private int _warFund;
     

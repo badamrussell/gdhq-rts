@@ -5673,12 +5673,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e21d6d4c55544d3686912c7b53acdb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _unitPrefabs:
+  - unitType: 1
+    prefab: {fileID: 1637921026644932, guid: b6f9eb08e9dcb484fbccc49d65f561ab, type: 3}
+  - unitType: 0
+    prefab: {fileID: 1079767520691416, guid: fed6fd85e4a83418485118c22ed9f184, type: 3}
   _enemyPrefabs:
   - {fileID: 1637921026644932, guid: b6f9eb08e9dcb484fbccc49d65f561ab, type: 3}
   - {fileID: 1079767520691416, guid: fed6fd85e4a83418485118c22ed9f184, type: 3}
   _startPoint: {fileID: 1323174403}
   _endPoint: {fileID: 211297404}
-  _spawnRate: 5
   _spawnContainer: {fileID: 763400254}
   _enemyPool: []
   _waves:
