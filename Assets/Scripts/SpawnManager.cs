@@ -44,7 +44,7 @@ public class SpawnManager : MonoBehaviour
         {
             yield return new WaitForSeconds(wc.initialDelay);
 
-            for (int i = 0; i < wc.loops; i++)
+            foreach(int i in System.Linq.Enumerable.Range(0, wc.loops))
             {
                 foreach (UnitType unitType in wc._enemyPattern)
                 {
