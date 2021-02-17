@@ -2,39 +2,45 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public struct UnitPrefab
-{
-    public UnitType unitType;
-    public GameObject prefab;
-}
-
 public class SpawnManager : MonoBehaviour
 {
-    public static SpawnManager Instance;
+    private static SpawnManager _instance;
+    public static SpawnManager Instance {
+        get
+        {
+            if (_instance == null)
+            {
+                Debug.LogError("SpawnManager is NULL");
+            }
 
-    [SerializeField]
-    private WaveConfig[] _waves;
+            return _instance;
+        }
+    }
 
-    [SerializeField]
-    private UnitPrefab[] _unitPrefabs;
-
+    [SerializeField] private WaveConfig[] _waves;
     [SerializeField] private Transform _startPoint;
     [SerializeField] private Transform _endPoint;
-    
     [SerializeField] private GameObject _spawnContainer;
-    
+    [SerializeField] private GameObject[] _unitPrefabs;
+
+    private Dictionary<UnitType, GameObject> _prefabLookup;
     private List<Enemy> _enemyPool = new List<Enemy>();
 
+    private void Awake()
+    {
+        _instance = this;
+        Time.timeScale = 8f;
+
+        _prefabLookup = new Dictionary<UnitType, GameObject>();
+        foreach(GameObject go in _unitPrefabs)
+        {
+            Enemy e = go.GetComponent<Enemy>();
+            _prefabLookup.Add(e.unitType, go);
+        }
+    }
 
     void Start()
     {
-        if (SpawnManager.Instance == null)
-        {
-            SpawnManager.Instance = this;
-            Time.timeScale = 8f;
-        }
-
         StartCoroutine(StartWaves());
     }
 
@@ -55,7 +61,7 @@ public class SpawnManager : MonoBehaviour
 
         }
 
-        Debug.Log("Wave Complete");
+        Debug.Log("All Waves Complete");
     }
 
     private GameObject SpawnNewEnemy(GameObject enemyPrefab)
@@ -70,14 +76,13 @@ public class SpawnManager : MonoBehaviour
 
     private GameObject GetEnemyPrefab(UnitType unitType)
     {
-        foreach(UnitPrefab u in _unitPrefabs) {
-            if (u.unitType == unitType)
-            {
-                return u.prefab;
-            }
-        }
+        GameObject prefab = null;
 
-        return _unitPrefabs[0].prefab;
+        if (_prefabLookup.TryGetValue(unitType, out prefab))
+        {
+            return prefab;
+        }
+        return _unitPrefabs[0];
     }
     
     private GameObject SpawnUnit(UnitType unitType)

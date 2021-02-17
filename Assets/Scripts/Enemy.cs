@@ -13,17 +13,21 @@ public enum UnitType
 
 public class Enemy : MonoBehaviour
 {
+
+    [SerializeField] private UnitType _unitType;
+    public UnitType unitType
+    {
+        get
+        {
+            return _unitType;
+        }
+    }
+
     private Vector3 _destination;
-
-    [SerializeField]
-    private int _health;
-
-    [SerializeField]
-    private int _warFund;
-    
     private NavMeshAgent _navMeshAgent;
 
-    public UnitType unitType;
+    [SerializeField] private int _health;
+    [SerializeField] private int _warFund;
     
     void Start()
     {
