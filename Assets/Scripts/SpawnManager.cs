@@ -24,6 +24,14 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private GameObject _spawnContainer;
     [SerializeField] private GameObject[] _enemyPrefabs;
 
+    public Vector3 GoalPosition
+    {
+        get
+        {
+            return _endPoint.position;
+        }
+    }
+
     private Dictionary<EnemyType, GameObject> _prefabLookup;
     private List<Enemy> _enemyPool = new List<Enemy>();
 
@@ -69,8 +77,6 @@ public class SpawnManager : MonoBehaviour
     {
         GameObject goEnemy = Instantiate(enemyPrefab, _startPoint.position, Quaternion.identity);
         goEnemy.transform.parent = _spawnContainer.transform;
-        Enemy enemy = goEnemy.GetComponent<Enemy>();
-        enemy.SetDestination(_endPoint.position);
         return goEnemy;
     }
 
