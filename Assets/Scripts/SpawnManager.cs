@@ -76,13 +76,7 @@ public class SpawnManager : MonoBehaviour
 
     private GameObject GetEnemyPrefab(UnitType unitType)
     {
-        GameObject prefab = null;
-
-        if (_prefabLookup.TryGetValue(unitType, out prefab))
-        {
-            return prefab;
-        }
-        return _unitPrefabs[0];
+        return _prefabLookup[unitType] ? _prefabLookup[unitType] : _unitPrefabs[0];
     }
     
     private GameObject SpawnUnit(UnitType unitType)
