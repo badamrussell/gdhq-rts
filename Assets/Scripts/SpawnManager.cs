@@ -18,7 +18,6 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
-    [SerializeField] private WaveConfig[] _waves;
     [SerializeField] private Transform _startPoint;
     [SerializeField] private Transform _endPoint;
     [SerializeField] private GameObject _spawnContainer;
@@ -48,31 +47,6 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
-    void Start()
-    {
-        StartCoroutine(StartWaves());
-    }
-
-    private IEnumerator StartWaves()
-    {
-        foreach (WaveConfig wc in _waves)
-        {
-            yield return new WaitForSeconds(wc.initialDelay);
-
-            foreach(int i in System.Linq.Enumerable.Range(0, wc.enemyPatternCount))
-            {
-                foreach (EnemyType enemyType in wc.enemyPattern)
-                {
-                    SpawnEnemy(enemyType);
-                    yield return new WaitForSeconds(wc.spawnRate);
-                }
-            }
-
-        }
-
-        Debug.Log("All Waves Complete");
-    }
-
     private GameObject SpawnNewEnemy(GameObject enemyPrefab)
     {
         GameObject goEnemy = Instantiate(enemyPrefab, _startPoint.position, Quaternion.identity);
@@ -80,13 +54,13 @@ public class SpawnManager : MonoBehaviour
         return goEnemy;
     }
 
-
     private GameObject GetEnemyPrefab(EnemyType enemyType)
     {
         return _prefabLookup[enemyType] ? _prefabLookup[enemyType] : _enemyPrefabs[0];
     }
-    
-    private GameObject SpawnEnemy(EnemyType enemyType)
+
+
+    public GameObject SpawnEnemy(EnemyType enemyType)
     {
         int i = _enemyPool.FindIndex(e => e.EnemyType == enemyType);
 
@@ -107,7 +81,7 @@ public class SpawnManager : MonoBehaviour
         
     }
 
-    public void EnemyReachedTarget(GameObject goEnemy)
+    public void EnemyReachedGoal(GameObject goEnemy)
     {
         goEnemy.SetActive(false);
         _enemyPool.Add(goEnemy.GetComponent<Enemy>());

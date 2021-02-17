@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class EnemyNavigation : MonoBehaviour
 {
  
-    void Start()
+    private void Start()
     {
         NavMeshAgent navMeshAgent = GetComponent<NavMeshAgent>();
 
@@ -24,7 +24,7 @@ public class EnemyNavigation : MonoBehaviour
     {
         if (other.tag == "goal")
         {
-            SpawnManager.Instance.EnemyReachedTarget(this.gameObject);
+            SpawnManager.Instance.EnemyReachedGoal(this.gameObject);
         }
     }
 }
