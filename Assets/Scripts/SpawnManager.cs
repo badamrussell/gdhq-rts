@@ -5,7 +5,8 @@ using UnityEngine;
 public class SpawnManager : MonoBehaviour
 {
     private static SpawnManager _instance;
-    public static SpawnManager Instance {
+    public static SpawnManager Instance
+    {
         get
         {
             if (_instance == null)
@@ -21,9 +22,9 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private Transform _startPoint;
     [SerializeField] private Transform _endPoint;
     [SerializeField] private GameObject _spawnContainer;
-    [SerializeField] private GameObject[] _unitPrefabs;
+    [SerializeField] private GameObject[] _enemyPrefabs;
 
-    private Dictionary<UnitType, GameObject> _prefabLookup;
+    private Dictionary<EnemyType, GameObject> _prefabLookup;
     private List<Enemy> _enemyPool = new List<Enemy>();
 
     private void Awake()
@@ -31,11 +32,11 @@ public class SpawnManager : MonoBehaviour
         _instance = this;
         Time.timeScale = 8f;
 
-        _prefabLookup = new Dictionary<UnitType, GameObject>();
-        foreach(GameObject go in _unitPrefabs)
+        _prefabLookup = new Dictionary<EnemyType, GameObject>();
+        foreach(GameObject go in _enemyPrefabs)
         {
             Enemy e = go.GetComponent<Enemy>();
-            _prefabLookup.Add(e.unitType, go);
+            _prefabLookup.Add(e.EnemyType, go);
         }
     }
 
@@ -50,11 +51,11 @@ public class SpawnManager : MonoBehaviour
         {
             yield return new WaitForSeconds(wc.initialDelay);
 
-            foreach(int i in System.Linq.Enumerable.Range(0, wc.loops))
+            foreach(int i in System.Linq.Enumerable.Range(0, wc.enemyPatternCount))
             {
-                foreach (UnitType unitType in wc._enemyPattern)
+                foreach (EnemyType enemyType in wc.enemyPattern)
                 {
-                    SpawnUnit(unitType);
+                    SpawnEnemy(enemyType);
                     yield return new WaitForSeconds(wc.spawnRate);
                 }
             }
@@ -74,14 +75,14 @@ public class SpawnManager : MonoBehaviour
     }
 
 
-    private GameObject GetEnemyPrefab(UnitType unitType)
+    private GameObject GetEnemyPrefab(EnemyType enemyType)
     {
-        return _prefabLookup[unitType] ? _prefabLookup[unitType] : _unitPrefabs[0];
+        return _prefabLookup[enemyType] ? _prefabLookup[enemyType] : _enemyPrefabs[0];
     }
     
-    private GameObject SpawnUnit(UnitType unitType)
+    private GameObject SpawnEnemy(EnemyType enemyType)
     {
-        int i = _enemyPool.FindIndex(e => e.unitType == unitType);
+        int i = _enemyPool.FindIndex(e => e.EnemyType == enemyType);
 
         if (i > -1)
         {
@@ -92,7 +93,7 @@ public class SpawnManager : MonoBehaviour
             return go;
         }
         
-        return SpawnNewEnemy(GetEnemyPrefab(unitType));
+        return SpawnNewEnemy(GetEnemyPrefab(enemyType));
     }
 
     public void EnemyDestroyed(GameObject goEnemy)

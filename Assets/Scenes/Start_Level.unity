@@ -5589,7 +5589,7 @@ MonoBehaviour:
   _startPoint: {fileID: 1323174403}
   _endPoint: {fileID: 211297404}
   _spawnContainer: {fileID: 763400254}
-  _unitPrefabs:
+  _enemyPrefabs:
   - {fileID: 1637921026644932, guid: b6f9eb08e9dcb484fbccc49d65f561ab, type: 3}
   - {fileID: 1079767520691416, guid: fed6fd85e4a83418485118c22ed9f184, type: 3}
 --- !u!4 &763400256

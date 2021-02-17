@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public enum UnitType
+public enum EnemyType
 {
     Heavy,
     Infantry,
@@ -14,12 +14,12 @@ public enum UnitType
 public class Enemy : MonoBehaviour
 {
 
-    [SerializeField] private UnitType _unitType;
-    public UnitType unitType
+    [SerializeField] private EnemyType _enemyType;
+    public EnemyType EnemyType
     {
         get
         {
-            return _unitType;
+            return _enemyType;
         }
     }
 
