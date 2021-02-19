@@ -17,16 +17,15 @@ public class WaveManager : MonoBehaviour
         foreach (WaveConfig wc in _waves)
         {
             yield return new WaitForSeconds(wc.initialDelay);
-
             foreach (int i in System.Linq.Enumerable.Range(0, wc.enemyPatternCount))
             {
                 foreach (EnemyType enemyType in wc.enemyPattern)
                 {
+
                     SpawnManager.Instance.SpawnEnemy(enemyType);
                     yield return new WaitForSeconds(wc.spawnRate);
                 }
             }
-
         }
 
         Debug.Log("All Waves Complete");

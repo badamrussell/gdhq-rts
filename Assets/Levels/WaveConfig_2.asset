@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b76856dfca8f44affbc0295c7a692005, type: 3}
   m_Name: WaveConfig_2
   m_EditorClassIdentifier: 
-  initialDelay: 2
-  spawnRate: 5
+  initialDelay: 6
+  spawnRate: 4
   enemyPatternCount: 2
   enemyPattern: 00000000

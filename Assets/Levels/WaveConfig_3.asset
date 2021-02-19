@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: WaveConfig_3
   m_EditorClassIdentifier: 
   initialDelay: 6
-  spawnRate: 3
+  spawnRate: 4
   enemyPatternCount: 4
   enemyPattern: 0100000000000000
