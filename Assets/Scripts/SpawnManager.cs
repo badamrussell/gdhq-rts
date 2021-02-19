@@ -81,9 +81,8 @@ public class SpawnManager : MonoBehaviour
         
     }
 
-    public void EnemyReachedGoal(GameObject goEnemy)
+    public void EnemyReachedGoal(EnemyType enemyType, GameObject goEnemy)
     {
-        EnemyType enemyType = goEnemy.GetComponent<Enemy>().EnemyType;
         string keyName = enemyType.ToString();
         goEnemy.SetActive(false);
         PoolManager.Instance.Add(keyName, goEnemy);

@@ -6,10 +6,20 @@ using UnityEngine.AI;
 public class EnemyNavigation : MonoBehaviour
 {
     private NavMeshAgent _navMeshAgent;
+    private EnemyType _enemyType;
 
     private void Awake()
     {
         _navMeshAgent = GetComponent<NavMeshAgent>();
+        Enemy enemy = GetComponent<Enemy>();
+
+        if (!enemy)
+        {
+            Debug.Log("EnemyNavigation is not attached to Enemy");
+        } else
+        {
+            _enemyType = enemy.EnemyType;
+        }
         if (!_navMeshAgent)
         {
             Debug.LogError("NavMesh Agent is NULL");
@@ -26,7 +36,7 @@ public class EnemyNavigation : MonoBehaviour
     {
         if (other.tag == "goal")
         {
-            SpawnManager.Instance.EnemyReachedGoal(this.gameObject);
+            SpawnManager.Instance.EnemyReachedGoal(_enemyType, this.gameObject);
         }
     }
 }
