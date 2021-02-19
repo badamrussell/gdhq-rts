@@ -1516,7 +1516,6 @@ GameObject:
   - component: {fileID: -5691693882391641192}
   - component: {fileID: -917974158810187667}
   - component: {fileID: 2975622580152515915}
-  - component: {fileID: 7019319338578272533}
   m_Layer: 0
   m_Name: Mech1
   m_TagString: Untagged
@@ -1610,18 +1609,6 @@ CapsuleCollider:
   m_Height: 7
   m_Direction: 1
   m_Center: {x: 0, y: 4.5, z: 0}
---- !u!114 &7019319338578272533
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1637921026644932}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e7b4df3af2294dfcadc7dd4a986a431, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1695296882317140
 GameObject:
   m_ObjectHideFlags: 0
