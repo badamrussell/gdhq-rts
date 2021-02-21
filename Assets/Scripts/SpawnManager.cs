@@ -2,21 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnManager : MonoBehaviour
+public class SpawnManager : MonoSingleton<SpawnManager>
 {
-    private static SpawnManager _instance;
-    public static SpawnManager Instance
-    {
-        get
-        {
-            if (_instance == null)
-            {
-                Debug.LogError("SpawnManager is NULL");
-            }
-
-            return _instance;
-        }
-    }
 
     [SerializeField] private Transform _startPoint;
     [SerializeField] private Transform _endPoint;
@@ -33,9 +20,11 @@ public class SpawnManager : MonoBehaviour
 
     private Dictionary<EnemyType, GameObject> _prefabLookup;
 
+
     private void Awake()
     {
-        _instance = this;
+        base.Awake();
+
         Time.timeScale = 10f;
 
         _prefabLookup = new Dictionary<EnemyType, GameObject>();
