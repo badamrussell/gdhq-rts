@@ -56,12 +56,5 @@ namespace GameDevHQITP.Units
             _navMeshAgent.SetDestination(goal);
         }
 
-        private void OnTriggerEnter(Collider other)
-        {
-            if (other.tag == "goal")
-            {
-                SpawnManager.Instance.EnemyReachedGoal(_enemyType, this.gameObject);
-            }
-        }
     }
 }

@@ -2040,8 +2040,9 @@ GameObject:
   - component: {fileID: 211297402}
   - component: {fileID: 211297401}
   - component: {fileID: 211297405}
+  - component: {fileID: 211297406}
   m_Layer: 0
-  m_Name: Goal
+  m_Name: PlayerHome
   m_TagString: goal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2139,6 +2140,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &211297406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 211297400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e49731e4f7e84431985e203178f603f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &213683863
 GameObject:
   m_ObjectHideFlags: 0
@@ -9690,7 +9703,7 @@ GameObject:
   - component: {fileID: 1323174405}
   - component: {fileID: 1323174404}
   m_Layer: 0
-  m_Name: Start
+  m_Name: SpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
