@@ -7,8 +7,8 @@ public class SpawnManager : MonoSingleton<SpawnManager>
 
     [SerializeField] private Transform _startPoint;
     [SerializeField] private Transform _endPoint;
-    [SerializeField] private GameObject _spawnContainer;
-    [SerializeField] private GameObject[] _enemyPrefabs;
+
+    [SerializeField] private WaveConfig[] _waves;
 
     public Vector3 GoalPosition
     {
@@ -18,49 +18,38 @@ public class SpawnManager : MonoSingleton<SpawnManager>
         }
     }
 
-    private Dictionary<EnemyType, GameObject> _prefabLookup;
-
-
-    private void Awake()
+    private void Start()
     {
-        base.Awake();
+        Time.timeScale = 6f;
 
-        Time.timeScale = 10f;
+        StartCoroutine(StartWaves());
+    }
 
-        _prefabLookup = new Dictionary<EnemyType, GameObject>();
-        foreach(GameObject go in _enemyPrefabs)
+    private IEnumerator StartWaves()
+    {
+        foreach (WaveConfig wc in _waves)
         {
-            Enemy e = go.GetComponent<Enemy>();
-            _prefabLookup.Add(e.EnemyType, go);
+            yield return new WaitForSeconds(wc.initialDelay);
+            foreach (int i in System.Linq.Enumerable.Range(0, wc.enemyPatternCount))
+            {
+                foreach (EnemyType enemyType in wc.enemyPattern)
+                {
+
+                    SpawnEnemy(enemyType);
+                    yield return new WaitForSeconds(wc.spawnRate);
+                }
+            }
         }
-    }
 
-    private GameObject SpawnNewEnemy(EnemyType enemyType)
-    {
-        GameObject enemyPrefab = GetEnemyPrefab(enemyType);
-        GameObject goEnemy = Instantiate(enemyPrefab, _startPoint.position, Quaternion.identity);
-
-        return goEnemy;
-    }
-
-    private GameObject GetEnemyPrefab(EnemyType enemyType)
-    {
-        return _prefabLookup[enemyType] ? _prefabLookup[enemyType] : _enemyPrefabs[0];
+        Debug.Log("All Waves Complete");
     }
 
     public GameObject SpawnEnemy(EnemyType enemyType)
     {
-        GameObject go = PoolManager.Instance.Get(enemyType.ToString());
-        if (go != null)
-        {
-            go.transform.position = _startPoint.position;
-            go.SetActive(true);
-        } else
-        {
-            go = SpawnNewEnemy(enemyType);
-            go.transform.parent = _spawnContainer.transform;
-            go.transform.position = _startPoint.position;
-        }
+        GameObject go = PoolManager.Instance.Get(enemyType);
+        go.SetActive(false);
+        go.transform.position = _startPoint.position;
+        go.SetActive(true);
 
         return go;
     }
@@ -72,9 +61,8 @@ public class SpawnManager : MonoSingleton<SpawnManager>
 
     public void EnemyReachedGoal(EnemyType enemyType, GameObject goEnemy)
     {
-        string keyName = enemyType.ToString();
         goEnemy.SetActive(false);
-        PoolManager.Instance.Add(keyName, goEnemy);
+        PoolManager.Instance.Remove(enemyType, goEnemy);
     }
     
 }

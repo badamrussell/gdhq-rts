@@ -5561,7 +5561,6 @@ GameObject:
   m_Component:
   - component: {fileID: 763400256}
   - component: {fileID: 763400255}
-  - component: {fileID: 763400257}
   - component: {fileID: 763400258}
   m_Layer: 0
   m_Name: Manager
@@ -5584,10 +5583,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _startPoint: {fileID: 1323174403}
   _endPoint: {fileID: 211297404}
-  _spawnContainer: {fileID: 763400254}
-  _enemyPrefabs:
-  - {fileID: 1637921026644932, guid: b6f9eb08e9dcb484fbccc49d65f561ab, type: 3}
-  - {fileID: 1079767520691416, guid: fed6fd85e4a83418485118c22ed9f184, type: 3}
+  _waves:
+  - {fileID: 11400000, guid: a1cc5719637364d15bd0b7e3d5496039, type: 2}
+  - {fileID: 11400000, guid: 18fd6c14d3e6c444d8f0d9bed32cc1a0, type: 2}
+  - {fileID: 11400000, guid: 7bcd74aceccac4843b633414cd8568d5, type: 2}
+  - {fileID: 11400000, guid: 4c7b186dc689c457ea2b0cba7de0a74f, type: 2}
+  - {fileID: 11400000, guid: 8ad96455e3c48408cb55c66fa5fa8e7b, type: 2}
 --- !u!4 &763400256
 Transform:
   m_ObjectHideFlags: 0
@@ -5602,24 +5603,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &763400257
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 763400254}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 218e6d5f4976647f0932f1bea09bd5f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _waves:
-  - {fileID: 11400000, guid: a1cc5719637364d15bd0b7e3d5496039, type: 2}
-  - {fileID: 11400000, guid: 18fd6c14d3e6c444d8f0d9bed32cc1a0, type: 2}
-  - {fileID: 11400000, guid: 7bcd74aceccac4843b633414cd8568d5, type: 2}
-  - {fileID: 11400000, guid: 4c7b186dc689c457ea2b0cba7de0a74f, type: 2}
-  - {fileID: 11400000, guid: 8ad96455e3c48408cb55c66fa5fa8e7b, type: 2}
 --- !u!114 &763400258
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5632,6 +5615,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 185513c337b54462c8baad5ba0432895, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _prefabs:
+  - enemyType: 1
+    prefab: {fileID: 1637921026644932, guid: b6f9eb08e9dcb484fbccc49d65f561ab, type: 3}
+  - enemyType: 0
+    prefab: {fileID: 1079767520691416, guid: fed6fd85e4a83418485118c22ed9f184, type: 3}
+  _poolSeedAmount: 2
+  _poolContainer: {fileID: 763400254}
 --- !u!1 &779600058
 GameObject:
   m_ObjectHideFlags: 0
