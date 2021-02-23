@@ -30,6 +30,16 @@ namespace GameDevHQITP.Managers
             SeedStartingPool();
         }
 
+        private void OnEnable()
+        {
+            Enemy.onEnemyDestroyed += Remove;
+        }
+
+        private void OnDisable()
+        {
+            Enemy.onEnemyDestroyed -= Remove;
+        }
+
         private void SeedStartingPool()
         {
             foreach(PoolPrefabLookup p in _prefabs)
@@ -73,6 +83,8 @@ namespace GameDevHQITP.Managers
                 Queue<GameObject> goQue = new Queue<GameObject>();
                 _pool.Add(enemyType, goQue);
             }
+
+            go.SetActive(false);
 
             _pool[enemyType].Enqueue(go);
         }

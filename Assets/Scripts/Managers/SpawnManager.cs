@@ -58,17 +58,6 @@ namespace GameDevHQITP.Managers
 
             return go;
         }
-
-        public void EnemyDestroyed(GameObject goEnemy)
-        {
-        
-        }
-
-        public void EnemyReachedGoal(EnemyType enemyType, GameObject goEnemy)
-        {
-            goEnemy.SetActive(false);
-            PoolManager.Instance.Remove(enemyType, goEnemy);
-        }
     
     }
 }
