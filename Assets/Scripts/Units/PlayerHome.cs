@@ -8,8 +8,7 @@ namespace GameDevHQITP.Units
 {
     public class PlayerHome : MonoBehaviour
     {
-        public delegate void OnReachedPlayerBase(GameObject go);
-        public static event OnReachedPlayerBase onReachedPlayerBase;
+        public static event Action<GameObject> onReachedPlayerBase;
 
         private void OnTriggerEnter(Collider other)
         {

@@ -18,8 +18,7 @@ namespace GameDevHQITP.Units
 
     public class Enemy : MonoBehaviour
     {
-        public delegate void OnEnemyDestroyed(EnemyType enemyType, GameObject go);
-        public static event OnEnemyDestroyed onEnemyDestroyed;
+        public static event Action<EnemyType, GameObject> onEnemyDestroyed;
 
         [SerializeField] private int _health;
         [SerializeField] private int _warFund;
