@@ -6,6 +6,9 @@ TagManager:
   tags:
   - goal
   - Enemy
+  - Tower
+  - TowerLocation
+  - TowerToBuild
   layers:
   - Default
   - TransparentFX

@@ -9,10 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b76856dfca8f44affbc0295c7a692005, type: 3}
-  m_Name: WaveConfig_3
+  m_Script: {fileID: 11500000, guid: d6e1ced8548da4d3b9104c090e0532e8, type: 3}
+  m_Name: currentGameState
   m_EditorClassIdentifier: 
-  initialDelay: 6
-  spawnRate: 4
-  enemyPatternCount: 4
-  enemyPattern: 0100000000000000
+  gameState: 3
