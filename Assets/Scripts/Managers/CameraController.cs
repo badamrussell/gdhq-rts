@@ -60,7 +60,8 @@ namespace GameDevHQITP.Managers
             if (mouseX < _screenLimitsHorz[0])
             {
                 pos.x -= _mouseEdgePanSpeed;
-            } else if (mouseX > _screenLimitsHorz[1])
+            }
+            else if (mouseX > _screenLimitsHorz[1])
             {
                 pos.x += _mouseEdgePanSpeed;
             }

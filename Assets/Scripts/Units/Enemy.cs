@@ -13,6 +13,8 @@ namespace GameDevHQITP.Units
     {
         Heavy,
         Infantry,
+        TowerGatlingGun,
+        TowerMissileLauncher,
         None
     }
 

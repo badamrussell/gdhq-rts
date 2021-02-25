@@ -3,30 +3,50 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+
 namespace GameDevHQITP.Managers
 {
+    [System.Serializable]
+    public struct AvailableTower
+    {
+        public GameObject dragging;
+        public GameObject tower;
+    }
 
     public class BuildTowerManager : MonoBehaviour
     {
+        public static event Action<GameObject> onStartBuildMode;
+        public static event Action onExitBuildMode;
+        public static event Action<GameObject> onStartTowerConstruction;
 
-        public static event Action<GameObject> onBuildTower;
-        public static event Action onCancelBuild;
+        public delegate void onSelectStartBuild(int index);
 
-        [SerializeField] private GameObject _towerPrefab;
-
+        [SerializeField] private AvailableTower[] _availableTowerPrefabs;
         [SerializeField] private GameObject _goTowerToBuild;
+        [SerializeField] private GameObject _towerPlotContainer;
+        [SerializeField] private GameObject _hideTowerContainer;
+        [SerializeField] private int _selectedTowerIndex = 0;
+        [SerializeField] private float _dragHeightOffset = 1f;
 
+        private GameObject[] _towerInstances;
 
-        // Update is called once per frame
+        private void Start()
+        {
+            _towerInstances = new GameObject[_availableTowerPrefabs.Length];
+            for(int i = 0; i < _availableTowerPrefabs.Length; i++)
+            {
+                _towerInstances[i] = Instantiate(_availableTowerPrefabs[i].dragging);
+                _towerInstances[i].transform.parent = _hideTowerContainer.transform;
+            }
+        }
+
         void Update()
         {
 
             if (Input.GetKeyDown(KeyCode.Space) && !_goTowerToBuild)
             {
-                _goTowerToBuild = Instantiate(_towerPrefab);
-                _goTowerToBuild.tag = "TowerToBuild";
+                EnableBuildMode();
             }
-
 
             if (_goTowerToBuild != null)
             {
@@ -35,24 +55,48 @@ namespace GameDevHQITP.Managers
 
                 if (Physics.Raycast(rayOrigin, out hitInfo))
                 {
-                    _goTowerToBuild.transform.position = new Vector3(hitInfo.point.x, 1f, hitInfo.point.z);
+                    _goTowerToBuild.transform.position = new Vector3(hitInfo.point.x, _dragHeightOffset, hitInfo.point.z);
                 }
 
                 if (Input.GetMouseButton(0))
                 {
-                    // BUGFIX - need to handle scenario with left-click and not in legal tower placement area
-                    _goTowerToBuild.tag = "Tower";
-                    onBuildTower(_goTowerToBuild);
-                    _goTowerToBuild = null;
+                    onStartTowerConstruction(_availableTowerPrefabs[_selectedTowerIndex].tower);
+                    DisableBuildMode();
                 } else if (Input.GetMouseButton(1))
                 {
-                    onCancelBuild();
-                    Destroy(_goTowerToBuild);
-                    _goTowerToBuild = null;
+                    DisableBuildMode();
                 }
             }
+        }
 
+        private void EnableBuildMode()
+        {
+            _goTowerToBuild = _towerInstances[_selectedTowerIndex];
+            _goTowerToBuild.transform.parent = _towerPlotContainer.transform;
+            onStartBuildMode(_goTowerToBuild);
+        }
 
+        private void DisableBuildMode()
+        {
+            if (!_goTowerToBuild) { return; }
+
+            _goTowerToBuild.transform.parent = _hideTowerContainer.transform;
+            _goTowerToBuild = null;
+            onExitBuildMode();
+        }
+
+        public void onSelectGatling()
+        {
+            _selectedTowerIndex = 0;
+            DisableBuildMode();
+            EnableBuildMode();
+        }
+
+        public void onSelectMissle()
+        {
+            _selectedTowerIndex = 1;
+            DisableBuildMode();
+            EnableBuildMode();
         }
     }
 }
