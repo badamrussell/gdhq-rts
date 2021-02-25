@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1662c12a207c7458393305afd14a61e1, type: 3}
   m_Name: PlayerWarBucks
   m_EditorClassIdentifier: 
-  value: -1100
+  value: 10000

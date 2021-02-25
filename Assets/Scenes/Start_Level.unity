@@ -4297,13 +4297,15 @@ MonoBehaviour:
   _zoomSpeed: 5
   _maxZoom: 50
   _minZoom: 15
-  _keyboardPanSpeed: 0.1
+  _keyboardPanSpeed: 0.5
   _minX: -45
   _maxX: -5
   _minZ: -22
   _maxZ: 10
-  _mouseEdgePanSpeed: 0.1
+  _mouseEdgePanSpeed: 0.2
   _screenEdgePanningOffset: 100
+  _screenEdgePanningBottomOffset: 10
+  _screenEdgeGutter: 1
 --- !u!1 &552431162
 GameObject:
   m_ObjectHideFlags: 0
