@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee7a744fdfac44fbb950d7522283c311, type: 3}
+  m_Name: GatlingGunTowerConfig
+  m_EditorClassIdentifier: 
+  towerType: 2
+  warBucksCost: 200
+  prefab: {fileID: 8492410811381567456, guid: 28589019bba8d4ab48fabe449f9edc32, type: 3}
