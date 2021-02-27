@@ -1308,12 +1308,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _battleReadyTower: {fileID: 6555879201802081846}
   _constructionTower: {fileID: 4902178510744231344}
-  _constructionTime: 20
+  _progressMeter: {fileID: 5076184134963987884}
   _constructionSpeed: 5
   _isBuilt: 0
   _maxHealth: 200
   _warBucksCost: 250
-  _progressMeter: {fileID: 5076184134963987884}
   _currentHealth: 0
   _warBucks: {fileID: 11400000, guid: 9204358f397004afbae80be3eae6172f, type: 2}
 --- !u!1 &4102116668505456032
@@ -4304,7 +4303,7 @@ BoxCollider:
   m_GameObject: {fileID: 6526301535810312834}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 2, z: 1}
   m_Center: {x: 0, y: 0.45, z: 0}

@@ -8,7 +8,7 @@ namespace GameDevHQITP.ScriptableObjects
     [CreateAssetMenu(menuName = "ScriptableObjects/new TowerType")]
     public class TowerConfig : ScriptableObject
     {
-        public EnemyType towerType;
+        public TowerType towerType;
         public int warBucksCost;
         public GameObject prefab;
     }

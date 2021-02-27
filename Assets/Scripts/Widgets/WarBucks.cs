@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+using GameDevHQITP.Managers;
 using GameDevHQITP.ScriptableObjects;
 
 namespace GameDevHQITP.Widgets
@@ -15,15 +16,21 @@ namespace GameDevHQITP.Widgets
         void Start()
         {
             _text = GetComponent<Text>();
-            if (!_text)
-            {
-                Debug.LogError("WarBucks missing text behavior.");
-            }
         }
 
-        void Update()
+        private void UpdateWarBucksDisplay(int newAmount)
         {
-            _text.text = _warBucks.value.ToString();
+            _text.text = newAmount.ToString();
+        }
+
+        private void OnEnable()
+        {
+            BuildTowerManager.onNewWarBucksTotal += UpdateWarBucksDisplay;
+        }
+
+        private void OnDisable()
+        {
+            BuildTowerManager.onNewWarBucksTotal -= UpdateWarBucksDisplay;
         }
     }
 }

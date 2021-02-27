@@ -3609,12 +3609,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _battleReadyTower: {fileID: 2056196648450481299}
   _constructionTower: {fileID: 178512252134168341}
-  _constructionTime: 20
+  _progressMeter: {fileID: 368381705}
   _constructionSpeed: 10
   _isBuilt: 0
   _maxHealth: 200
   _warBucksCost: 100
-  _progressMeter: {fileID: 368381705}
   _currentHealth: 0
   _warBucks: {fileID: 11400000, guid: 9204358f397004afbae80be3eae6172f, type: 2}
 --- !u!1 &8718494106838332384
@@ -6202,6 +6201,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6910226489105183353, guid: 530151c435c144058898fc5974b092cd, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8416613225277276636, guid: 530151c435c144058898fc5974b092cd, type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

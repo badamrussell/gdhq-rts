@@ -6,15 +6,12 @@ using GameDevHQITP.Managers;
 
 namespace GameDevHQITP.Units
 {
-    /*
-     * What is weird here is saving the reference for _towerBeingDragged.
-     * It is used so it only reacts to physics collisions with that object
-     */
+
     public class TowerEmptyPlot : MonoBehaviour
     {
 
-        public static event Action<GameObject> onNearTowerPlacement;
-        public static event Action<GameObject> onExitTowerPlacement;
+        public static event Action<bool> onMouseNearTowerPlotEvent;
+        public static event Action onPlaceTowerEvent;
 
         enum TowerLocationMode
         {
@@ -23,16 +20,21 @@ namespace GameDevHQITP.Units
             occupied,
         }
 
-        [SerializeField] private TowerLocationMode _towerLocationMode;
+        [SerializeField] private TowerLocationMode _towerLocationMode = TowerLocationMode.available;
         [SerializeField] private GameObject _selectionFx;
         [SerializeField] private GameObject _platform;
 
-        private GameObject _occupyingTower;
-        private GameObject _towerBeingDragged;
+        private bool _buildModeEnabled = false;
+
+        private bool IsOccupied {
+            get
+            {
+                return _towerLocationMode == TowerLocationMode.occupied;
+            }
+        }
 
         void Start()
         {
-            _towerLocationMode = _occupyingTower ? TowerLocationMode.occupied : TowerLocationMode.available;
             _selectionFx.SetActive(false);
         }
 
@@ -40,64 +42,60 @@ namespace GameDevHQITP.Units
         {
             BuildTowerManager.onStartBuildMode += HandleStartBuildMode;
             BuildTowerManager.onExitBuildMode += HandleExitBuildMode;
-            BuildTowerManager.onStartTowerConstruction += BuildTower;
         }
 
         private void OnDisable()
         {
             BuildTowerManager.onStartBuildMode -= HandleStartBuildMode;
             BuildTowerManager.onExitBuildMode -= HandleExitBuildMode;
-            BuildTowerManager.onStartTowerConstruction -= BuildTower;
         }
 
         private void HandleStartBuildMode(GameObject go)
         {
-            if (_towerLocationMode == TowerLocationMode.occupied) { return; }
+            if (IsOccupied) { return; }
+            _buildModeEnabled = true;
 
             _selectionFx.SetActive(true);
-            _towerBeingDragged = go;
         }
 
         private void HandleExitBuildMode()
         {
+            _buildModeEnabled = false;
+
             _selectionFx.SetActive(false);
-            _towerBeingDragged = null;
             if (_towerLocationMode == TowerLocationMode.selected) {
                 _towerLocationMode = TowerLocationMode.available;
             }
         }
 
-        private void BuildTower(GameObject go)
+        private void OnMouseEnter()
         {
-            if (_towerLocationMode != TowerLocationMode.selected) { return; }
-            _towerLocationMode = TowerLocationMode.occupied;
-            _towerBeingDragged = null;
-            _platform.SetActive(false);
+            if (!_buildModeEnabled || IsOccupied) { return; }
+            if (onMouseNearTowerPlotEvent == null) { return; }
 
-            _occupyingTower = Instantiate(go);
-            _occupyingTower.transform.parent = transform;
-            _occupyingTower.transform.localPosition = Vector3.zero;
-        }
-
-
-        private void OnTriggerEnter(Collider other)
-        {
-            if (_towerLocationMode == TowerLocationMode.occupied) { return; }
-            if (other.gameObject != _towerBeingDragged) { return; }
-            if (onNearTowerPlacement == null) { return; }
-
-            onNearTowerPlacement(other.gameObject);
+            onMouseNearTowerPlotEvent(true);
             _towerLocationMode = TowerLocationMode.selected;
         }
 
-        private void OnTriggerExit(Collider other)
+        private void OnMouseExit()
         {
-            if (_towerLocationMode == TowerLocationMode.occupied) { return; }
-            if (other.gameObject != _towerBeingDragged) { return; }
-            if (onExitTowerPlacement == null) { return; }
+            if (!_buildModeEnabled || IsOccupied) { return; }
+            if (onMouseNearTowerPlotEvent == null) { return; }
 
-            onExitTowerPlacement(other.gameObject);
+            onMouseNearTowerPlotEvent(false);
             _towerLocationMode = TowerLocationMode.available;
+        }
+
+        private void OnMouseDown()
+        {
+            if (!_buildModeEnabled || IsOccupied) { return; }
+            if (onPlaceTowerEvent == null) { return; }
+
+            _towerLocationMode = TowerLocationMode.occupied;
+            _platform.SetActive(false);
+
+            onPlaceTowerEvent();
+            onMouseNearTowerPlotEvent(false);
         }
 
     }

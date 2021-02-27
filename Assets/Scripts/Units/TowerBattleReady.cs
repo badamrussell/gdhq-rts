@@ -4,6 +4,11 @@ using UnityEngine;
 
 namespace GameDevHQITP.Units
 {
+    public enum TowerType
+    {
+        TowerGatlingGun,
+        TowerMissileLauncher,
+    }
 
     public class TowerBattleReady : MonoBehaviour
     {

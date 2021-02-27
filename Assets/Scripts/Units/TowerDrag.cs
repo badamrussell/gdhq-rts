@@ -13,31 +13,29 @@ namespace GameDevHQITP.Units
 
         void Start()
         {
-            ShowRedAttack(gameObject);
+            IsNearPlot(false);
         }
 
         private void OnEnable()
         {
-            TowerEmptyPlot.onNearTowerPlacement += ShowGreenAttack;
-            TowerEmptyPlot.onExitTowerPlacement += ShowRedAttack;
+            TowerEmptyPlot.onMouseNearTowerPlotEvent += IsNearPlot;
         }
 
         private void OnDisable()
         {
-            TowerEmptyPlot.onNearTowerPlacement -= ShowGreenAttack;
-            TowerEmptyPlot.onExitTowerPlacement -= ShowRedAttack;
+            TowerEmptyPlot.onMouseNearTowerPlotEvent -= IsNearPlot;
         }
 
-        private void ShowGreenAttack(GameObject go)
+        private void IsNearPlot(bool isNear)
         {
-            _attackRadius.GetComponent<Renderer>().material.color = _successColor;
-        }
-
-        private void ShowRedAttack(GameObject go)
-        {
-            if (go != gameObject) { return; }
-
-            _attackRadius.GetComponent<Renderer>().material.color = _failColor;
+            if (isNear)
+            {
+                _attackRadius.GetComponent<Renderer>().material.color = _successColor;
+            }
+            else
+            {
+                _attackRadius.GetComponent<Renderer>().material.color = _failColor;
+            }
         }
 
     }
