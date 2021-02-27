@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee7a744fdfac44fbb950d7522283c311, type: 3}
   m_Name: GatlingGunTowerConfig
   m_EditorClassIdentifier: 
-  towerType: 2
+  towerType: 0
   warBucksCost: 200
   prefab: {fileID: 8492410811381567456, guid: 28589019bba8d4ab48fabe449f9edc32, type: 3}

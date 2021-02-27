@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee7a744fdfac44fbb950d7522283c311, type: 3}
   m_Name: MissileTowerConfig
   m_EditorClassIdentifier: 
-  towerType: 3
+  towerType: 1
   warBucksCost: 500
   prefab: {fileID: 3722541957627528517, guid: d74a2e8d6b23641a9a12c603301d79ba, type: 3}

@@ -1450,8 +1450,8 @@ MonoBehaviour:
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0, g: 0.02261785, b: 0.8773585, a: 0.7019608}
+    m_SelectedColor: {r: 0.3850746, g: 0.8584906, b: 0.1579299, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -14012,6 +14012,36 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4735469010697762, guid: b5ef17a8abecc4c5f91e8b1b54aa64b7, type: 3}
   m_PrefabInstance: {fileID: 1732947692}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1738580064
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1738580065}
+  m_Layer: 0
+  m_Name: ActiveTowers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1738580065
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1738580064}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1741381861
 GameObject:
   m_ObjectHideFlags: 0
@@ -16044,14 +16074,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _availableTowerPrefabs:
   - dragging: {fileID: 478807520509652230, guid: 91490fc3ae0814ea9810fe96c62272e0, type: 3}
-    tower: {fileID: 8492410811381567456, guid: 28589019bba8d4ab48fabe449f9edc32, type: 3}
+    towerConfig: {fileID: 11400000, guid: 40436aaae19d54c8ba51d3ef5874b454, type: 2}
   - dragging: {fileID: 8580851885246840634, guid: d9a6793af59ff43bb80245f8bb5e63f2, type: 3}
-    tower: {fileID: 3722541957627528517, guid: d74a2e8d6b23641a9a12c603301d79ba, type: 3}
-  _goTowerToBuild: {fileID: 0}
+    towerConfig: {fileID: 11400000, guid: f71f50add8f764d1587448dd610c8025, type: 2}
+  _towerToBuildGO: {fileID: 0}
   _towerPlotContainer: {fileID: 2041172116}
+  _activeTowersContainer: {fileID: 1738580064}
   _hideTowerContainer: {fileID: 1171463131}
-  _selectedTowerIndex: 0
-  _dragHeightOffset: 1
+  _warBucksTotal: 10000
 --- !u!1001 &2052424245
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16393,7 +16423,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 532d08ee023f8421fb08b3dd650e29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _warBucks: {fileID: 11400000, guid: 9204358f397004afbae80be3eae6172f, type: 2}
+  _warBucks: {fileID: 0}
   _text: {fileID: 0}
 --- !u!1001 &2110816248
 PrefabInstance:
