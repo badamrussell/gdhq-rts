@@ -42,26 +42,23 @@ namespace GameDevHQITP.Managers
 
         void Update()
         {
-            Vector3 pos = new Vector3(transform.position.x, transform.position.y, transform.position.z);
 
-            if (Input.GetKey(KeyCode.W))
-            {
-                pos.z += _keyboardPanSpeed;
-            }
-            if (Input.GetKey(KeyCode.S))
-            {
-                pos.z -= _keyboardPanSpeed;
-            }
-            if (Input.GetKey(KeyCode.A))
-            {
-                pos.x -= _keyboardPanSpeed;
-            }
-            if (Input.GetKey(KeyCode.D))
-            {
-                pos.x += _keyboardPanSpeed;
-            }
+            CalculatePanning();
+            ZoomInput();
+        }
+
+        void CalculatePanning()
+        {
+            Vector3 pos = transform.position;
+
+            // movement from keyboard commands
+            float _verticalInput = Input.GetAxis("Vertical");
+            float _horizontalInput = Input.GetAxis("Horizontal");
+            pos.z += _verticalInput * _keyboardPanSpeed;
+            pos.x += _horizontalInput * _keyboardPanSpeed;
 
 
+            //movement from mouse at edges of screen
             float mouseX = Input.mousePosition.x;
             float mouseY = Input.mousePosition.y;
 
@@ -83,19 +80,16 @@ namespace GameDevHQITP.Managers
                 pos.z += _mouseEdgePanSpeed;
             }
 
-            float scrollValue = Input.GetAxis("Mouse ScrollWheel");
-
-            if (scrollValue != 0f)
-            {
-                pos.y += scrollValue * _zoomSpeed;
-                pos.y = Mathf.Clamp(pos.y, _minZoom, _maxZoom);
-            }
-
 
             pos.x = Mathf.Clamp(pos.x, _minX, _maxX);
             pos.z = Mathf.Clamp(pos.z, _minZ, _maxZ);
             transform.position = pos;
         }
-
+        void ZoomInput()
+        {
+            float _scrollValue = Input.GetAxis("Mouse ScrollWheel");
+            Camera.main.fieldOfView -= _scrollValue * _zoomSpeed;
+            Camera.main.fieldOfView = Mathf.Clamp(Camera.main.fieldOfView, _minZoom, _maxZoom);
+        }
     }
 }
