@@ -28,6 +28,7 @@ namespace GameDevHQ.FileBase.Missle_Launcher.Missle
         private bool _fuseOut = false; //bool for if the rocket fuse
         private bool _trackRotation = false; //bool to track rotation of the rocket
 
+        private GameObject _target;
 
         // Use this for initialization
         IEnumerator Start()
@@ -76,6 +77,7 @@ namespace GameDevHQ.FileBase.Missle_Launcher.Missle
             if (_trackRotation == true) //check track rotation bool
             {
                 _rigidbody.rotation = Quaternion.LookRotation(_rigidbody.velocity); // adjust rotation of rocket based on velocity
+                //_rigidbody.rotation = Quaternion.LookRotation(_target.transform.position); // adjust rotation of rocket based on velocity
                 _rigidbody.AddForce(transform.forward * 100f); //add force to the rocket
             }
 
@@ -84,11 +86,12 @@ namespace GameDevHQ.FileBase.Missle_Launcher.Missle
         /// <summary>
         /// This method is used to assign traits to our missle assigned from the launcher.
         /// </summary>
-        public void AssignMissleRules(float launchSpeed, float power, float fuseDelay, float destroyTimer)
+        public void AssignMissleRules(float launchSpeed, float power, float fuseDelay, float destroyTimer, GameObject target)
         {
             _launchSpeed = launchSpeed; //set the launch speed
             _power = power; //set the power
             _fuseDelay = fuseDelay; //set the fuse delay
+            _target = target;
             Destroy(this.gameObject, destroyTimer); //destroy the rocket after destroyTimer 
         }
     }

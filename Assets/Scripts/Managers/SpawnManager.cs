@@ -25,7 +25,7 @@ namespace GameDevHQITP.Managers
 
         private void Start()
         {
-            Time.timeScale = 2f;
+            //Time.timeScale = 2f;
 
             StartCoroutine(StartWaves());
         }

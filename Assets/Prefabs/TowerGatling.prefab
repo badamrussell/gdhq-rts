@@ -378,6 +378,40 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!54 &3619179294435373097
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1233158341296728997}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
+--- !u!114 &1839281952399959156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1233158341296728997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bfbc1eed4ab54a3a911277aa3f7665b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _nearbyEnemies: []
+  _horizontalRotate: {fileID: 331476115633259756}
+  _verticalRotate: {fileID: 331514667885727142}
+  _rotationSpeed: 1
+  _towerActionsGO: {fileID: 331183956826882420}
+  _targetedEnemy: {fileID: 0}
 --- !u!1 &1407524694849109845
 GameObject:
   m_ObjectHideFlags: 0
@@ -1012,7 +1046,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &402115134848152873
 Transform:
   m_ObjectHideFlags: 0
@@ -3611,7 +3645,7 @@ MonoBehaviour:
   _constructionTower: {fileID: 178512252134168341}
   _progressMeter: {fileID: 368381705}
   _constructionSpeed: 10
-  _isBuilt: 0
+  _isBuilt: 1
   _maxHealth: 200
   _warBucksCost: 100
   _currentHealth: 0
@@ -6145,19 +6179,39 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 622946586055412727, guid: 530151c435c144058898fc5974b092cd, type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 864166837609035752, guid: 530151c435c144058898fc5974b092cd, type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2665962411605132673, guid: 530151c435c144058898fc5974b092cd, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: c29cf846ecf79449c9dab0d4b2d31c50, type: 2}
+    - target: {fileID: 2704982417049582379, guid: 530151c435c144058898fc5974b092cd, type: 3}
+      propertyPath: m_Volume
+      value: 0.508
+      objectReference: {fileID: 0}
+    - target: {fileID: 3540487894041677230, guid: 530151c435c144058898fc5974b092cd, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3726159685731215990, guid: 530151c435c144058898fc5974b092cd, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4375493117857573118, guid: 530151c435c144058898fc5974b092cd, type: 3}
+      propertyPath: _attackRadius
+      value: 
+      objectReference: {fileID: 1233158341296728997}
     - target: {fileID: 4382532418844140618, guid: 530151c435c144058898fc5974b092cd, type: 3}
       propertyPath: m_Name
       value: TowerBattleReady
       objectReference: {fileID: 0}
     - target: {fileID: 4382532418844140618, guid: 530151c435c144058898fc5974b092cd, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6910226489105183353, guid: 530151c435c144058898fc5974b092cd, type: 3}
       propertyPath: m_RootOrder
@@ -6225,3 +6279,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b79bd37bb7a644189e82ff09f92fb26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &331183956826882420 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2641737446791181593, guid: 530151c435c144058898fc5974b092cd, type: 3}
+  m_PrefabInstance: {fileID: 2319859840273118317}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &331476115633259756 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2641484320714567809, guid: 530151c435c144058898fc5974b092cd, type: 3}
+  m_PrefabInstance: {fileID: 2319859840273118317}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &331514667885727142 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2641373200063494603, guid: 530151c435c144058898fc5974b092cd, type: 3}
+  m_PrefabInstance: {fileID: 2319859840273118317}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1233158341296728997 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3543421143583121352, guid: 530151c435c144058898fc5974b092cd, type: 3}
+  m_PrefabInstance: {fileID: 2319859840273118317}
+  m_PrefabAsset: {fileID: 0}

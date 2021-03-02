@@ -26,7 +26,14 @@ namespace GameDevHQITP.Managers
             _battleReadyTower.gameObject.SetActive(_isBuilt);
             _constructionTower.gameObject.SetActive(!_isBuilt);
 
-            if (!_isBuilt)
+            if (_isBuilt)
+            {
+                _currentHealth = _maxHealth;
+                _progressMeter.progressValue = 1f;
+
+                _battleReadyTower.gameObject.SetActive(_isBuilt);
+                _constructionTower.gameObject.SetActive(!_isBuilt);
+            } else
             {
                 StartCoroutine(UpdateBuildProgress());
             }

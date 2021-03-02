@@ -965,7 +965,7 @@ GameObject:
   - component: {fileID: 2021831057259248225}
   m_Layer: 2
   m_Name: TowerMissileDrag
-  m_TagString: Tower
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

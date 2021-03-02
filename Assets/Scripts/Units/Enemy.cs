@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using GameDevHQITP.Managers;
+using GameDevHQITP.Widgets;
 using GameDevHQITP.Units;
 
 
@@ -20,11 +21,15 @@ namespace GameDevHQITP.Units
     {
         public static event Action<EnemyType, GameObject> onEnemyDestroyed;
 
-        [SerializeField] private int _health;
+        //[SerializeField] private int _health;
+        //[SerializeField] private int _maxHealth;
         [SerializeField] private int _warFund;
         private NavMeshAgent _navMeshAgent;
 
         [SerializeField] private EnemyType _enemyType;
+        //[SerializeField] private ProgressMeter _progressMeter;
+        private Animator _animator;
+
         public EnemyType EnemyType
         {
             get
@@ -37,6 +42,7 @@ namespace GameDevHQITP.Units
         private void Awake()
         {
             _navMeshAgent = GetComponent<NavMeshAgent>();
+            _animator = GetComponent<Animator>();
             Enemy enemy = GetComponent<Enemy>();
 
             if (!enemy)
@@ -59,6 +65,10 @@ namespace GameDevHQITP.Units
 
             Vector3 goal = SpawnManager.Instance.GoalPosition;
             _navMeshAgent.SetDestination(goal);
+
+            _navMeshAgent.isStopped = false;
+            _animator.SetBool("isAlive", true);
+
         }
 
         private void OnDisable()
@@ -75,6 +85,20 @@ namespace GameDevHQITP.Units
                 onEnemyDestroyed(_enemyType, gameObject);
             }
         }
+
+        public void OnTargetAreaDestroyed()
+        {
+            _navMeshAgent.isStopped = true;
+            _animator.SetBool("isAlive", false);
+            StartCoroutine(OnDeath());
+        }
+
+        public IEnumerator OnDeath()
+        {
+            yield return new WaitForSeconds(5f);
+            onEnemyDestroyed(_enemyType, gameObject);
+        }
+
     }
 
 }

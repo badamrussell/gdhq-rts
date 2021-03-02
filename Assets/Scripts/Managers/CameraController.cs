@@ -62,23 +62,23 @@ namespace GameDevHQITP.Managers
             float mouseX = Input.mousePosition.x;
             float mouseY = Input.mousePosition.y;
 
-            if (mouseX > _screenLimitsHorz[0] && mouseX < _screenLimitsHorz[1])
-            {
-                pos.x -= _mouseEdgePanSpeed;
-            }
-            else if (mouseX > _screenLimitsHorz[2] && mouseX < _screenLimitsHorz[3])
-            {
-                pos.x += _mouseEdgePanSpeed;
-            }
+            //if (mouseX > _screenLimitsHorz[0] && mouseX < _screenLimitsHorz[1])
+            //{
+            //    pos.x -= _mouseEdgePanSpeed;
+            //}
+            //else if (mouseX > _screenLimitsHorz[2] && mouseX < _screenLimitsHorz[3])
+            //{
+            //    pos.x += _mouseEdgePanSpeed;
+            //}
 
-            if (mouseY > _screenLimitsVert[0] && mouseY < _screenLimitsVert[1])
-            {
-                pos.z -= _mouseEdgePanSpeed;
-            }
-            else if (mouseY > _screenLimitsVert[2] && mouseY < _screenLimitsVert[3])
-            {
-                pos.z += _mouseEdgePanSpeed;
-            }
+            //if (mouseY > _screenLimitsVert[0] && mouseY < _screenLimitsVert[1])
+            //{
+            //    pos.z -= _mouseEdgePanSpeed;
+            //}
+            //else if (mouseY > _screenLimitsVert[2] && mouseY < _screenLimitsVert[3])
+            //{
+            //    pos.z += _mouseEdgePanSpeed;
+            //}
 
 
             pos.x = Mathf.Clamp(pos.x, _minX, _maxX);

@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using GameDevHQ.FileBase.Missle_Launcher.Missle;
+using GameDevHQITP.Units;
 
 namespace GameDevHQ.FileBase.Missle_Launcher
 {
-    public class Missle_Launcher : MonoBehaviour
+    public class Missle_Launcher : MonoBehaviour, ITowerActions
     {
         [SerializeField]
         private GameObject _missilePrefab; //holds the missle gameobject to clone
@@ -25,9 +26,13 @@ namespace GameDevHQ.FileBase.Missle_Launcher
         private float _destroyTime = 10.0f; //how long till the rockets get cleaned up
         private bool _launched; //bool to check if we launched the rockets
 
+        private bool _isAttacking = false;
+        private GameObject _target;
+
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Space) && _launched == false) //check for space key and if we launched the rockets
+            //if (Input.GetKeyDown(KeyCode.Space) && _launched == false) //check for space key and if we launched the rockets
+            if (_isAttacking && _launched == false)
             {
                 _launched = true; //set the launch bool to true
                 StartCoroutine(FireRocketsRoutine()); //start a coroutine that fires the rockets. 
@@ -45,7 +50,7 @@ namespace GameDevHQ.FileBase.Missle_Launcher
                 rocket.transform.localEulerAngles = new Vector3(-90, 0, 0); //set the rotation values to be properly aligned with the rockets forward direction
                 rocket.transform.parent = null; //set the rocket parent to null
 
-                rocket.GetComponent<GameDevHQ.FileBase.Missle_Launcher.Missle.Missle>().AssignMissleRules(_launchSpeed, _power, _fuseDelay, _destroyTime); //assign missle properties 
+                rocket.GetComponent<GameDevHQ.FileBase.Missle_Launcher.Missle.Missle>().AssignMissleRules(_launchSpeed, _power, _fuseDelay, _destroyTime, _target); //assign missle properties 
 
                 _misslePositions[i].SetActive(false); //turn off the rocket sitting in the turret to make it look like it fired
 
@@ -59,6 +64,19 @@ namespace GameDevHQ.FileBase.Missle_Launcher
             }
 
             _launched = false; //set launch bool to false
+        }
+
+        public void StartAttack(GameObject target)
+        {
+            _isAttacking = true;
+            _target = target;
+        }
+
+        public void StopAttack()
+        {
+            _isAttacking = false;
+            _target = null;
+
         }
     }
 }

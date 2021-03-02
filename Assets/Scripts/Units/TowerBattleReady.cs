@@ -14,9 +14,5 @@ namespace GameDevHQITP.Units
     {
         [SerializeField] private GameObject _attackRadius;
 
-        private void Start()
-        {
-            _attackRadius.SetActive(false);
-        }
     }
 }
