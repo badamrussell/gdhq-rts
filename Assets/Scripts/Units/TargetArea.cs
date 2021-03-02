@@ -6,6 +6,8 @@ using GameDevHQITP.Widgets;
 
 namespace GameDevHQITP.Units
 {
+    // this is an area that can be targeted for attack
+    // has its own health and set a progress bar
     public class TargetArea : MonoBehaviour
     {
         public static event Action<GameObject> onTargetAreaDestroyed;
@@ -33,11 +35,16 @@ namespace GameDevHQITP.Units
 
             _health -= damage;
 
+            // TO_DO: should probably have the Enemy class do this
             _progressMeter.progressValue = (float)_health / _maxHealth;
 
             if (_health <= 0)
             {
+                // TO_DO: This seems odd?
+                // need to let enemy know this was destroyed
+                // so could be an event, but only a specific enemy should react
                 _enemy.OnTargetAreaDestroyed();
+
                 onTargetAreaDestroyed(gameObject);
             }
         }

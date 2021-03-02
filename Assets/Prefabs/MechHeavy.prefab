@@ -3396,7 +3396,7 @@ GameObject:
   - component: {fileID: 7332601451909137116}
   m_Layer: 0
   m_Name: HitZone
-  m_TagString: Enemy
+  m_TagString: Attackable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

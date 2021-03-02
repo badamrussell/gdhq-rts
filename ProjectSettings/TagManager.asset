@@ -9,6 +9,7 @@ TagManager:
   - Tower
   - TowerLocation
   - TowerToBuild
+  - Attackable
   layers:
   - Default
   - TransparentFX

@@ -8,6 +8,8 @@ using GameDevHQITP.ScriptableObjects;
 
 namespace GameDevHQITP.Managers
 {
+    // Manages between the different tower states; construction, battle, upgrade, etc
+
     public class TowerController : MonoBehaviour
     {
         [SerializeField] private TowerBattleReady _battleReadyTower;
