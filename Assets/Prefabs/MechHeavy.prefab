@@ -493,6 +493,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _warFund: 0
   _enemyType: 0
+  _progressMeter: {fileID: 6620741727558919506}
+  _health: 0
+  _maxHealth: 400
+  _targetArea: {fileID: 6900282982989722822}
 --- !u!135 &50180410149680972
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -3393,7 +3397,6 @@ GameObject:
   - component: {fileID: 4870261548651088355}
   - component: {fileID: 4946434899913918475}
   - component: {fileID: 9204893764193623198}
-  - component: {fileID: 7332601451909137116}
   m_Layer: 0
   m_Name: HitZone
   m_TagString: Attackable
@@ -3477,22 +3480,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.49999997
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7332601451909137116
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6900282982989722822}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed4038923a4b7492791eab0b2ab5e449, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _enemy: {fileID: 6775994867780325714}
-  _progressMeter: {fileID: 6620741727558919506}
-  _health: 300
-  _maxHealth: 300
 --- !u!1001 &4194053900270661778
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -16186,6 +16186,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MechInfantry(Clone)
       objectReference: {fileID: 0}
+    - target: {fileID: 3849045865512655036, guid: ccee443862f694d5abd7c96515ce873a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3888955769417671901, guid: ccee443862f694d5abd7c96515ce873a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: -71.287094
@@ -17383,7 +17387,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2210015409184935409, guid: 8b2e1f85ae62d4081801f1f8d285ee76, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2215232599386572585, guid: 8b2e1f85ae62d4081801f1f8d285ee76, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

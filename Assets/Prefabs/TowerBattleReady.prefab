@@ -15163,6 +15163,7 @@ GameObject:
   - component: {fileID: 5291613601732403058}
   - component: {fileID: 864166837609035752}
   - component: {fileID: 3726159685731215990}
+  - component: {fileID: 8967808432023034143}
   m_Layer: 0
   m_Name: AttackRadius
   m_TagString: Untagged
@@ -15246,6 +15247,27 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8967808432023034143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3543421143583121352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bfbc1eed4ab54a3a911277aa3f7665b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _nearbyTargets: []
+  _horizontalRotate: {fileID: 0}
+  _verticalRotate: {fileID: 0}
+  _rotationSpeed: 2
+  _towerActionsGO: {fileID: 0}
+  _targetedArea: {fileID: 0}
+  _horizontalAngleOffset: 0
+  _verticalAngleOffset: 0
+  _baseDamagePerSec: 20
 --- !u!1 &4382532418844140618
 GameObject:
   m_ObjectHideFlags: 0
@@ -15292,7 +15314,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b79bd37bb7a644189e82ff09f92fb26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackRadius: {fileID: 3543421143583121352}
+  _attackRadius: {fileID: 8967808432023034143}
+  _horizontalRotate: {fileID: 2641484320714567809}
+  _verticalRotate: {fileID: 2641373200063494603}
+  _rotationSpeed: 2
+  _towerActionsGO: {fileID: 2641737446791181593}
+  _targetedArea: {fileID: 0}
+  _horizontalAngleOffset: 0
+  _verticalAngleOffset: 0
+  _baseDamagePerSec: 20
 --- !u!65 &8416613225277276636
 BoxCollider:
   m_ObjectHideFlags: 0

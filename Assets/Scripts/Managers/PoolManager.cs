@@ -32,12 +32,12 @@ namespace GameDevHQITP.Managers
 
         private void OnEnable()
         {
-            Enemy.onEnemyDestroyed += Remove;
+            Enemy.OnEnemyDestroyed += Remove;
         }
 
         private void OnDisable()
         {
-            Enemy.onEnemyDestroyed -= Remove;
+            Enemy.OnEnemyDestroyed -= Remove;
         }
 
         private void SeedStartingPool()

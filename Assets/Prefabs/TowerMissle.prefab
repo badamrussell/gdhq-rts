@@ -5571,6 +5571,10 @@ PrefabInstance:
       propertyPath: _verticalAngleOffset
       value: 31
       objectReference: {fileID: 0}
+    - target: {fileID: 6778357099207664137, guid: 95719afc849a348f4b5a5ace0797b5ab, type: 3}
+      propertyPath: _verticalAngleOffset
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 7854114784095184702, guid: 95719afc849a348f4b5a5ace0797b5ab, type: 3}
       propertyPath: m_RootOrder
       value: 1

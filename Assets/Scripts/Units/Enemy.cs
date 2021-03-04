@@ -19,16 +19,17 @@ namespace GameDevHQITP.Units
 
     public class Enemy : MonoBehaviour
     {
-        public static event Action<EnemyType, GameObject> onEnemyDestroyed;
+        public static event Action<EnemyType, GameObject> OnEnemyDestroyed;
 
-        //[SerializeField] private int _health;
-        //[SerializeField] private int _maxHealth;
         [SerializeField] private int _warFund;
-        private NavMeshAgent _navMeshAgent;
-
         [SerializeField] private EnemyType _enemyType;
-        //[SerializeField] private ProgressMeter _progressMeter;
+        [SerializeField] private ProgressMeter _progressMeter;
+        [SerializeField] private int _health;
+        [SerializeField] private int _maxHealth;
+        [SerializeField] private GameObject _targetArea;
+
         private Animator _animator;
+        private NavMeshAgent _navMeshAgent;
 
         public EnemyType EnemyType
         {
@@ -62,43 +63,57 @@ namespace GameDevHQITP.Units
         private void OnEnable()
         {
             PlayerHome.onReachedPlayerBase += ReachedPlayerBase;
+            TowerBattleReady.OnTakeDamage += TakeDamage;
 
             Vector3 goal = SpawnManager.Instance.GoalPosition;
             _navMeshAgent.SetDestination(goal);
 
+            _health = _maxHealth;
+            _progressMeter.progressValue = 1f;
+
             _navMeshAgent.isStopped = false;
             _animator.SetBool("isAlive", true);
-
         }
 
         private void OnDisable()
         {
             PlayerHome.onReachedPlayerBase -= ReachedPlayerBase;
+            TowerBattleReady.OnTakeDamage -= TakeDamage;
         }
 
         public void ReachedPlayerBase(GameObject go)
         {
             if (gameObject != go) { return; }
 
-            if (onEnemyDestroyed != null)
+            if (OnEnemyDestroyed != null)
             {
-                onEnemyDestroyed(_enemyType, gameObject);
+                OnEnemyDestroyed(_enemyType, gameObject);
             }
-        }
-
-        public void OnTargetAreaDestroyed()
-        {
-            _navMeshAgent.isStopped = true;
-            _animator.SetBool("isAlive", false);
-            StartCoroutine(OnDeath());
         }
 
         public IEnumerator OnDeath()
         {
             yield return new WaitForSeconds(5f);
-            onEnemyDestroyed(_enemyType, gameObject);
+            OnEnemyDestroyed(_enemyType, gameObject);
         }
 
+        public void TakeDamage(GameObject target, int damage)
+        {
+            if (target != _targetArea) { return; }
+            _health -= damage;
+
+            _progressMeter.progressValue = (float)_health / _maxHealth;
+
+            if (_health <= 0)
+            {
+                _navMeshAgent.isStopped = true;
+                _animator.SetBool("isAlive", false);
+                // look into Write Defaults for 
+                StartCoroutine(OnDeath());
+
+                OnEnemyDestroyed(_enemyType, _targetArea);
+            }
+        }
     }
 
 }

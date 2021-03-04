@@ -123,6 +123,17 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &207068419 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6648934256948030834, guid: 28589019bba8d4ab48fabe449f9edc32, type: 3}
+  m_PrefabInstance: {fileID: 1054762029}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bfbc1eed4ab54a3a911277aa3f7665b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &512990886 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 331476115633259756, guid: 28589019bba8d4ab48fabe449f9edc32, type: 3}
@@ -409,6 +420,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2056196648450481299, guid: 28589019bba8d4ab48fabe449f9edc32, type: 3}
+      propertyPath: _attackRadius
+      value: 
+      objectReference: {fileID: 207068419}
+    - target: {fileID: 2056196648450481299, guid: 28589019bba8d4ab48fabe449f9edc32, type: 3}
       propertyPath: _verticalRotate
       value: 
       objectReference: {fileID: 1577354053}
@@ -629,6 +644,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1006740319929196325, guid: d74a2e8d6b23641a9a12c603301d79ba, type: 3}
+      propertyPath: _verticalAngleOffset
+      value: 33
+      objectReference: {fileID: 0}
     - target: {fileID: 3722541957627528517, guid: d74a2e8d6b23641a9a12c603301d79ba, type: 3}
       propertyPath: m_Name
       value: TowerMissle
@@ -653,7 +672,7 @@ GameObject:
   - component: {fileID: 1978700332}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Enemy
+  m_TagString: Attackable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

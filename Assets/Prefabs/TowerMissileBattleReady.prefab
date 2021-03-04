@@ -739,10 +739,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bfbc1eed4ab54a3a911277aa3f7665b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _nearbyEnemies: []
+  _nearbyTargets: []
   _horizontalRotate: {fileID: 3661878311088110184}
   _verticalRotate: {fileID: 8704670905621421234}
   _rotationSpeed: 1
+  _towerActionsGO: {fileID: 0}
+  _targetedArea: {fileID: 0}
+  _horizontalAngleOffset: 0
+  _verticalAngleOffset: 0
+  _baseDamagePerSec: 20
 --- !u!1 &7001427677771017662
 GameObject:
   m_ObjectHideFlags: 0
@@ -1032,7 +1037,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b79bd37bb7a644189e82ff09f92fb26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackRadius: {fileID: 6448820206844521941}
+  _attackRadius: {fileID: 1294661306}
+  _horizontalRotate: {fileID: 3661878311088110184}
+  _verticalRotate: {fileID: 8704670905621421234}
+  _rotationSpeed: 2
+  _towerActionsGO: {fileID: 868751156583662192}
+  _targetedArea: {fileID: 0}
+  _horizontalAngleOffset: 0
+  _verticalAngleOffset: 0
+  _baseDamagePerSec: 20
 --- !u!65 &4950479132727404533
 BoxCollider:
   m_ObjectHideFlags: 0
