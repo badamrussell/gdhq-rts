@@ -11,41 +11,42 @@ namespace GameDevHQITP.Units
     // returns best target GetTargetPosition
     public class AttackRadius : MonoBehaviour
     {
-        //public static event Action<GameObject, int> onTakeDamage;
-
         [SerializeField] private List<GameObject> _nearbyTargets = new List<GameObject>();
-        [SerializeField] GameObject _targetedArea;
+
+        private GameObject _targetedNeighbor;
+        private GameObject _targetedGO;
 
         private void OnEnable()
         {
-            Enemy.OnEnemyDestroyed += RemoveTarget;
+            Enemy.OnEnemyStartDeath += RemoveNeighbor;
         }
 
         private void OnDisable()
         {
-            Enemy.OnEnemyDestroyed -= RemoveTarget;
+            Enemy.OnEnemyStartDeath -= RemoveNeighbor;
         }
 
-        private void RemoveTarget(EnemyType enemyType, GameObject target)
+        private void RemoveNeighbor(EnemyType enemyType, GameObject enemyGO)
         {
-            if (_targetedArea == target)
+            if (_targetedNeighbor == enemyGO)
             {
-                _targetedArea = null;
+                _targetedGO = null;
+                _targetedNeighbor = null;
             }
 
-            _nearbyTargets.RemoveAll(e => e == target);
+            _nearbyTargets.RemoveAll(e => e == enemyGO);
         }
 
         public GameObject GetLockedOnTarget()
         {
-            return _targetedArea;
+            return _targetedGO;
         }
 
         public bool GetTargetPosition(out GameObject targetPos)
         {
-            if (_targetedArea != null)
+            if (_targetedGO != null)
             {
-                targetPos = _targetedArea;
+                targetPos = _targetedGO;
                 return true;
             }
 
@@ -53,8 +54,19 @@ namespace GameDevHQITP.Units
             {
                 // TO_DO: Instead of taking first, is there a better algorithm?
                 // if enemy leaves attackRadius, select closest enemy & lock on
+                _targetedNeighbor = _nearbyTargets[0];
                 targetPos = _nearbyTargets[0];
-                _targetedArea = _nearbyTargets[0];
+
+                IAttackable attackableTest = _targetedNeighbor.GetComponent<IAttackable>();
+
+                if (attackableTest != null)
+                {
+                    _targetedGO = attackableTest.GetAttackTarget();
+                } else
+                {
+                    _targetedGO = _targetedNeighbor.gameObject;
+                }
+
                 return true;
             }
 
@@ -64,24 +76,16 @@ namespace GameDevHQITP.Units
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.tag != "Attackable") { return; }
+            if (other.tag != "Enemy") { return; }
 
             _nearbyTargets.Add(other.gameObject);
         }
 
         private void OnTriggerExit(Collider other)
         {
-            if (other.tag != "Attackable") { return; }
+            if (other.tag != "Enemy") { return; }
 
-            int index = _nearbyTargets.FindIndex(e => e == other.gameObject);
-            if (index > -1)
-            {
-                if (_nearbyTargets[index] == _targetedArea)
-                {
-                    _targetedArea = null;
-                }
-                _nearbyTargets.RemoveAt(index);
-            }
+            RemoveNeighbor(EnemyType.None, other.gameObject);
         }
     }
 }

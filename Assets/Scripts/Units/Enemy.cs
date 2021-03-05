@@ -8,8 +8,14 @@ using GameDevHQITP.Widgets;
 using GameDevHQITP.Units;
 
 
+
 namespace GameDevHQITP.Units
 {
+    public interface IDamageable<T>
+    {
+        public void Thing();
+    }
+
     public enum EnemyType
     {
         Heavy,
@@ -17,9 +23,10 @@ namespace GameDevHQITP.Units
         None
     }
 
-    public class Enemy : MonoBehaviour
+    public class Enemy : MonoBehaviour, IAttackable
     {
-        public static event Action<EnemyType, GameObject> OnEnemyDestroyed;
+        public static event Action<EnemyType, GameObject> OnEnemyEndDeath;
+        public static event Action<EnemyType, GameObject> OnEnemyStartDeath;
 
         [SerializeField] private int _warFund;
         [SerializeField] private EnemyType _enemyType;
@@ -30,6 +37,7 @@ namespace GameDevHQITP.Units
 
         [SerializeField] private Animator _animator;
         [SerializeField] private NavMeshAgent _navMeshAgent;
+        [SerializeField] private Collider _collider;
 
         public EnemyType EnemyType
         {
@@ -37,6 +45,11 @@ namespace GameDevHQITP.Units
             {
                 return _enemyType;
             }
+        }
+
+        public GameObject GetAttackTarget()
+        {
+            return _targetArea;
         }
 
         public void InitiateActive()
@@ -64,6 +77,7 @@ namespace GameDevHQITP.Units
             PlayerHome.onReachedPlayerBase += ReachedPlayerBase;
             TowerBattleReady.OnTakeDamage += TakeDamage;
 
+            //_collider.enabled = true;
             InitiateActive();
 
             Vector3 goal = SpawnManager.Instance.GoalPosition;
@@ -81,21 +95,26 @@ namespace GameDevHQITP.Units
         {
             if (gameObject != go) { return; }
 
-            if (OnEnemyDestroyed != null)
+            if (OnEnemyEndDeath != null)
             {
-                OnEnemyDestroyed(_enemyType, gameObject);
+                OnEnemyEndDeath(_enemyType, gameObject);
             }
         }
 
         public IEnumerator OnDeath()
         {
+            //_collider.enabled = false;
+            if (OnEnemyStartDeath != null)
+            {
+                OnEnemyStartDeath(EnemyType.None, gameObject);
+            }
             yield return new WaitForSeconds(5f);
             _animator.WriteDefaultValues();
             gameObject.SetActive(false);
 
-            if (OnEnemyDestroyed != null)
+            if (OnEnemyEndDeath != null)
             {
-                OnEnemyDestroyed(_enemyType, gameObject);
+                OnEnemyEndDeath(_enemyType, gameObject);
             }
         }
 

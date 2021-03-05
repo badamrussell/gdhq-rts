@@ -1919,7 +1919,7 @@ GameObject:
   - component: {fileID: 4027858643913419646}
   m_Layer: 0
   m_Name: MechInfantry
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2001,6 +2001,9 @@ MonoBehaviour:
   _health: 0
   _maxHealth: 50
   _targetArea: {fileID: 8248648057431498077}
+  _animator: {fileID: 0}
+  _navMeshAgent: {fileID: 0}
+  _collider: {fileID: 4027858643913419646}
 --- !u!136 &4027858643913419646
 CapsuleCollider:
   m_ObjectHideFlags: 0

@@ -60,6 +60,7 @@ namespace GameDevHQITP.Units
             {
                 _isFiring = false;
                 StopCoroutine("SendDamage");
+                _towerActions.StopAttack();
             }
         }
 

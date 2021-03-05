@@ -6201,6 +6201,10 @@ PrefabInstance:
       propertyPath: _attackRadius
       value: 
       objectReference: {fileID: 6648934256948030834}
+    - target: {fileID: 4375493117857573118, guid: 530151c435c144058898fc5974b092cd, type: 3}
+      propertyPath: _rotationSpeed
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4382532418844140618, guid: 530151c435c144058898fc5974b092cd, type: 3}
       propertyPath: m_Name
       value: TowerBattleReady

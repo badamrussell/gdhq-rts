@@ -415,7 +415,7 @@ GameObject:
   - component: {fileID: 50180410149680972}
   m_Layer: 0
   m_Name: MechHeavy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -499,6 +499,7 @@ MonoBehaviour:
   _targetArea: {fileID: 6900282982989722822}
   _animator: {fileID: 851563086749567694}
   _navMeshAgent: {fileID: 6267020231620653830}
+  _collider: {fileID: 50180410149680972}
 --- !u!135 &50180410149680972
 SphereCollider:
   m_ObjectHideFlags: 0

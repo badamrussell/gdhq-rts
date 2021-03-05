@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: WaveConfig_Infantry
   m_EditorClassIdentifier: 
   initialDelay: 2
-  spawnRate: 5
-  enemyPatternCount: 10
+  spawnRate: 10
+  enemyPatternCount: 6
   enemyPattern: 01000000

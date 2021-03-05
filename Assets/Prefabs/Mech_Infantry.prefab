@@ -437,7 +437,7 @@ GameObject:
   - component: {fileID: 3509199776944251124}
   m_Layer: 0
   m_Name: Mech_Infantry
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -501,6 +501,7 @@ MonoBehaviour:
   _targetArea: {fileID: 1911543104295164816}
   _animator: {fileID: 8576002742958710216}
   _navMeshAgent: {fileID: 2875398529117971082}
+  _collider: {fileID: 3509199776944251124}
 --- !u!136 &3509199776944251124
 CapsuleCollider:
   m_ObjectHideFlags: 0
