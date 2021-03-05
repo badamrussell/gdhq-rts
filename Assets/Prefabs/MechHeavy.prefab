@@ -451,7 +451,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: ce1eb73ac9ab84e15995b62bc72c5b18, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
@@ -497,6 +497,8 @@ MonoBehaviour:
   _health: 0
   _maxHealth: 400
   _targetArea: {fileID: 6900282982989722822}
+  _animator: {fileID: 851563086749567694}
+  _navMeshAgent: {fileID: 6267020231620653830}
 --- !u!135 &50180410149680972
 SphereCollider:
   m_ObjectHideFlags: 0

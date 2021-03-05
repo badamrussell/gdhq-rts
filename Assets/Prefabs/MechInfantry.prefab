@@ -1955,7 +1955,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: aea78be2764f44f138c366a3cc4323f3, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
@@ -1999,7 +1999,7 @@ MonoBehaviour:
   _enemyType: 1
   _progressMeter: {fileID: 116687391309067993}
   _health: 0
-  _maxHealth: 200
+  _maxHealth: 50
   _targetArea: {fileID: 8248648057431498077}
 --- !u!136 &4027858643913419646
 CapsuleCollider:

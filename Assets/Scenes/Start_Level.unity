@@ -5900,7 +5900,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _prefabs:
   - enemyType: 1
-    prefab: {fileID: 2210015409184935409, guid: 8b2e1f85ae62d4081801f1f8d285ee76, type: 3}
+    prefab: {fileID: 4387745763020777372, guid: 15e191c517779470ab498ddcf5c57b04, type: 3}
   - enemyType: 0
     prefab: {fileID: 757078777756783454, guid: 360b61b26a8ca4c00987752cf846cd93, type: 3}
   _poolSeedAmount: 2
@@ -10229,7 +10229,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1323174402}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1

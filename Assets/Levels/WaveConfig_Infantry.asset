@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initialDelay: 2
   spawnRate: 5
-  enemyPatternCount: 4
+  enemyPatternCount: 10
   enemyPattern: 01000000
