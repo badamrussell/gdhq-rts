@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Linq;
+using GameDevHQITP.ScriptableObjects;
 
 namespace GameDevHQITP.Units
 {
@@ -26,7 +27,7 @@ namespace GameDevHQITP.Units
             Enemy.OnEnemyStartDeath -= RemoveNeighbor;
         }
 
-        private void RemoveNeighbor(EnemyType enemyType, GameObject enemyGO)
+        private void RemoveNeighbor(EnemyConfig enemyConfig, GameObject enemyGO)
         {
             if (_targetedNeighbor == enemyGO)
             {
@@ -37,12 +38,17 @@ namespace GameDevHQITP.Units
             _nearbyTargets.RemoveAll(e => e == enemyGO);
         }
 
+        public GameObject GetLockedOnUnit()
+        {
+            return _targetedNeighbor;
+        }
+
         public GameObject GetLockedOnTarget()
         {
             return _targetedGO;
         }
 
-        public bool GetTargetPosition(out GameObject targetPos)
+        public bool GetTarget(out GameObject targetPos)
         {
             if (_targetedGO != null)
             {
@@ -55,7 +61,6 @@ namespace GameDevHQITP.Units
                 // TO_DO: Instead of taking first, is there a better algorithm?
                 // if enemy leaves attackRadius, select closest enemy & lock on
                 _targetedNeighbor = _nearbyTargets[0];
-                targetPos = _nearbyTargets[0];
 
                 IAttackable attackableTest = _targetedNeighbor.GetComponent<IAttackable>();
 
@@ -66,6 +71,8 @@ namespace GameDevHQITP.Units
                 {
                     _targetedGO = _targetedNeighbor.gameObject;
                 }
+
+                targetPos = _targetedGO;
 
                 return true;
             }
@@ -85,7 +92,7 @@ namespace GameDevHQITP.Units
         {
             if (other.tag != "Enemy") { return; }
 
-            RemoveNeighbor(EnemyType.None, other.gameObject);
+            RemoveNeighbor(null, other.gameObject);
         }
     }
 }

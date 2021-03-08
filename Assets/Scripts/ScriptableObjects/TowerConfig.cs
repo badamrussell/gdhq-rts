@@ -11,5 +11,10 @@ namespace GameDevHQITP.ScriptableObjects
         public TowerType towerType;
         public int warBucksCost;
         public GameObject prefab;
+        public float attackRadius;
+        public int level;
+        public int maxHealth;
+        public float constructionTime;
+        public int warBucksSell;
     }
 }

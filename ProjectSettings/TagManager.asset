@@ -10,6 +10,8 @@ TagManager:
   - TowerLocation
   - TowerToBuild
   - Attackable
+  - Ground
+  - Missile
   layers:
   - Default
   - TransparentFX

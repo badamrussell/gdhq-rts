@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using GameDevHQITP.Utility;
 using GameDevHQITP.Units;
+using GameDevHQITP.ScriptableObjects;
 
 namespace GameDevHQITP.Managers
 {
@@ -76,17 +77,17 @@ namespace GameDevHQITP.Managers
             }
         }
 
-        public void Remove(EnemyType enemyType, GameObject go)
+        public void Remove(EnemyConfig enemyConfig, GameObject go)
         {
-            if (!_pool.ContainsKey(enemyType))
+            if (!_pool.ContainsKey(enemyConfig.enemyType))
             {
                 Queue<GameObject> goQue = new Queue<GameObject>();
-                _pool.Add(enemyType, goQue);
+                _pool.Add(enemyConfig.enemyType, goQue);
             }
 
             go.SetActive(false);
 
-            _pool[enemyType].Enqueue(go);
+            _pool[enemyConfig.enemyType].Enqueue(go);
         }
 
     }

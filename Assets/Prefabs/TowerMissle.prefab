@@ -5571,9 +5571,29 @@ PrefabInstance:
       propertyPath: _verticalAngleOffset
       value: 31
       objectReference: {fileID: 0}
+    - target: {fileID: 8275563236049249, guid: 95719afc849a348f4b5a5ace0797b5ab, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 2237409722691117304, guid: 95719afc849a348f4b5a5ace0797b5ab, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 4385851333915979142, guid: 95719afc849a348f4b5a5ace0797b5ab, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 6778357099207664137, guid: 95719afc849a348f4b5a5ace0797b5ab, type: 3}
       propertyPath: _verticalAngleOffset
       value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 7001427677771017662, guid: 95719afc849a348f4b5a5ace0797b5ab, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 7246989131217961378, guid: 95719afc849a348f4b5a5ace0797b5ab, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 7854114784095184702, guid: 95719afc849a348f4b5a5ace0797b5ab, type: 3}
       propertyPath: m_RootOrder
@@ -5622,6 +5642,10 @@ PrefabInstance:
     - target: {fileID: 8278097613625551825, guid: 95719afc849a348f4b5a5ace0797b5ab, type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8500220005972153206, guid: 95719afc849a348f4b5a5ace0797b5ab, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 8580851885246840634, guid: 95719afc849a348f4b5a5ace0797b5ab, type: 3}
       propertyPath: m_Name

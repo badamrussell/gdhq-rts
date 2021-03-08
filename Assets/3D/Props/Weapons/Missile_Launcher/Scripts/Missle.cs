@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using GameDevHQITP.Units;
+using GameDevHQITP.ScriptableObjects;
 
 namespace GameDevHQ.FileBase.Missle_Launcher.Missle
 {
@@ -8,6 +10,7 @@ namespace GameDevHQ.FileBase.Missle_Launcher.Missle
     [RequireComponent(typeof(AudioSource))] //require audiosource
     public class Missle : MonoBehaviour
     {
+
         [SerializeField]
         private ParticleSystem _particle; //reference to the particle system
 
@@ -27,8 +30,14 @@ namespace GameDevHQ.FileBase.Missle_Launcher.Missle
 
         private bool _fuseOut = false; //bool for if the rocket fuse
         private bool _trackRotation = false; //bool to track rotation of the rocket
+        private float _gravityOffset = 0;
 
         private GameObject _target;
+        [SerializeField] GameObject _explosionPrefab;
+        [SerializeField] ParticleSystem _exposionParticles;
+        [SerializeField] GameObject _missileGO;
+        [SerializeField] MissileConfig _missileConfig;
+        [SerializeField] float _targetVerticalOffset = 7f;
 
         // Use this for initialization
         IEnumerator Start()
@@ -46,41 +55,18 @@ namespace GameDevHQ.FileBase.Missle_Launcher.Missle
             _launched = true; //set the launch bool to true 
             _thrust = false; //set thrust bool to false
 
+
+            _exposionParticles.Stop();
         }
 
 
         // Update is called once per frame
         void FixedUpdate()
         {
-            if (_fuseOut == false) //check if fuseOut is false
-                return;
 
-            if (_launched == true) //check if launched is true
-            {
-                _rigidbody.AddForce(transform.forward * _launchSpeed); //add force to the rocket in the forward direction
+            if (!_missileGO.activeSelf) { return; }
 
-                if (Time.time > _initialLaunchTime + _fuseDelay) //check if the initial launch + fuse delay has passed
-                {
-                    _launched = false; //launched bool goes false
-                    _thrust = true; //thrust bool goes true
-                }
-            }
-
-            if (_thrust == true) //if thrust is true
-            {
-                _rigidbody.useGravity = true; //enable gravity 
-                _rigidbody.velocity = transform.forward * _power; //set velocity multiplied by the power variable
-                _thrust = false; //set thrust bool to false
-                _trackRotation = true; //track rotation bool set to true
-            }
-             
-            if (_trackRotation == true) //check track rotation bool
-            {
-                _rigidbody.rotation = Quaternion.LookRotation(_rigidbody.velocity); // adjust rotation of rocket based on velocity
-                //_rigidbody.rotation = Quaternion.LookRotation(_target.transform.position); // adjust rotation of rocket based on velocity
-                _rigidbody.AddForce(transform.forward * 100f); //add force to the rocket
-            }
-
+            TrackTarget();
         }
 
         /// <summary>
@@ -88,11 +74,43 @@ namespace GameDevHQ.FileBase.Missle_Launcher.Missle
         /// </summary>
         public void AssignMissleRules(float launchSpeed, float power, float fuseDelay, float destroyTimer, GameObject target)
         {
-            _launchSpeed = launchSpeed; //set the launch speed
-            _power = power; //set the power
-            _fuseDelay = fuseDelay; //set the fuse delay
             _target = target;
             Destroy(this.gameObject, destroyTimer); //destroy the rocket after destroyTimer 
+        }
+
+        private void TrackTarget()
+        {
+
+            Vector3 newTargetPos = _target == null ? Vector3.forward : _target.transform.position;
+            Vector3 dir = newTargetPos - transform.position;
+            dir.y -= _gravityOffset;
+            _gravityOffset += _missileConfig.gravityOffset;
+            transform.Translate(Vector3.forward * Time.deltaTime * _missileConfig.missileSpeed);
+
+            Quaternion rot = Quaternion.LookRotation(dir);
+            transform.rotation = Quaternion.Slerp(transform.rotation, rot, Time.deltaTime * _missileConfig.turningDamping);
+
+            //Debug.DrawLine(transform.position, newTargetPos, Color.cyan, 0.2f);
+            Debug.DrawRay(transform.position, Vector3.one * 0.1f, Color.magenta, 1f);
+            //Debug.DrawRay(transform.position, dir, Color.yellow, 0.2f);
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag("Enemy") || other.CompareTag("Ground"))
+            {
+                _missileGO.SetActive(false);
+                //Debug.DrawLine(gameObject.transform.position, other.gameObject.transform.position, Color.cyan, 5f);
+                GameObject go = Instantiate(_explosionPrefab, this.transform);
+                Vector3 newHit = transform.position + Vector3.forward * 0.5f;
+                go.transform.position = newHit;
+
+                Destroy(this.gameObject, 5f);
+                if (other.CompareTag("Enemy"))
+                {
+                    TowerBattleReady.OnTakeDamage(other.gameObject, 50);
+                }
+            }
         }
     }
 }

@@ -6,6 +6,7 @@ using UnityEngine.AI;
 using GameDevHQITP.Managers;
 using GameDevHQITP.Widgets;
 using GameDevHQITP.Units;
+using GameDevHQITP.ScriptableObjects;
 
 
 
@@ -25,11 +26,12 @@ namespace GameDevHQITP.Units
 
     public class Enemy : MonoBehaviour, IAttackable
     {
-        public static event Action<EnemyType, GameObject> OnEnemyEndDeath;
-        public static event Action<EnemyType, GameObject> OnEnemyStartDeath;
+        public static event Action<EnemyConfig, GameObject> OnEnemyEndDeath;
+        public static event Action<EnemyConfig, GameObject> OnEnemyStartDeath;
+
+        [SerializeField] private EnemyConfig enemyConfig;
 
         [SerializeField] private int _warFund;
-        [SerializeField] private EnemyType _enemyType;
         [SerializeField] private ProgressMeter _progressMeter;
         [SerializeField] private int _health;
         [SerializeField] private int _maxHealth;
@@ -43,7 +45,7 @@ namespace GameDevHQITP.Units
         {
             get
             {
-                return _enemyType;
+                return enemyConfig.enemyType;
             }
         }
 
@@ -55,9 +57,12 @@ namespace GameDevHQITP.Units
         public void InitiateActive()
         {
             _animator.SetBool("isAlive", true);
+            _collider.enabled = true;
 
             _health = _maxHealth;
             _progressMeter.progressValue = 1f;
+
+            _navMeshAgent.enabled = true;
 
             _health = _maxHealth;
             _progressMeter.progressValue = 1f;
@@ -68,6 +73,8 @@ namespace GameDevHQITP.Units
         public void InitiateDeath()
         {
             _animator.SetBool("isAlive", false);
+            _collider.enabled = false;
+            _navMeshAgent.enabled = false;
             _navMeshAgent.isStopped = true;
             StartCoroutine(OnDeath());
         }
@@ -77,7 +84,6 @@ namespace GameDevHQITP.Units
             PlayerHome.onReachedPlayerBase += ReachedPlayerBase;
             TowerBattleReady.OnTakeDamage += TakeDamage;
 
-            //_collider.enabled = true;
             InitiateActive();
 
             Vector3 goal = SpawnManager.Instance.GoalPosition;
@@ -97,16 +103,15 @@ namespace GameDevHQITP.Units
 
             if (OnEnemyEndDeath != null)
             {
-                OnEnemyEndDeath(_enemyType, gameObject);
+                OnEnemyEndDeath(enemyConfig, gameObject);
             }
         }
 
         public IEnumerator OnDeath()
         {
-            //_collider.enabled = false;
             if (OnEnemyStartDeath != null)
             {
-                OnEnemyStartDeath(EnemyType.None, gameObject);
+                OnEnemyStartDeath(enemyConfig, gameObject);
             }
             yield return new WaitForSeconds(5f);
             _animator.WriteDefaultValues();
@@ -114,13 +119,13 @@ namespace GameDevHQITP.Units
 
             if (OnEnemyEndDeath != null)
             {
-                OnEnemyEndDeath(_enemyType, gameObject);
+                OnEnemyEndDeath(enemyConfig, gameObject);
             }
         }
 
         public void TakeDamage(GameObject target, int damage)
         {
-            if (target != _targetArea) { return; }
+            if (target != _targetArea && target != gameObject) { return; }
             _health -= damage;
 
             _progressMeter.progressValue = (float)_health / _maxHealth;
@@ -130,6 +135,8 @@ namespace GameDevHQITP.Units
                 InitiateDeath();
             }
         }
+
+        
     }
 
 }

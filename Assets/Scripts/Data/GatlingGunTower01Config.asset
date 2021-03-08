@@ -10,8 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ee7a744fdfac44fbb950d7522283c311, type: 3}
-  m_Name: MissileTowerConfig
+  m_Name: GatlingGunTower01Config
   m_EditorClassIdentifier: 
-  towerType: 1
-  warBucksCost: 500
-  prefab: {fileID: 3722541957627528517, guid: d74a2e8d6b23641a9a12c603301d79ba, type: 3}
+  towerType: 0
+  warBucksCost: 200
+  prefab: {fileID: 5018790803802074779, guid: 8756817d7ff004bd68a46bf0d8154992, type: 3}
+  attackRadius: 0
+  level: 0
+  maxHealth: 0
+  constructionTime: 0
+  warBucksSell: 0

@@ -51,12 +51,14 @@ namespace GameDevHQITP.Managers
         {
             TowerEmptyPlot.onMouseNearTowerPlotEvent += IsNearAvailableTowerPlot;
             TowerEmptyPlot.onPlaceTowerEvent += TryPlaceTower;
+            Enemy.OnEnemyStartDeath += EarnWarBucks;
         }
 
         private void OnDisable()
         {
             TowerEmptyPlot.onMouseNearTowerPlotEvent -= IsNearAvailableTowerPlot;
             TowerEmptyPlot.onPlaceTowerEvent -= TryPlaceTower;
+            Enemy.OnEnemyStartDeath -= EarnWarBucks;
         }
 
         void Update()
@@ -144,6 +146,12 @@ namespace GameDevHQITP.Managers
             _selectedTowerIndex = 1;
             DisableBuildMode();
             EnableBuildMode();
+        }
+
+        private void EarnWarBucks(EnemyConfig enemyConfig, GameObject go)
+        {
+            _warBucksTotal += enemyConfig.warBucks;
+            onNewWarBucksTotal(_warBucksTotal);
         }
 
     }

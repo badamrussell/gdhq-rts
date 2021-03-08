@@ -29,6 +29,7 @@ namespace GameDevHQ.FileBase.Gatling_Gun
         private AudioSource _audioSource; //reference to the audio source component
         private bool _startWeaponNoise = true;
         private bool _isAttacking = false;
+        private GameObject _target;
 
         // Use this for initialization
         void Start()
@@ -87,16 +88,30 @@ namespace GameDevHQ.FileBase.Gatling_Gun
         public void StartAttack(GameObject target)
         {
             _isAttacking = true;
-            
+            _target = target;
+            StartCoroutine("SendDamage");
         }
 
         public void StopAttack()
         {
             _isAttacking = false;
+            _target = null;
 
             Muzzle_Flash.SetActive(false); //turn off muzzle flash particle effect
             _audioSource.Stop(); //stop the sound effect from playing
             _startWeaponNoise = true; //set the start weapon noise value to true
+
+            StopCoroutine("SendDamage");
+        }
+
+        private IEnumerator SendDamage()
+        {
+            while (_target != null)
+            {
+                yield return new WaitForSeconds(0.1f);
+                int _damageRate = 20;
+                TowerBattleReady.OnTakeDamage(_target, _damageRate);
+            }
         }
     }
 
