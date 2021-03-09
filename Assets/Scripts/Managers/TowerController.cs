@@ -5,6 +5,7 @@ using UnityEngine;
 using GameDevHQITP.Units;
 using GameDevHQITP.Widgets;
 using GameDevHQITP.ScriptableObjects;
+using GameDevHQITP.Managers;
 
 namespace GameDevHQITP.Managers
 {
@@ -12,9 +13,11 @@ namespace GameDevHQITP.Managers
 
     public class TowerController : MonoBehaviour
     {
+        [SerializeField] private TowerConfig _towerConfig;
         [SerializeField] private TowerBattleReady _battleReadyTower;
         [SerializeField] private TowerConstruction _constructionTower;
         [SerializeField] private ProgressMeter _progressMeter;
+        [SerializeField] private GameObject _selectedGO;
 
         [SerializeField] private float _constructionSpeed = 10f;
         [SerializeField] private bool _isBuilt;
@@ -27,6 +30,7 @@ namespace GameDevHQITP.Managers
         {
             _battleReadyTower.gameObject.SetActive(_isBuilt);
             _constructionTower.gameObject.SetActive(!_isBuilt);
+            _selectedGO.SetActive(false);
 
             if (_isBuilt)
             {
@@ -39,6 +43,16 @@ namespace GameDevHQITP.Managers
             {
                 StartCoroutine(UpdateBuildProgress());
             }
+        }
+
+        private void OnEnable()
+        {
+            UIManager.OnSelectedTower += SelectTower;
+        }
+
+        private void OnDisable()
+        {
+            UIManager.OnSelectedTower -= SelectTower;
         }
 
         private IEnumerator UpdateBuildProgress()
@@ -67,6 +81,23 @@ namespace GameDevHQITP.Managers
             } else {
                 Destroy(gameObject);
             }
+        }
+
+        private void SelectTower(GameObject go)
+        {
+            if (go != gameObject)
+            {
+                _selectedGO.SetActive(false);
+                return;
+            }
+
+            _selectedGO.SetActive(true);
+        }
+
+        private void OnMouseDown()
+        {
+            UIManager.Instance.OnSelectTower(_towerConfig, gameObject);
+            //_selectedGO.SetActive(true);
         }
     }
 }

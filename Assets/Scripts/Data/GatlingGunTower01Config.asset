@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towerType: 0
   warBucksCost: 200
-  prefab: {fileID: 5018790803802074779, guid: 8756817d7ff004bd68a46bf0d8154992, type: 3}
+  prefab: {fileID: 5018790803802074779, guid: 474cbc9c6f0af4c7ab8d550b77abdf42, type: 3}
   attackRadius: 0
-  level: 0
+  level: 1
   maxHealth: 0
   constructionTime: 0
   warBucksSell: 0

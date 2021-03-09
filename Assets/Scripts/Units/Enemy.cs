@@ -86,9 +86,12 @@ namespace GameDevHQITP.Units
 
             InitiateActive();
 
-            Vector3 goal = SpawnManager.Instance.GoalPosition;
-            _navMeshAgent.SetDestination(goal);
-            _navMeshAgent.isStopped = false;
+            if (SpawnManager.Instance != null)
+            {
+                Vector3 goal = SpawnManager.Instance.GoalPosition;
+                _navMeshAgent.SetDestination(goal);
+                _navMeshAgent.isStopped = false;
+            }
         }
 
         private void OnDisable()

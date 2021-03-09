@@ -4084,17 +4084,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _attackRadius: {fileID: 7798136123743226889}
-  _attackRadiusAmount: 15
+  _attackRadiusAmount: 25
   _horizontalRotate: {fileID: 3811429308142167447}
   _verticalRotate: {fileID: 3811329324630568157}
   _rotationSpeed: 1
   _horizontalAngleOffset: 0
   _verticalAngleOffset: 0
   _baseDamagePerSec: 20
-  Muzzle_Flash: {fileID: 3811742733498391785}
-  bulletCasings: {fileID: 3900268013415378155}
+  _gunBarrels:
+  - {fileID: 3815069155236926229}
+  _muzzleFlashes:
+  - {fileID: 3811742733498391785}
+  _bulletCasings:
+  - {fileID: 3900268013415378155}
   fireSound: {fileID: 8300000, guid: 08e0cb88300e54b09aa0deb684c3a3de, type: 3}
-  _tracerGO: {fileID: 3812251519030827011}
+  _tracerGO:
+  - {fileID: 3812251519030827011}
   _tracerScaleX: 0.14
 --- !u!1 &3494029176318280637
 GameObject:
