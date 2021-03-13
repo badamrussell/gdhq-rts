@@ -38,22 +38,21 @@ namespace GameDevHQITP.Units
         // Use this for initialization
         new void Start()
         {
-            base.Start();
-
             //_gunBarrel = GameObject.Find("Barrel_to_Spin").GetComponent<Transform>(); //assigning the transform of the gun barrel to the variable
-            
 
             _audioSource = GetComponent<AudioSource>(); //ssign the Audio Source to the reference variable
             _audioSource.playOnAwake = false; //disabling play on awake
             _audioSource.loop = true; //making sure our sound effect loops
             _audioSource.clip = fireSound; //assign the clip to play
+
+            StopAttack();
         }
 
         // Update is called once per frame
         new void Update()
         {
             base.Update();
-
+            Debug.Log($"UPDATE {_isAttacking}");
             if (_isAttacking)
             {
                 RotateBarrel(); //Call the rotation function responsible for rotating our gun barrel

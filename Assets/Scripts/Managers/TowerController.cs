@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using System;
 using GameDevHQITP.Units;
 using GameDevHQITP.Widgets;
 using GameDevHQITP.ScriptableObjects;
@@ -13,46 +14,61 @@ namespace GameDevHQITP.Managers
 
     public class TowerController : MonoBehaviour
     {
+
+        public static event Action<TowerConfig, GameObject> OnSelectedTower;
+
         [SerializeField] private TowerConfig _towerConfig;
         [SerializeField] private TowerBattleReady _battleReadyTower;
         [SerializeField] private TowerConstruction _constructionTower;
         [SerializeField] private ProgressMeter _progressMeter;
-        [SerializeField] private GameObject _selectedGO;
+        //[SerializeField] private GameObject _selectedGO;
 
         [SerializeField] private float _constructionSpeed = 10f;
+        [SerializeField] private ParticleSystem _constructionSmoke;
+        [SerializeField] private ParticleSystem _dismantleCloud;
+
         [SerializeField] private bool _isBuilt;
         [SerializeField] private int _maxHealth;
         [SerializeField] private int _warBucksCost;
         [SerializeField] private float _currentHealth;
         [SerializeField] private IntVariable _warBucks;
+        //[SerializeField] private TowerActions _towerActions;
 
         void Start()
         {
-            _battleReadyTower.gameObject.SetActive(_isBuilt);
+            //_battleReadyTower.gameObject.SetActive(_isBuilt);
             _constructionTower.gameObject.SetActive(!_isBuilt);
-            _selectedGO.SetActive(false);
+            //_selectedGO.SetActive(false);
+            //_towerActions.OnHide();
 
             if (_isBuilt)
             {
                 _currentHealth = _maxHealth;
                 _progressMeter.progressValue = 1f;
 
-                _battleReadyTower.gameObject.SetActive(_isBuilt);
+                //_battleReadyTower.gameObject.SetActive(_isBuilt);
                 _constructionTower.gameObject.SetActive(!_isBuilt);
+                _battleReadyTower.Init();
             } else
             {
                 StartCoroutine(UpdateBuildProgress());
+                var ps = _constructionSmoke.main;
+                _constructionSmoke.Stop();
+                ps.duration = _towerConfig.constructionTime;
+                _constructionSmoke.Play();
             }
         }
 
         private void OnEnable()
         {
-            UIManager.OnSelectedTower += SelectTower;
+            SelectionManager.OnUpgradeTower += OnUpgradeTower;
+            SelectionManager.OnDismantleTower += OnDismantleTower;
         }
 
         private void OnDisable()
         {
-            UIManager.OnSelectedTower -= SelectTower;
+            SelectionManager.OnUpgradeTower -= OnUpgradeTower;
+            SelectionManager.OnDismantleTower -= OnDismantleTower;
         }
 
         private IEnumerator UpdateBuildProgress()
@@ -76,28 +92,59 @@ namespace GameDevHQITP.Managers
                 _isBuilt = true;
                 _currentHealth = _maxHealth;
 
-                _battleReadyTower.gameObject.SetActive(_isBuilt);
+                _battleReadyTower.Init();
+
+                _constructionSmoke.Stop();
+                //_battleReadyTower.gameObject.SetActive(_isBuilt);
                 _constructionTower.gameObject.SetActive(!_isBuilt);
             } else {
                 Destroy(gameObject);
             }
         }
 
-        private void SelectTower(GameObject go)
-        {
-            if (go != gameObject)
-            {
-                _selectedGO.SetActive(false);
-                return;
-            }
+        //private void SelectTower(GameObject go)
+        //{
+        //    if (go != gameObject)
+        //    {
+        //        //_selectedGO.SetActive(false);
+        //        return;
+        //    }
 
-            _selectedGO.SetActive(true);
-        }
+        //    Debug.Log("Unit selected");
+        //    //_selectedGO.SetActive(true);
+
+        //    //_towerActions.OnShow();
+        //}
 
         private void OnMouseDown()
         {
-            UIManager.Instance.OnSelectTower(_towerConfig, gameObject);
+            Debug.Log("Unit selected");
+            if (OnSelectedTower != null)
+            {
+                OnSelectedTower(_towerConfig, gameObject);
+            }
             //_selectedGO.SetActive(true);
+        }
+
+        public void OnUpgradeTower(GameObject go)
+        {
+            if (go != this.gameObject) { return; }
+
+            Debug.Log("Show Upgrade");
+            GameObject newTower = Instantiate(_towerConfig.upgradePrefab, transform.parent);
+            newTower.transform.position = transform.position;
+            Destroy(this.gameObject);
+        }
+
+        public void OnDismantleTower(GameObject go)
+        {
+            if (go != this.gameObject) { return; }
+
+            _dismantleCloud.Play();
+
+            _battleReadyTower.gameObject.SetActive(false);
+            Debug.Log("Show Dismantle");
+            Destroy(this.gameObject, 5f);
         }
     }
 }

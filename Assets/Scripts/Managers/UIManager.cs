@@ -29,6 +29,8 @@ namespace GameDevHQITP.Managers
         [SerializeField] private GameObject _dismantleMenu;
 
         [SerializeField] private EnumArmoryMenuModes _armoryMode;
+        [SerializeField] private SelectTower _selectTower;
+
 
         private void Start()
         {
@@ -106,22 +108,24 @@ namespace GameDevHQITP.Managers
         {
             _selectedTowers.Clear();
             _selectedTowers.Add(go);
-            OnSelectedTower(go);
+            //OnSelectedTower(go);
 
-            switch (towerConfig.towerType)
-            {
-                case Units.TowerType.TowerGatlingGun:
-                    _armoryMode = EnumArmoryMenuModes.upgradeGatling;
-                    break;
-                case Units.TowerType.TowerMissileLauncher:
-                    _armoryMode = EnumArmoryMenuModes.upgradeMissile;
-                    break;
-                default:
-                    _armoryMode = EnumArmoryMenuModes.purchase;
-                    break;
-            }
+            _selectTower.Init(towerConfig, go);
 
-            SetArmoryMenu();
+            //switch (towerConfig.towerType)
+            //{
+            //    case Units.TowerType.TowerGatlingGun:
+            //        _armoryMode = EnumArmoryMenuModes.upgradeGatling;
+            //        break;
+            //    case Units.TowerType.TowerMissileLauncher:
+            //        _armoryMode = EnumArmoryMenuModes.upgradeMissile;
+            //        break;
+            //    default:
+            //        _armoryMode = EnumArmoryMenuModes.purchase;
+            //        break;
+            //}
+
+            //SetArmoryMenu();
         }
 
         private void EnablePurchaseMode()

@@ -12,10 +12,16 @@ namespace GameDevHQITP.Units
     // returns best target GetTargetPosition
     public class AttackRadius : MonoBehaviour
     {
-        [SerializeField] private List<GameObject> _nearbyTargets = new List<GameObject>();
+        [SerializeField] private List<GameObject> _nearbyTargets;
+        [SerializeField] private string[] _attackableTags;
 
         private GameObject _targetedNeighbor;
         private GameObject _targetedGO;
+
+        private void Start()
+        {
+            _nearbyTargets = new List<GameObject>();
+        }
 
         private void OnEnable()
         {
@@ -61,6 +67,7 @@ namespace GameDevHQITP.Units
                 // TO_DO: Instead of taking first, is there a better algorithm?
                 // if enemy leaves attackRadius, select closest enemy & lock on
                 _targetedNeighbor = _nearbyTargets[0];
+                Debug.Log(_targetedNeighbor);
 
                 IAttackable attackableTest = _targetedNeighbor.GetComponent<IAttackable>();
 
@@ -83,14 +90,13 @@ namespace GameDevHQITP.Units
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.tag != "Enemy") { return; }
-
+            if (!Array.Exists(_attackableTags, a => a == other.tag)) { return; }
             _nearbyTargets.Add(other.gameObject);
         }
 
         private void OnTriggerExit(Collider other)
         {
-            if (other.tag != "Enemy") { return; }
+            if (!Array.Exists(_attackableTags, a => a == other.tag)) { return; }
 
             RemoveNeighbor(null, other.gameObject);
         }

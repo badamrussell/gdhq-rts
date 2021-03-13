@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: MissileTower02Config
   m_EditorClassIdentifier: 
   towerType: 1
-  warBucksCost: 500
+  warBucksCost: 1000
   prefab: {fileID: 1173345893951344408, guid: 55a6c983846f74390b33e04dad93e0df, type: 3}
-  attackRadius: 0
+  upgradePrefab: {fileID: 0}
+  attackRadius: 20
   level: 2
-  maxHealth: 0
-  constructionTime: 0
-  warBucksSell: 0
+  maxHealth: 500
+  constructionTime: 20
+  warBucksSell: 250

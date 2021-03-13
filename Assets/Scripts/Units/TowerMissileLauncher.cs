@@ -39,7 +39,6 @@ namespace GameDevHQITP.Units
         new void Update()
         {
             base.Update();
-
             //if (Input.GetKeyDown(KeyCode.Space) && _launched == false) //check for space key and if we launched the rockets
             if (_isAttacking && _launched == false)
             {

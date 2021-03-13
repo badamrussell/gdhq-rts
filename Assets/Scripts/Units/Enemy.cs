@@ -24,7 +24,7 @@ namespace GameDevHQITP.Units
         None
     }
 
-    public class Enemy : MonoBehaviour, IAttackable
+    public class Enemy : FollowTarget, IAttackable
     {
         public static event Action<EnemyConfig, GameObject> OnEnemyEndDeath;
         public static event Action<EnemyConfig, GameObject> OnEnemyStartDeath;
@@ -139,7 +139,17 @@ namespace GameDevHQITP.Units
             }
         }
 
-        
+
+        protected override void StopAttack()
+        {
+
+        }
+        protected override void StartAttack(GameObject target)
+        {
+
+        }
+
+
     }
 
 }

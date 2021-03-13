@@ -15,8 +15,9 @@ MonoBehaviour:
   towerType: 0
   warBucksCost: 200
   prefab: {fileID: 5018790803802074779, guid: 474cbc9c6f0af4c7ab8d550b77abdf42, type: 3}
-  attackRadius: 0
+  upgradePrefab: {fileID: 4294285039181008439, guid: 0631e172c65f7495ebb09565748d3551, type: 3}
+  attackRadius: 8
   level: 1
-  maxHealth: 0
-  constructionTime: 0
-  warBucksSell: 0
+  maxHealth: 150
+  constructionTime: 8
+  warBucksSell: 50

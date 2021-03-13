@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: GatlingGunTower02Config
   m_EditorClassIdentifier: 
   towerType: 0
-  warBucksCost: 200
+  warBucksCost: 400
   prefab: {fileID: 4294285039181008439, guid: 0631e172c65f7495ebb09565748d3551, type: 3}
-  attackRadius: 0
+  upgradePrefab: {fileID: 0}
+  attackRadius: 12
   level: 2
-  maxHealth: 0
-  constructionTime: 0
-  warBucksSell: 0
+  maxHealth: 350
+  constructionTime: 15
+  warBucksSell: 150
