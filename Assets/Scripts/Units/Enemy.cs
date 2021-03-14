@@ -8,6 +8,7 @@ using GameDevHQITP.Widgets;
 using GameDevHQITP.Units;
 using GameDevHQITP.ScriptableObjects;
 using UnityEngine.PlayerLoop;
+using VSCodeEditor;
 
 
 namespace GameDevHQITP.Units
@@ -42,7 +43,9 @@ namespace GameDevHQITP.Units
         [SerializeField] private NavMeshAgent _navMeshAgent;
         [SerializeField] private Collider _collider;
         [SerializeField] private GameObject _attackTarget;
+        [SerializeField] private GameObject _parentRender;
         
+        [SerializeField] private Renderer[] _dissolveRenderers;
         public EnemyType EnemyType
         {
             get
@@ -59,6 +62,8 @@ namespace GameDevHQITP.Units
         private void Start()
         {
             _animator.SetBool("IsAlive", true);
+
+            _dissolveRenderers = _parentRender.GetComponentsInChildren<Renderer>();
         }
 
         private void Update()
@@ -131,19 +136,39 @@ namespace GameDevHQITP.Units
             }
         }
 
+        private IEnumerator OnFadeDeath()
+        {
+            float dissolveAmount = 0f;
+            float timeInc = 0.01f;
+            float totalTime = 4f;
+            float increment = 1f * timeInc / totalTime;
+            while (dissolveAmount < 1f)
+            {
+                for (int i = 0; i < _dissolveRenderers.Length; i++)
+                {
+                    _dissolveRenderers[i].material.SetFloat("_fillAmount", dissolveAmount);
+                }
+                
+                dissolveAmount += increment;
+                yield return new WaitForEndOfFrame();
+            }
+        }
+        
         public IEnumerator OnDeath()
         {
             if (OnEnemyStartDeath != null)
             {
                 OnEnemyStartDeath(enemyConfig, gameObject);
             }
-            yield return new WaitForSeconds(5f);
+
+            yield return OnFadeDeath();
+            
             _animator.WriteDefaultValues();
             gameObject.SetActive(false);
 
             if (OnEnemyEndDeath != null)
             {
-                OnEnemyEndDeath(enemyConfig, gameObject);
+                // OnEnemyEndDeath(enemyConfig, gameObject);
             }
         }
 
@@ -173,7 +198,7 @@ namespace GameDevHQITP.Units
             _animator.SetBool("IsAttacking", false);
             _attackTarget = null;
         }
-
+  
     }
 
 }
