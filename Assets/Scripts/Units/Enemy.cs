@@ -7,7 +7,7 @@ using GameDevHQITP.Managers;
 using GameDevHQITP.Widgets;
 using GameDevHQITP.Units;
 using GameDevHQITP.ScriptableObjects;
-
+using UnityEngine.PlayerLoop;
 
 
 namespace GameDevHQITP.Units
@@ -28,6 +28,7 @@ namespace GameDevHQITP.Units
     {
         public static event Action<EnemyConfig, GameObject> OnEnemyEndDeath;
         public static event Action<EnemyConfig, GameObject> OnEnemyStartDeath;
+        public static Action<GameObject, int> OnTakeDamage;
 
         [SerializeField] private EnemyConfig enemyConfig;
 
@@ -40,7 +41,8 @@ namespace GameDevHQITP.Units
         [SerializeField] private Animator _animator;
         [SerializeField] private NavMeshAgent _navMeshAgent;
         [SerializeField] private Collider _collider;
-
+        [SerializeField] private GameObject _attackTarget;
+        
         public EnemyType EnemyType
         {
             get
@@ -59,6 +61,16 @@ namespace GameDevHQITP.Units
             _animator.SetBool("IsAlive", true);
         }
 
+        private void Update()
+        {
+            base.Update();
+            if (_isAttacking)
+            {
+                float fDamage = _baseDamagePerSec * Time.deltaTime;
+                OnTakeDamage(_attackTarget, Mathf.RoundToInt((fDamage)));
+            }
+        }
+        
         public void InitiateActive()
         {
             _animator.SetBool("IsAlive", true);
@@ -150,14 +162,16 @@ namespace GameDevHQITP.Units
         
         protected override void StartAttack(GameObject target)
         {
-            Debug.Log("START ATTACK");
+            Debug.Log($"START ATTACK {_damageRate} | {_baseDamagePerSec}");
             _animator.SetBool("IsAttacking", true);
+            _attackTarget = target;
         }
 
         protected override void StopAttack()
         {
             Debug.Log("STOP ATTACK");
             _animator.SetBool("IsAttacking", false);
+            _attackTarget = null;
         }
 
     }

@@ -20565,6 +20565,7 @@ MonoBehaviour:
   _warBucksCost: 200
   _currentHealth: 0
   _warBucks: {fileID: 11400000, guid: 9204358f397004afbae80be3eae6172f, type: 2}
+  _hitZone: {fileID: 6247596423999746555}
 --- !u!65 &9189456764764462528
 BoxCollider:
   m_ObjectHideFlags: 0

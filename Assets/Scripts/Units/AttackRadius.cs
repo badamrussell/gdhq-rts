@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Linq;
+using GameDevHQITP.Managers;
 using GameDevHQITP.ScriptableObjects;
 
 namespace GameDevHQITP.Units
@@ -26,11 +27,13 @@ namespace GameDevHQITP.Units
         private void OnEnable()
         {
             Enemy.OnEnemyStartDeath += RemoveNeighbor;
+            TowerController.OnTowerHitZoneDestroyed += RemoveTower;
         }
 
         private void OnDisable()
         {
             Enemy.OnEnemyStartDeath -= RemoveNeighbor;
+            TowerController.OnTowerHitZoneDestroyed -= RemoveTower;
         }
 
         private void RemoveNeighbor(EnemyConfig enemyConfig, GameObject enemyGO)
@@ -43,7 +46,18 @@ namespace GameDevHQITP.Units
 
             _nearbyTargets.RemoveAll(e => e == enemyGO);
         }
+        
+        private void RemoveTower(GameObject towerGO)
+        {
+            if (_targetedNeighbor == towerGO)
+            {
+                _targetedGO = null;
+                _targetedNeighbor = null;
+            }
 
+            _nearbyTargets.RemoveAll(e => e == towerGO);
+        }
+        
         public GameObject GetLockedOnUnit()
         {
             return _targetedNeighbor;
@@ -67,7 +81,7 @@ namespace GameDevHQITP.Units
                 // TO_DO: Instead of taking first, is there a better algorithm?
                 // if enemy leaves attackRadius, select closest enemy & lock on
                 _targetedNeighbor = _nearbyTargets[0];
-                Debug.Log(_targetedNeighbor);
+                // Debug.Log(_targetedNeighbor);
 
                 IAttackable attackableTest = _targetedNeighbor.GetComponent<IAttackable>();
 
@@ -100,5 +114,6 @@ namespace GameDevHQITP.Units
 
             RemoveNeighbor(null, other.gameObject);
         }
+        
     }
 }

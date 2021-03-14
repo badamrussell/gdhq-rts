@@ -16,7 +16,8 @@ namespace GameDevHQITP.Managers
     {
 
         public static event Action<TowerConfig, GameObject> OnSelectedTower;
-
+        public static event Action<GameObject> OnTowerHitZoneDestroyed;
+        
         [SerializeField] private TowerConfig _towerConfig;
         [SerializeField] private TowerBattleReady _battleReadyTower;
         [SerializeField] private TowerConstruction _constructionTower;
@@ -33,7 +34,8 @@ namespace GameDevHQITP.Managers
         [SerializeField] private float _currentHealth;
         [SerializeField] private IntVariable _warBucks;
         //[SerializeField] private TowerActions _towerActions;
-
+        [SerializeField] private GameObject _hitZone;
+        
         void Start()
         {
             //_battleReadyTower.gameObject.SetActive(_isBuilt);
@@ -63,28 +65,31 @@ namespace GameDevHQITP.Managers
         {
             SelectionManager.OnUpgradeTower += OnUpgradeTower;
             SelectionManager.OnDismantleTower += OnDismantleTower;
+            Enemy.OnTakeDamage += OnTakeDamage;
         }
 
         private void OnDisable()
         {
             SelectionManager.OnUpgradeTower -= OnUpgradeTower;
             SelectionManager.OnDismantleTower -= OnDismantleTower;
+            Enemy.OnTakeDamage -= OnTakeDamage;
         }
 
         private IEnumerator UpdateBuildProgress()
         {
-            _currentHealth = 0.1f;
+            _currentHealth = 1f;
             _warBucks.value -= _warBucksCost;
 
             while (_currentHealth < _maxHealth)
             {
-                _currentHealth += Time.deltaTime * _constructionSpeed;
-                _progressMeter.progressValue = _currentHealth / _maxHealth;
-
                 if (_currentHealth < 0f)
                 {
                     break;   
                 }
+                
+                _currentHealth += Time.deltaTime * _constructionSpeed;
+                _progressMeter.progressValue = _currentHealth / _maxHealth;
+                
                 yield return null;
             }
 
@@ -130,7 +135,7 @@ namespace GameDevHQITP.Managers
         {
             if (go != this.gameObject) { return; }
 
-            Debug.Log("Show Upgrade");
+            // Debug.Log("Show Upgrade");
             GameObject newTower = Instantiate(_towerConfig.upgradePrefab, transform.parent);
             newTower.transform.position = transform.position;
             Destroy(this.gameObject);
@@ -143,8 +148,22 @@ namespace GameDevHQITP.Managers
             _dismantleCloud.Play();
 
             _battleReadyTower.gameObject.SetActive(false);
-            Debug.Log("Show Dismantle");
             Destroy(this.gameObject, 5f);
+        }
+
+        private void OnTakeDamage(GameObject go, int damage)
+        {
+            if (go != _hitZone) { return; }
+
+            _currentHealth -= damage;
+            _progressMeter.progressValue = _currentHealth / _maxHealth;
+           // Debug.Log($"YES - TOWER TAKE DAMAGE {damage} and now is {_currentHealth}");
+
+            if (_currentHealth <= 0)
+            {
+                OnDismantleTower(gameObject);
+                OnTowerHitZoneDestroyed(_battleReadyTower.gameObject);
+            }
         }
     }
 }

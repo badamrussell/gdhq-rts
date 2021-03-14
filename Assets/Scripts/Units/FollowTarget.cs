@@ -7,8 +7,6 @@ namespace GameDevHQITP.Units
 {
     abstract public class FollowTarget : MonoBehaviour
     {
-        public static Action<GameObject, int> OnTakeDamage;
-
         [SerializeField] private AttackRadius _attackRadius;
         [SerializeField] protected float _attackRadiusAmount = 15f;
 
@@ -20,7 +18,7 @@ namespace GameDevHQITP.Units
 
         [SerializeField] float _horizontalAngleOffset = 0f;
         [SerializeField] float _verticalAngleOffset = 0f;
-        [SerializeField] int _baseDamagePerSec = 20;
+        [SerializeField] protected int _baseDamagePerSec = 20;
 
         [SerializeField] float _viewAngle = 30f;
 
@@ -75,7 +73,13 @@ namespace GameDevHQITP.Units
             Vector3 horzPos = _horizontalRotate.transform.forward;
             Vector3 targetPos = _forwardDir.transform.forward;
             Vector3 horzDiff = targetPos - horzPos;
+            // Debug.Log($"LOOK: {horzDiff} is {horzDiff.magnitude}");
 
+            if (horzDiff.magnitude < 0.01f)
+            {
+                return;
+            }
+            
             Quaternion diffHorzRot = Quaternion.LookRotation(horzDiff);
             _horizontalRotate.transform.rotation = Quaternion.Slerp(_horizontalRotate.transform.rotation, diffHorzRot, Time.deltaTime * _rotationSpeed);
 

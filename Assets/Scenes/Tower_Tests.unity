@@ -178,6 +178,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9157300868482388000, guid: 474cbc9c6f0af4c7ab8d550b77abdf42, type: 3}
+      propertyPath: _hitZone
+      value: 
+      objectReference: {fileID: 499618152}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 474cbc9c6f0af4c7ab8d550b77abdf42, type: 3}
 --- !u!1 &334358272
@@ -370,6 +374,11 @@ Transform:
   m_Father: {fileID: 1063230976}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &499618152 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6247596423999746555, guid: 474cbc9c6f0af4c7ab8d550b77abdf42, type: 3}
+  m_PrefabInstance: {fileID: 29121140}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &531745111
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -812,6 +821,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1218435345, guid: 360b61b26a8ca4c00987752cf846cd93, type: 3}
+      propertyPath: m_TranslationOffsets.Array.data[0].z
+      value: -0.12671328
+      objectReference: {fileID: 0}
     - target: {fileID: 757078777756783454, guid: 360b61b26a8ca4c00987752cf846cd93, type: 3}
       propertyPath: m_Name
       value: MechHeavy
@@ -822,7 +835,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 761680886377281634, guid: 360b61b26a8ca4c00987752cf846cd93, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -21.771324
+      value: -18.11
       objectReference: {fileID: 0}
     - target: {fileID: 761680886377281634, guid: 360b61b26a8ca4c00987752cf846cd93, type: 3}
       propertyPath: m_LocalPosition.y
@@ -830,7 +843,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 761680886377281634, guid: 360b61b26a8ca4c00987752cf846cd93, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 9.8557
+      value: 3.9
       objectReference: {fileID: 0}
     - target: {fileID: 761680886377281634, guid: 360b61b26a8ca4c00987752cf846cd93, type: 3}
       propertyPath: m_LocalRotation.w
@@ -859,6 +872,10 @@ PrefabInstance:
     - target: {fileID: 761680886377281634, guid: 360b61b26a8ca4c00987752cf846cd93, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6775994867780325714, guid: 360b61b26a8ca4c00987752cf846cd93, type: 3}
+      propertyPath: _baseDamagePerSec
+      value: 100
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 360b61b26a8ca4c00987752cf846cd93, type: 3}
@@ -3011,6 +3028,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mech_Infantry 1 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 4387745763020777372, guid: 15e191c517779470ab498ddcf5c57b04, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4387745763020777373, guid: 15e191c517779470ab498ddcf5c57b04, type: 3}
       propertyPath: m_RootOrder
       value: 14
@@ -3435,6 +3456,7 @@ MonoBehaviour:
   _animator: {fileID: 9207328645456484176}
   _navMeshAgent: {fileID: 3396947951734745106}
   _collider: {fileID: 4066815379845311084}
+  _attackTarget: {fileID: 0}
 --- !u!136 &4066815379845311084
 CapsuleCollider:
   m_ObjectHideFlags: 0
