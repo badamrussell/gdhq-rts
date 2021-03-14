@@ -17,6 +17,7 @@ namespace GameDevHQITP.Managers
 
         public static event Action<TowerConfig, GameObject> OnSelectedTower;
         public static event Action<GameObject> OnTowerHitZoneDestroyed;
+        public static event Action<GameObject> onTowerDestroyed;
         
         [SerializeField] private TowerConfig _towerConfig;
         [SerializeField] private TowerBattleReady _battleReadyTower;
@@ -145,10 +146,16 @@ namespace GameDevHQITP.Managers
         {
             if (go != this.gameObject) { return; }
 
+            if (onTowerDestroyed != null)
+            {
+                onTowerDestroyed(this.gameObject);
+            }
+            
             _dismantleCloud.Play();
 
             _battleReadyTower.gameObject.SetActive(false);
             Destroy(this.gameObject, 5f);
+
         }
 
         private void OnTakeDamage(GameObject go, int damage)

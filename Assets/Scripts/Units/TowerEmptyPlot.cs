@@ -42,12 +42,14 @@ namespace GameDevHQITP.Units
         {
             BuildTowerManager.onStartBuildMode += HandleStartBuildMode;
             BuildTowerManager.onExitBuildMode += HandleExitBuildMode;
+            TowerController.onTowerDestroyed += HandleTowerDestroyed;
         }
 
         private void OnDisable()
         {
             BuildTowerManager.onStartBuildMode -= HandleStartBuildMode;
             BuildTowerManager.onExitBuildMode -= HandleExitBuildMode;
+            TowerController.onTowerDestroyed -= HandleTowerDestroyed;
         }
 
         private void HandleStartBuildMode(GameObject go)
@@ -98,5 +100,18 @@ namespace GameDevHQITP.Units
             onMouseNearTowerPlotEvent(false);
         }
 
+        private void HandleTowerDestroyed(GameObject go)
+        {
+            Vector3 diff = go.transform.position - transform.position;
+            float mag = diff.magnitude;
+            Debug.Log($"enable plot: {mag}");
+            if (mag > 1f)
+            {
+                return;
+            }
+            
+            _towerLocationMode = TowerLocationMode.available;
+            _platform.SetActive(true);
+        }
     }
 }

@@ -2493,6 +2493,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5873652282696315203}
   - component: {fileID: 4430109464760347920}
+  - component: {fileID: 556148060074063884}
   m_Layer: 0
   m_Name: ProgressMeter
   m_TagString: Untagged
@@ -2533,6 +2534,18 @@ MonoBehaviour:
   _amountTransform: {fileID: 6893497406352972077}
   _healthyColor: {r: 0.18493326, g: 0.6886792, b: 0.14901961, a: 1}
   _dangerColor: {r: 0.745283, g: 0.1511659, b: 0.1511659, a: 1}
+--- !u!114 &556148060074063884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3099677790479369041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70e7f8f7b920147b2b304c30fd947dd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4387745763020777372
 GameObject:
   m_ObjectHideFlags: 0
@@ -2623,6 +2636,7 @@ MonoBehaviour:
   _animator: {fileID: 2530545183884247244}
   _navMeshAgent: {fileID: 8357889101657718670}
   _collider: {fileID: 7253459498169220592}
+  _attackTarget: {fileID: 0}
 --- !u!136 &7253459498169220592
 CapsuleCollider:
   m_ObjectHideFlags: 0
