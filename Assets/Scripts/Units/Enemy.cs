@@ -54,9 +54,16 @@ namespace GameDevHQITP.Units
             return _targetArea;
         }
 
+        private void Start()
+        {
+            _animator.SetBool("IsAlive", true);
+        }
+
         public void InitiateActive()
         {
-            _animator.SetBool("isAlive", true);
+            _animator.SetBool("IsAlive", true);
+            _animator.SetBool("IsWalking", false);
+
             _collider.enabled = true;
 
             _health = _maxHealth;
@@ -72,7 +79,7 @@ namespace GameDevHQITP.Units
 
         public void InitiateDeath()
         {
-            _animator.SetBool("isAlive", false);
+            _animator.SetBool("IsAlive", false);
             _collider.enabled = false;
             _navMeshAgent.enabled = false;
             _navMeshAgent.isStopped = true;
@@ -91,6 +98,8 @@ namespace GameDevHQITP.Units
                 Vector3 goal = SpawnManager.Instance.GoalPosition;
                 _navMeshAgent.SetDestination(goal);
                 _navMeshAgent.isStopped = false;
+
+                _animator.SetBool("IsWalking", true);
             }
         }
 
@@ -138,17 +147,18 @@ namespace GameDevHQITP.Units
                 InitiateDeath();
             }
         }
-
+        
+        protected override void StartAttack(GameObject target)
+        {
+            Debug.Log("START ATTACK");
+            _animator.SetBool("IsAttacking", true);
+        }
 
         protected override void StopAttack()
         {
-
+            Debug.Log("STOP ATTACK");
+            _animator.SetBool("IsAttacking", false);
         }
-        protected override void StartAttack(GameObject target)
-        {
-
-        }
-
 
     }
 

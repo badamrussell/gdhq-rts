@@ -52,7 +52,6 @@ namespace GameDevHQITP.Units
         new void Update()
         {
             base.Update();
-            Debug.Log($"UPDATE {_isAttacking}");
             if (_isAttacking)
             {
                 RotateBarrel(); //Call the rotation function responsible for rotating our gun barrel

@@ -21,6 +21,8 @@ namespace GameDevHQITP.Units
         [SerializeField] float _verticalAngleOffset = 0f;
         [SerializeField] int _baseDamagePerSec = 20;
 
+        [SerializeField] float _viewAngle = 30f;
+
         protected abstract void StopAttack();
         protected abstract void StartAttack(GameObject target);
 
@@ -37,7 +39,7 @@ namespace GameDevHQITP.Units
             _defaultRotation = _horizontalRotate.transform.rotation.eulerAngles;
         }
 
-        protected void Update()
+        protected void LateUpdate()
         {
             GameObject targetGO;
 
@@ -55,75 +57,61 @@ namespace GameDevHQITP.Units
         private void LookAtTarget(GameObject targetGO)
         {
             Vector3 targetPos = targetGO.transform.position;
-            float offsetY = -90f;
-            float offsetZ = 90f;
-            float offsetX = 0f;
-            Vector3 offsetRot = new Vector3(offsetX, offsetY, offsetZ);
+
+            Vector3 leftPos = Quaternion.AngleAxis(-_viewAngle, Vector3.up) * _horizontalRotate.transform.forward * 10f;
+            Debug.DrawRay(_horizontalRotate.transform.position, leftPos, Color.magenta, 0.01f);
+
+            Vector3 centerPos = _horizontalRotate.transform.forward * 10f;
+            Debug.DrawRay(_horizontalRotate.transform.position, centerPos, Color.blue, 0.01f);
+
+            Vector3 rightPos = Quaternion.AngleAxis(_viewAngle, Vector3.up) * _horizontalRotate.transform.forward * 10f;
+            Debug.DrawRay(_horizontalRotate.transform.position, rightPos, Color.magenta, 0.01f);
+
 
             // Rotate horizontally
             Vector3 horzPos = _horizontalRotate.transform.position;
-            Vector3 horzDiff = horzPos - targetPos;
+            Vector3 horzDiff = targetPos - horzPos;
+            horzDiff.y = 0f;
             Quaternion diffHorzRot = Quaternion.LookRotation(horzDiff);
-            float rotHorzY = diffHorzRot.eulerAngles.y + _horizontalAngleOffset;
-            float rotHorzZ = diffHorzRot.eulerAngles.z + _horizontalAngleOffset;
-            Quaternion rotHorz = Quaternion.Euler(0, 0, rotHorzZ);
-            Vector3 targetAngles = _horizontalRotate.transform.rotation.eulerAngles;
-            Quaternion targetHorz = _horizontalRotate.transform.rotation;
-            targetHorz.eulerAngles = new Vector3(targetAngles.x, targetAngles.y, rotHorzZ);
-
-            Vector3 currentRotation = diffHorzRot.eulerAngles + offsetRot;
-            currentRotation.z = diffHorzRot.eulerAngles.y;
-            //Debug.Log($"rot: {_defaultRotation} > {horzDiff}");
-            Debug.DrawLine(horzPos, targetPos, Color.cyan, 0.1f);
-            //_horizontalRotate.transform.rotation = Quaternion.Slerp(_horizontalRotate.transform.rotation, targetHorz, Time.deltaTime * _rotationSpeed);
-            //_horizontalRotate.transform.rotation = Quaternion.Euler(currentRotation);// Quaternion.Euler(targetHorz.x, targetHorz.y, targetHorz.z);
-            //Quaternion.Slerp(_horizontalRotate.transform.rotation, targetHorz, Time.deltaTime * _rotationSpeed);
-            //Vector3 nextRotation = new Vector3(0, 0, 30f) + offsetRot;
-            //Vector3 nextRotation = _horizontalRotate.transform.rotation.eulerAngles;
-            Vector3 nextRotation = _defaultRotation + horzDiff;
-            Debug.Log($"rot: {_defaultRotation} > {nextRotation}");
+            _horizontalRotate.transform.rotation = Quaternion.Slerp(_horizontalRotate.transform.rotation, diffHorzRot, Time.deltaTime * _rotationSpeed);
 
 
-            _horizontalRotate.transform.rotation = diffHorzRot;// Quaternion.Euler(nextRotation);// Quaternion.Euler(targetHorz.x, targetHorz.y, targetHorz.z);
-
-            //Vector3 drawPos = horzTrans;
-
-            //if (_verticalRotate != null)
-            //{
-            //    // Rotate vertically
-            //    Vector3 vertTrans = _verticalRotate.transform.position;
-            //    drawPos = vertTrans;
-            //    Vector3 vertDiff = targetPos - vertTrans;
-            //    Quaternion diffRot = Quaternion.LookRotation(vertDiff);
-            //    float rotX = diffRot.eulerAngles.x + _verticalAngleOffset;
-            //    Quaternion rotVert = Quaternion.Euler(rotX, rotHorzY, 0);
-            //    Debug.DrawLine(vertTrans, targetPos, Color.magenta, 0.1f);
-            //    _verticalRotate.transform.rotation = Quaternion.Slerp(_verticalRotate.transform.rotation, rotVert, Time.deltaTime * _rotationSpeed);
-            //}
+            if (_verticalRotate != null)
+            {
+                // Rotate vertically
+                Vector3 vertTrans = _verticalRotate.transform.position;
+                Vector3 vertDiff = targetPos - vertTrans;
+                vertDiff.x = 0f;
+                Quaternion diffVertRot = Quaternion.LookRotation(vertDiff);
+                //Debug.DrawLine(vertTrans, targetPos, Color.magenta, 0.1f);
+                _verticalRotate.transform.rotation = Quaternion.Slerp(_verticalRotate.transform.rotation, diffVertRot, Time.deltaTime * _rotationSpeed);
+            }
 
 
-            //float rotDiffY = Mathf.Abs(_horizontalRotate.transform.rotation.eulerAngles.y - rotHorzY);
+            float angle = Vector3.Angle(_horizontalRotate.transform.forward, horzDiff);
 
-            //if (rotDiffY < 15f)
-            //{
-            //    if (_isAttacking)
-            //    {
-            //        //Debug.DrawLine(drawPos, targetPos, Color.green, 0.1f);
-            //    }
-            //    else
-            //    {
+            if (Mathf.Abs(angle) < _viewAngle)
+            {
+                if (_isAttacking)
+                {
+                    Debug.DrawLine(_horizontalRotate.transform.position, targetPos, Color.green, 0.1f);
+                }
+                else
+                {
+                    StartAttack(targetGO);
+                    _isAttacking = true;
+                }
+            }
+            else
+            {
+                Debug.DrawLine(_horizontalRotate.transform.position, targetPos, Color.red, 0.1f);
+                if (_isAttacking)
+                {
+                    StopAttack();
+                    _isAttacking = false;
+                }
+            }
 
-            //        StartAttack(targetGO);
-            //        _isAttacking = true;
-            //    }
-            //}
-            //else
-            //{
-            //    //Debug.DrawLine(drawPos, targetPos, Color.red, 0.1f);
-
-            //    StopAttack();
-            //    _isAttacking = false;
-            //}
         }
     }
 }
