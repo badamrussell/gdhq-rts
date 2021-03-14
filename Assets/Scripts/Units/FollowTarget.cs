@@ -14,6 +14,7 @@ namespace GameDevHQITP.Units
 
         [SerializeField] private GameObject _horizontalRotate;
         [SerializeField] private GameObject _verticalRotate;
+        [SerializeField] private GameObject _forwardDir;
 
         [SerializeField] float _rotationSpeed = 2f;
 
@@ -29,19 +30,29 @@ namespace GameDevHQITP.Units
         protected int _damageRate;
         protected bool _isAttacking;
 
-        [SerializeField] private Vector3 _defaultRotation;
 
         protected void Start()
         {
             _damageRate = Mathf.Max(_baseDamagePerSec / 10, 1);
             _isAttacking = false;
             _attackRadius.gameObject.transform.localScale = Vector3.one * _attackRadiusAmount;
-            _defaultRotation = _horizontalRotate.transform.rotation.eulerAngles;
         }
 
-        protected void LateUpdate()
+        protected void Update()
         {
             GameObject targetGO;
+
+            //Vector3 leftPos = Quaternion.AngleAxis(-_viewAngle, Vector3.up) * _forwardDir.transform.forward * _attackRadiusAmount / 2f;
+            //Debug.DrawRay(_horizontalRotate.transform.position, leftPos, Color.magenta, 0.01f);
+
+            //Vector3 centerPos = _horizontalRotate.transform.forward * _attackRadiusAmount / 2f;
+            //Debug.DrawRay(_horizontalRotate.transform.position, centerPos, Color.blue, 0.01f);
+
+            //Vector3 rightPos = Quaternion.AngleAxis(_viewAngle, Vector3.up) * _forwardDir.transform.forward * _attackRadiusAmount / 2f;
+            //Debug.DrawRay(_horizontalRotate.transform.position, rightPos, Color.magenta, 0.01f);
+
+            //Vector3 frontPos = _forwardDir.transform.forward * _attackRadiusAmount / 2f;
+            //Debug.DrawRay(_horizontalRotate.transform.position, frontPos, Color.green, 0.01f);
 
             if (_attackRadius.GetTarget(out targetGO))
             {
@@ -51,22 +62,28 @@ namespace GameDevHQITP.Units
             {
                 _isAttacking = false;
                 StopAttack();
+
+            } else
+            {
+                LookForward();
             }
+        }
+
+        private void LookForward()
+        {
+
+            Vector3 horzPos = _horizontalRotate.transform.forward;
+            Vector3 targetPos = _forwardDir.transform.forward;
+            Vector3 horzDiff = targetPos - horzPos;
+
+            Quaternion diffHorzRot = Quaternion.LookRotation(horzDiff);
+            _horizontalRotate.transform.rotation = Quaternion.Slerp(_horizontalRotate.transform.rotation, diffHorzRot, Time.deltaTime * _rotationSpeed);
+
         }
 
         private void LookAtTarget(GameObject targetGO)
         {
             Vector3 targetPos = targetGO.transform.position;
-
-            Vector3 leftPos = Quaternion.AngleAxis(-_viewAngle, Vector3.up) * _horizontalRotate.transform.forward * 10f;
-            Debug.DrawRay(_horizontalRotate.transform.position, leftPos, Color.magenta, 0.01f);
-
-            Vector3 centerPos = _horizontalRotate.transform.forward * 10f;
-            Debug.DrawRay(_horizontalRotate.transform.position, centerPos, Color.blue, 0.01f);
-
-            Vector3 rightPos = Quaternion.AngleAxis(_viewAngle, Vector3.up) * _horizontalRotate.transform.forward * 10f;
-            Debug.DrawRay(_horizontalRotate.transform.position, rightPos, Color.magenta, 0.01f);
-
 
             // Rotate horizontally
             Vector3 horzPos = _horizontalRotate.transform.position;
@@ -88,13 +105,13 @@ namespace GameDevHQITP.Units
             }
 
 
-            float angle = Vector3.Angle(_horizontalRotate.transform.forward, horzDiff);
+            float angle = Vector3.Angle(_forwardDir.transform.forward, horzDiff);
 
             if (Mathf.Abs(angle) < _viewAngle)
             {
                 if (_isAttacking)
                 {
-                    Debug.DrawLine(_horizontalRotate.transform.position, targetPos, Color.green, 0.1f);
+                    //Debug.DrawLine(_horizontalRotate.transform.position, targetPos, Color.green, 0.1f);
                 }
                 else
                 {
@@ -104,7 +121,7 @@ namespace GameDevHQITP.Units
             }
             else
             {
-                Debug.DrawLine(_horizontalRotate.transform.position, targetPos, Color.red, 0.1f);
+                //Debug.DrawLine(_horizontalRotate.transform.position, targetPos, Color.red, 0.1f);
                 if (_isAttacking)
                 {
                     StopAttack();

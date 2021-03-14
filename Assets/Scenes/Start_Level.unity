@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.62032515, g: 0.58680993, b: 0.5983204, a: 1}
+  m_IndirectSpecularColor: {r: 0.6402023, g: 0.60547256, b: 0.6168556, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -13837,7 +13837,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70e7f8f7b920147b2b304c30fd947dd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _transform: {fileID: 428444232}
 --- !u!114 &428444234
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14406,7 +14405,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70e7f8f7b920147b2b304c30fd947dd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _transform: {fileID: 440509734}
 --- !u!1 &442693523
 GameObject:
   m_ObjectHideFlags: 0
@@ -27008,7 +27006,6 @@ GameObject:
   - component: {fileID: 763400256}
   - component: {fileID: 763400258}
   - component: {fileID: 763400257}
-  - component: {fileID: 763400255}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -27016,20 +27013,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &763400255
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 763400254}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7020b443ce68e493d9475106f18518ec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _selectedTowers: []
-  _selectTowerGO: {fileID: 0}
 --- !u!4 &763400256
 Transform:
   m_ObjectHideFlags: 0
@@ -44491,6 +44474,8 @@ MonoBehaviour:
   _constructionTower: {fileID: 119519578}
   _progressMeter: {fileID: 1778734927}
   _constructionSpeed: 100
+  _constructionSmoke: {fileID: 0}
+  _dismantleCloud: {fileID: 0}
   _isBuilt: 1
   _maxHealth: 200
   _warBucksCost: 200
@@ -46392,6 +46377,8 @@ MonoBehaviour:
   _constructionTower: {fileID: 1111251817}
   _progressMeter: {fileID: 1018662131}
   _constructionSpeed: 25
+  _constructionSmoke: {fileID: 0}
+  _dismantleCloud: {fileID: 0}
   _isBuilt: 1
   _maxHealth: 200
   _warBucksCost: 500
@@ -59222,6 +59209,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1574409124}
   m_CullTransparentMesh: 0
+--- !u!1001 &1577171483
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4215500929993442080, guid: c6112dd32a2d749e79fb6be9d9287dc0, type: 3}
+      propertyPath: m_Name
+      value: SelectionManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 4215500929993442081, guid: c6112dd32a2d749e79fb6be9d9287dc0, type: 3}
+      propertyPath: m_RootOrder
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 4215500929993442081, guid: c6112dd32a2d749e79fb6be9d9287dc0, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4215500929993442081, guid: c6112dd32a2d749e79fb6be9d9287dc0, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4215500929993442081, guid: c6112dd32a2d749e79fb6be9d9287dc0, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4215500929993442081, guid: c6112dd32a2d749e79fb6be9d9287dc0, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4215500929993442081, guid: c6112dd32a2d749e79fb6be9d9287dc0, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4215500929993442081, guid: c6112dd32a2d749e79fb6be9d9287dc0, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4215500929993442081, guid: c6112dd32a2d749e79fb6be9d9287dc0, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4215500929993442081, guid: c6112dd32a2d749e79fb6be9d9287dc0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4215500929993442081, guid: c6112dd32a2d749e79fb6be9d9287dc0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4215500929993442081, guid: c6112dd32a2d749e79fb6be9d9287dc0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c6112dd32a2d749e79fb6be9d9287dc0, type: 3}
 --- !u!1 &1578059404
 GameObject:
   m_ObjectHideFlags: 0

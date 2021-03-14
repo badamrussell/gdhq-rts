@@ -2559,7 +2559,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4387745763020777372}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -2604,14 +2604,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 025094a741a2248b08784c43edad4f63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackRadius: {fileID: 0}
+  _attackRadius: {fileID: 3372240363533444172}
   _attackRadiusAmount: 15
   _horizontalRotate: {fileID: 4573445514846355962}
   _verticalRotate: {fileID: 0}
-  _rotationSpeed: 2
+  _forwardDir: {fileID: 2471610027001345346}
+  _rotationSpeed: 1
   _horizontalAngleOffset: 0
   _verticalAngleOffset: 0
   _baseDamagePerSec: 20
+  _viewAngle: 70
   enemyConfig: {fileID: 11400000, guid: 637a44b3512c44b3095b3a91110fedfe, type: 2}
   _warFund: 0
   _progressMeter: {fileID: 4430109464760347920}
@@ -2975,7 +2977,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7800499784032402140}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
