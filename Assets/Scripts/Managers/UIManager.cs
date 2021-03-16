@@ -5,6 +5,7 @@ using GameDevHQITP.ScriptableObjects;
 using GameDevHQITP.Widgets;
 using GameDevHQITP.Utility;
 using System;
+using GameDevHQITP.Units;
 using UnityEngine.UI;
 
 namespace GameDevHQITP.Managers
@@ -36,6 +37,9 @@ namespace GameDevHQITP.Managers
         private int _healthGoodLimit;
         private int _healthOkayLimit;
 
+        private int _warbucksTotal = 0;
+        [SerializeField] private int _startWarBucks = 1000;
+        
         [SerializeField] private Color _okayColor;
         [SerializeField] private Color _poorColor;
         
@@ -45,6 +49,8 @@ namespace GameDevHQITP.Managers
         [SerializeField] private Text _warBucksText;
         [SerializeField] private Text _healthStatusText;
         [SerializeField] private Text _levelStatusText;
+        [SerializeField] private Text _timerText;
+
         [SerializeField] private GameObject _levelStatus;
         [SerializeField] private GameObject _playbackPauseEnabled;
         [SerializeField] private GameObject _playbackPlayEnabled;
@@ -52,11 +58,14 @@ namespace GameDevHQITP.Managers
 
         [SerializeField] private List<Image> _colorizedOverlays;
         [SerializeField] private Image[] _colorOverlays;
+        [SerializeField] private ArmoryButton[] _armoryButtons;
+
+        
         
         private void Start()
         {
             _armoryMode = EnumArmoryMenuModes.purchase;
-            SetArmoryMenu();
+            // SetArmoryMenu();
 
             _healthGoodLimit = Mathf.RoundToInt(_startPlayerHealth * _healthGoodPercent);
             _healthOkayLimit =  Mathf.RoundToInt(_startPlayerHealth * _healthOkayPercent);
@@ -73,59 +82,82 @@ namespace GameDevHQITP.Managers
             OnRestart();
         }
 
+        private IEnumerator StartTimer()
+        {
+            int minutes = 0;
+            int seconds = -1;
+            while (true)
+            {
+                seconds++;
+                if (seconds == 60)
+                {
+                    minutes++;
+                    seconds = 0;
+                }
+                
+                string sec = seconds.ToString().PadLeft(2, '0' );
+                _timerText.text = $"{minutes}:{sec}";
+                yield return new WaitForSeconds(1f);
+            }
+        }
+        
         private void OnEnable()
         {
-            MenuChoice.OnAccept += DoMenuAction;
-            MenuChoice.OnCancel += EnablePurchaseMode;
+            // MenuChoice.OnAccept += DoMenuAction;
+            // MenuChoice.OnCancel += EnablePurchaseMode;
+            BuildTowerManager.onNewWarBucksTotal += UpdateWarBucks;
+            Enemy.OnEnemyStartDeath += EarnWarBucks;
         }
 
         private void OnDisable()
         {
-            MenuChoice.OnAccept -= DoMenuAction;
-            MenuChoice.OnCancel -= EnablePurchaseMode;
+            // MenuChoice.OnAccept -= DoMenuAction;
+            // MenuChoice.OnCancel -= EnablePurchaseMode;
+            BuildTowerManager.onNewWarBucksTotal -= UpdateWarBucks;
+            Enemy.OnEnemyStartDeath -= EarnWarBucks;
         }
 
-        private void DoMenuAction()
-        {
-            switch (_armoryMode)
-            {
-                case EnumArmoryMenuModes.dismantle:
-                    Debug.Log("UPGRADE DISMANTLE");
-                    break;
-                case EnumArmoryMenuModes.upgradeGatling:
-                    Debug.Log("UPGRADE GATLING");
-                    break;
-                case EnumArmoryMenuModes.upgradeMissile:
-                    Debug.Log("UPGRADE MISSILE");
-                    break;
-                case EnumArmoryMenuModes.purchase:
-                default:
-                    break;
-            }
+        // private void DoMenuAction()
+        // {
+        //     switch (_armoryMode)
+        //     {
+        //         case EnumArmoryMenuModes.dismantle:
+        //             Debug.Log("UPGRADE DISMANTLE");
+        //             break;
+        //         case EnumArmoryMenuModes.upgradeGatling:
+        //             Debug.Log("UPGRADE GATLING");
+        //             break;
+        //         case EnumArmoryMenuModes.upgradeMissile:
+        //             Debug.Log("UPGRADE MISSILE");
+        //             break;
+        //         case EnumArmoryMenuModes.purchase:
+        //         default:
+        //             break;
+        //     }
+        //
+        //     EnablePurchaseMode();
+        //     SetArmoryMenu();
+        // }
 
-            EnablePurchaseMode();
-            SetArmoryMenu();
-        }
-
-        private void SetArmoryMenu()
-        {
-            switch (_armoryMode)
-            {
-                case EnumArmoryMenuModes.dismantle:
-                    _purchaseMenu.SetActive(false);
-                    break;
-                case EnumArmoryMenuModes.upgradeGatling:
-                    _purchaseMenu.SetActive(false);
-                    break;
-                case EnumArmoryMenuModes.upgradeMissile:
-                    _purchaseMenu.SetActive(false);
-                    break;
-                case EnumArmoryMenuModes.purchase:
-                default:
-                    _purchaseMenu.SetActive(true);
-                    break;
-            }
-        }
+        // private void SetArmoryMenu()
+        // {
+        //     switch (_armoryMode)
+        //     {
+        //         case EnumArmoryMenuModes.dismantle:
+        //             _purchaseMenu.SetActive(false);
+        //             break;
+        //         case EnumArmoryMenuModes.upgradeGatling:
+        //             _purchaseMenu.SetActive(false);
+        //             break;
+        //         case EnumArmoryMenuModes.upgradeMissile:
+        //             _purchaseMenu.SetActive(false);
+        //             break;
+        //         case EnumArmoryMenuModes.purchase:
+        //         default:
+        //             _purchaseMenu.SetActive(true);
+        //             break;
+        //     }
+        // }
 
         public void OnSelectTower(TowerConfig towerConfig, GameObject go)
         {
@@ -151,11 +183,11 @@ namespace GameDevHQITP.Managers
             //SetArmoryMenu();
         }
 
-        private void EnablePurchaseMode()
-        {
-
-            _armoryMode = EnumArmoryMenuModes.purchase;
-        }
+        // private void EnablePurchaseMode()
+        // {
+        //
+        //     _armoryMode = EnumArmoryMenuModes.purchase;
+        // }
 
         private void EnableUpgradeMode(TowerConfig towerConfig, GameObject go)
         {
@@ -206,19 +238,42 @@ namespace GameDevHQITP.Managers
         {
             _waveText.text = $"{value}/{maxValue}";
         }
+
+        public bool MakePurchase(int value)
+        {
+            if (value <= _warbucksTotal)
+            {
+                UpdateWarBucks(-value);
+                return true;
+            }
+
+            return false;
+        }
         
         public void UpdateWarBucks(int value)
         {
-            _warBucksText.text = value.ToString();
+            _warbucksTotal += value;
+            _warBucksText.text = _warbucksTotal.ToString();
+
+            foreach (ArmoryButton btn in _armoryButtons)
+            {
+                btn.IsAffordable(_warbucksTotal);
+            }
         }
         
         public void OnRestart()
         {
             Debug.Log("RESTART?");
+
+            _warbucksTotal = _startWarBucks;
+            UpdateWarBucks(0);
             
             _playerHealth = _startPlayerHealth;
             UpdatePlayerHealth(0);
             
+            StopCoroutine("StartTimer");
+            StartCoroutine("StartTimer");
+        
             OnPlay();
         }
         
@@ -268,6 +323,11 @@ namespace GameDevHQITP.Managers
             _playbackPlayEnabled.SetActive(false);
             _playbackFFEnabled.SetActive(false);
             _levelStatus.SetActive(true);
+        }
+        
+        private void EarnWarBucks(EnemyConfig enemyConfig, GameObject go)
+        {
+            UpdateWarBucks(enemyConfig.warBucks);
         }
     }
     

@@ -28,7 +28,7 @@ namespace GameDevHQITP.Managers
         [SerializeField] private GameObject _towerPlotContainer;
         [SerializeField] private GameObject _activeTowersContainer;
         [SerializeField] private GameObject _hideTowerContainer;
-        [SerializeField] private int _warBucksTotal;
+        // [SerializeField] private int _warBucksTotal;
 
         private int _selectedTowerIndex = 0;
         private bool _buildModeEnabled = false;
@@ -44,21 +44,18 @@ namespace GameDevHQITP.Managers
                 _towerInstances[i] = Instantiate(_availableTowerPrefabs[i].dragging);
                 _towerInstances[i].transform.parent = _hideTowerContainer.transform;
             }
-            onNewWarBucksTotal(_warBucksTotal);
         }
 
         private void OnEnable()
         {
             TowerEmptyPlot.onMouseNearTowerPlotEvent += IsNearAvailableTowerPlot;
             TowerEmptyPlot.onPlaceTowerEvent += TryPlaceTower;
-            Enemy.OnEnemyStartDeath += EarnWarBucks;
         }
 
         private void OnDisable()
         {
             TowerEmptyPlot.onMouseNearTowerPlotEvent -= IsNearAvailableTowerPlot;
             TowerEmptyPlot.onPlaceTowerEvent -= TryPlaceTower;
-            Enemy.OnEnemyStartDeath -= EarnWarBucks;
         }
 
         void Update()
@@ -101,14 +98,12 @@ namespace GameDevHQITP.Managers
         {
             int towerCost = 10;
             TowerConfig config = _availableTowerPrefabs[_selectedTowerIndex].towerConfig;
-
-            if (_warBucksTotal >= config.warBucksCost)
+            
+            if (UIManager.Instance.MakePurchase(config.warBucksCost))
             {
                 GameObject go = Instantiate(config.prefab, _selectedPlotPosition, Quaternion.identity);
                 go.transform.parent = _activeTowersContainer.transform;
-                _warBucksTotal -= towerCost;
                 DisableBuildMode();
-                onNewWarBucksTotal(_warBucksTotal);
             }
 
         }
@@ -146,12 +141,6 @@ namespace GameDevHQITP.Managers
             _selectedTowerIndex = 1;
             DisableBuildMode();
             EnableBuildMode();
-        }
-
-        private void EarnWarBucks(EnemyConfig enemyConfig, GameObject go)
-        {
-            _warBucksTotal += enemyConfig.warBucks;
-            onNewWarBucksTotal(_warBucksTotal);
         }
 
     }

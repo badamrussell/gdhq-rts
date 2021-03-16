@@ -15,6 +15,7 @@ namespace GameDevHQITP.ScriptableObjects
         public float attackRadius;
         public int level;
         public int maxHealth;
+        public int damage;
         public float constructionTime;
         public int warBucksSell;
     }

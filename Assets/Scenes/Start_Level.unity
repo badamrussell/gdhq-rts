@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.62032515, g: 0.58680993, b: 0.5983204, a: 1}
+  m_IndirectSpecularColor: {r: 0.6402023, g: 0.60547256, b: 0.6168556, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -8289,6 +8289,7 @@ GameObject:
   - component: {fileID: 150529101}
   - component: {fileID: 150529100}
   - component: {fileID: 150529102}
+  - component: {fileID: 150529103}
   m_Layer: 5
   m_Name: Gatling
   m_TagString: Untagged
@@ -8410,6 +8411,20 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &150529103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 150529098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 490886904a53548e8862b0779bfe55a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _towerConfig: {fileID: 11400000, guid: 2618c93b9ec9a4dbe9ad2a898069dcb4, type: 2}
+  _button: {fileID: 150529102}
 --- !u!1 &163886500
 GameObject:
   m_ObjectHideFlags: 0
@@ -23544,14 +23559,16 @@ MonoBehaviour:
   _startPlayerHealth: 100
   _healthGoodPercent: 0.6
   _healthOkayPercent: 0.2
+  _startWarBucks: 1000
   _okayColor: {r: 0.39215687, g: 1, b: 0.39215687, a: 1}
   _poorColor: {r: 1, g: 0.39215687, b: 0.39215687, a: 1}
   _lifeText: {fileID: 783571177}
   _waveText: {fileID: 640746102}
   _versionText: {fileID: 1367709903}
-  _warBucksText: {fileID: 91309198}
+  _warBucksText: {fileID: 2109062355}
   _healthStatusText: {fileID: 254106825}
   _levelStatusText: {fileID: 12562996}
+  _timerText: {fileID: 599379054}
   _levelStatus: {fileID: 909662579}
   _playbackPauseEnabled: {fileID: 1390762800}
   _playbackPlayEnabled: {fileID: 142299666}
@@ -23564,6 +23581,9 @@ MonoBehaviour:
   - {fileID: 1432688604}
   - {fileID: 2105959597}
   - {fileID: 909662581}
+  _armoryButtons:
+  - {fileID: 150529103}
+  - {fileID: 1416097953}
 --- !u!1001 &595690249
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23658,6 +23678,85 @@ Transform:
   m_Father: {fileID: 1358938333}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &599379051
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 599379052}
+  - component: {fileID: 599379053}
+  - component: {fileID: 599379054}
+  m_Layer: 5
+  m_Name: Timer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &599379052
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 599379051}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.9999896, y: 0.9999896, z: 0.9999896}
+  m_Children: []
+  m_Father: {fileID: 1353408164}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 87.92, y: -131.99994}
+  m_SizeDelta: {x: 150.02, y: 55.3}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &599379053
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 599379051}
+  m_CullTransparentMesh: 0
+--- !u!114 &599379054
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 599379051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 0.818039, b: 0.5411765, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 30
+    m_FontStyle: 1
+    m_BestFit: 0
+    m_MinSize: 3
+    m_MaxSize: 99
+    m_Alignment: 2
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 0:00
 --- !u!4 &601775506 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5145075671667350447, guid: 467615084a9bf4667853968db2c40c7e, type: 3}
@@ -44340,6 +44439,7 @@ RectTransform:
   - {fileID: 1481126975}
   - {fileID: 276783686}
   - {fileID: 1588779653}
+  - {fileID: 599379052}
   m_Father: {fileID: 592720672}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -46205,6 +46305,7 @@ GameObject:
   - component: {fileID: 1416097951}
   - component: {fileID: 1416097950}
   - component: {fileID: 1416097952}
+  - component: {fileID: 1416097953}
   m_Layer: 5
   m_Name: Missile
   m_TagString: Untagged
@@ -46326,6 +46427,20 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1416097953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1416097948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 490886904a53548e8862b0779bfe55a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _towerConfig: {fileID: 11400000, guid: 5886becc549054fe1b09916394130153, type: 2}
+  _button: {fileID: 1416097952}
 --- !u!1 &1418195136
 GameObject:
   m_ObjectHideFlags: 0
@@ -81310,7 +81425,6 @@ MonoBehaviour:
   _towerPlotContainer: {fileID: 2041172116}
   _activeTowersContainer: {fileID: 1738580064}
   _hideTowerContainer: {fileID: 1171463131}
-  _warBucksTotal: 10000
 --- !u!1001 &2052424245
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -82845,7 +82959,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2109062353}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 532d08ee023f8421fb08b3dd650e29aa, type: 3}
   m_Name: 
