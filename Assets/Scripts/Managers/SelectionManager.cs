@@ -41,7 +41,6 @@ namespace GameDevHQITP.Managers
 
         private void OnEnable()
         {
-            Debug.Log("OnEnable");
             TowerController.OnSelectedTower += OnSelectTower;
         }
 
@@ -86,13 +85,11 @@ namespace GameDevHQITP.Managers
         {
             _containerGO.SetActive(true);
 
-            Debug.Log("SHOW TOWER ACTIONS");
             _animator.SetBool("IsVisible", true);
             _animator.SetBool("IsDismantle", false);
             _animator.SetBool("IsUpgrade", false);
-
-            _upgradeButton.interactable = _activeTowerConfig.upgradePrefab != null;
-            //_showUpgrade.SetActive(_activeTowerConfig.upgradePrefab != null);
+            
+            _upgradeButton.interactable = UIManager.Instance.CanAfford(_activeTowerConfig.upgradeCost) && _activeTowerConfig.upgradePrefab != null;
         }
 
         public void OnHide()
@@ -121,15 +118,17 @@ namespace GameDevHQITP.Managers
 
         public void OnConfirmSell()
         {
-            Debug.Log("CONFIRM DISMANTLE");
             OnDismantleTower(_selectedTowers[0]);
+            UIManager.Instance.UpdateWarBucks(_activeTowerConfig.warBucksSell);
             OnHide();
         }
 
         public void OnConfirmUpgrade()
         {
-            Debug.Log("CONFIRM UPGRADE");
-            OnUpgradeTower(_selectedTowers[0]);
+            if (UIManager.Instance.MakePurchase(_activeTowerConfig.warBucksCost))
+            {
+                OnUpgradeTower(_selectedTowers[0]);
+            }
             OnHide();
         }
 

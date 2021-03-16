@@ -548,7 +548,7 @@ MonoBehaviour:
   _warFund: 0
   _progressMeter: {fileID: 6620741727558919506}
   _health: 0
-  _maxHealth: 50
+  _maxHealth: 400
   _targetArea: {fileID: 6900282982989722822}
   _animator: {fileID: 6938821521385286864}
   _navMeshAgent: {fileID: 6267020231620653830}
@@ -3584,7 +3584,7 @@ ParentConstraint:
   m_TranslationAtRest: {x: 0, y: 3.4957888, z: -0.32533112}
   m_RotationAtRest: {x: 0, y: 0, z: 0}
   m_TranslationOffsets:
-  - {x: 0, y: 1.3615748, z: -0.12671322}
+  - {x: 0, y: 1.3615748, z: -0.12671328}
   m_RotationOffsets:
   - {x: 0, y: 0, z: 0}
   m_AffectTranslationX: 1

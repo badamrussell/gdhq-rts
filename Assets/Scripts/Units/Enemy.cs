@@ -80,7 +80,13 @@ namespace GameDevHQITP.Units
         {
             _animator.SetBool("IsAlive", true);
             _animator.SetBool("IsWalking", false);
-
+            
+            _progressMeter.gameObject.SetActive(true);
+            for (int i = 0; i < _dissolveRenderers.Length; i++)
+            {
+                _dissolveRenderers[i].material.SetFloat("_fillAmount", 0f);
+            }
+            
             _collider.enabled = true;
 
             _health = _maxHealth;
@@ -98,8 +104,8 @@ namespace GameDevHQITP.Units
         {
             _animator.SetBool("IsAlive", false);
             _collider.enabled = false;
-            _navMeshAgent.enabled = false;
             _navMeshAgent.isStopped = true;
+            _navMeshAgent.enabled = false;
             StartCoroutine(OnDeath());
         }
 
@@ -162,6 +168,8 @@ namespace GameDevHQITP.Units
                 OnEnemyStartDeath(enemyConfig, gameObject, true);
             }
 
+            _progressMeter.gameObject.SetActive(false);
+            
             yield return OnFadeDeath();
             
             _animator.WriteDefaultValues();

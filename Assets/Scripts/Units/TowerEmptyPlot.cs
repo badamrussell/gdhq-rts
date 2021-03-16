@@ -104,11 +104,7 @@ namespace GameDevHQITP.Units
         {
             Vector3 diff = go.transform.position - transform.position;
             float mag = diff.magnitude;
-            Debug.Log($"enable plot: {mag}");
-            if (mag > 1f)
-            {
-                return;
-            }
+            if (mag > 1f) { return; }
             
             _towerLocationMode = TowerLocationMode.available;
             _platform.SetActive(true);

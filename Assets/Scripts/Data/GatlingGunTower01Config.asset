@@ -19,5 +19,7 @@ MonoBehaviour:
   attackRadius: 8
   level: 1
   maxHealth: 150
+  damage: 0
   constructionTime: 8
   warBucksSell: 50
+  upgradeCost: 400

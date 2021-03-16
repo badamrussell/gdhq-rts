@@ -18,5 +18,6 @@ namespace GameDevHQITP.ScriptableObjects
         public int damage;
         public float constructionTime;
         public int warBucksSell;
+        public int upgradeCost;
     }
 }

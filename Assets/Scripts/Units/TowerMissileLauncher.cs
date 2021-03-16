@@ -33,7 +33,6 @@ namespace GameDevHQITP.Units
         private float _destroyTime = 10.0f; //how long till the rockets get cleaned up
         private bool _launched; //bool to check if we launched the rockets
 
-        //private bool _isAttacking = false;
         private GameObject _target;
 
         new void Update()
@@ -43,7 +42,7 @@ namespace GameDevHQITP.Units
             if (_isAttacking && _launched == false)
             {
                 _launched = true; //set the launch bool to true
-                StartCoroutine(FireRocketsRoutine()); //start a coroutine that fires the rockets. 
+                StartCoroutine("FireRocketsRoutine"); //start a coroutine that fires the rockets. 
             }
         }
 
@@ -59,7 +58,6 @@ namespace GameDevHQITP.Units
 
             rocket.transform.parent = null; //set the rocket parent to null
 
-            //rocket.GetComponent<GameDevHQ.FileBase.Missle_Launcher_Dual_Turret.Missle.Missle>().AssignMissleRules(_launchSpeed, _power, _fuseDelay, _destroyTime); //assign missle properties 
             rocket.GetComponent<GameDevHQ.FileBase.Missle_Launcher.Missle.Missle>().AssignMissleRules(_launchSpeed, _power, _fuseDelay, _destroyTime, _target); //assign missle properties 
             missilePos[index].SetActive(false); //turn off the rocket sitting in the turret to make it look like it fired
         }
@@ -80,27 +78,6 @@ namespace GameDevHQITP.Units
                     FireRocket(_misslePositionsRight, i);
                     yield return new WaitForSeconds(_fireDelay); //wait for the firedelay
                 }
-
-                //GameObject rocketLeft = Instantiate(_missilePrefab) as GameObject; //instantiate a rocket
-                //GameObject rocketRight = Instantiate(_missilePrefab) as GameObject; //instantiate a rocket
-
-                //rocketLeft.transform.parent = _misslePositionsLeft[i].transform; //set the rockets parent to the missle launch position 
-                //rocketRight.transform.parent = _misslePositionsRight[i].transform; //set the rockets parent to the missle launch position 
-
-                //rocketLeft.transform.localPosition = Vector3.zero; //set the rocket position values to zero
-                //rocketRight.transform.localPosition = Vector3.zero; //set the rocket position values to zero
-
-                //rocketLeft.transform.localEulerAngles = new Vector3(0, 0, 0); //set the rotation values to be properly aligned with the rockets forward direction
-                //rocketRight.transform.localEulerAngles = new Vector3(0, 0, 0); //set the rotation values to be properly aligned with the rockets forward direction
-
-                //rocketLeft.transform.parent = null; //set the rocket parent to null
-                //rocketRight.transform.parent = null; //set the rocket parent to null
-
-                //rocketLeft.GetComponent<GameDevHQ.FileBase.Missle_Launcher_Dual_Turret.Missle.Missle>().AssignMissleRules(_launchSpeed, _power, _fuseDelay, _destroyTime); //assign missle properties 
-                //rocketRight.GetComponent<GameDevHQ.FileBase.Missle_Launcher_Dual_Turret.Missle.Missle>().AssignMissleRules(_launchSpeed, _power, _fuseDelay, _destroyTime); //assign missle properties 
-
-                //_misslePositionsLeft[i].SetActive(false); //turn off the rocket sitting in the turret to make it look like it fired
-                //_misslePositionsRight[i].SetActive(false); //turn off the rocket sitting in the turret to make it look like it fired
             }
 
             for (int i = 0; i < maxIndex; i++) //itterate through missle positions
@@ -128,6 +105,8 @@ namespace GameDevHQITP.Units
         protected override void StopAttack()
         {
             _target = null;
+            StopCoroutine("FireRocketsRoutine");
+            _launched = false;
         }
     }
 }

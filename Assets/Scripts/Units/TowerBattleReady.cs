@@ -28,7 +28,8 @@ namespace GameDevHQITP.Units
         [SerializeField] float _horizontalAngleOffset = 0f;
         [SerializeField] float _verticalAngleOffset = 0f;
         [SerializeField] int _baseDamagePerSec = 20;
-
+        [SerializeField] private GameObject _targetGO;
+        
         protected abstract void StopAttack();
         protected abstract void StartAttack(GameObject target);
 
@@ -54,7 +55,12 @@ namespace GameDevHQITP.Units
 
             if (_attackRadius.GetTarget(out targetGO))
             {
-
+                if (targetGO != _targetGO)
+                {
+                    _isAttacking = false;
+                    StopAttack();
+                    _targetGO = targetGO;
+                }
                 RotateTurret(targetGO);
             } else if (_isAttacking)
             {
@@ -74,7 +80,7 @@ namespace GameDevHQITP.Units
             Quaternion diffHorzRot = Quaternion.LookRotation(horzDiff);
             float rotHorzY = diffHorzRot.eulerAngles.y + _horizontalAngleOffset;
             Quaternion rotHorz = Quaternion.Euler(0, rotHorzY, 0);
-            //Debug.DrawLine(horzTrans, targetPos, Color.blue, 1f);
+            Debug.DrawLine(horzTrans, targetPos, Color.blue, 0.1f);
             _horizontalRotate.transform.rotation = Quaternion.Slerp(_horizontalRotate.transform.rotation, rotHorz, Time.deltaTime * _rotationSpeed);
 
             Vector3 drawPos = horzTrans;
@@ -99,7 +105,7 @@ namespace GameDevHQITP.Units
             {
                 if (_isAttacking)
                 {
-                    //Debug.DrawLine(drawPos, targetPos, Color.green, 0.1f);
+                    Debug.DrawLine(drawPos, targetPos, Color.green, 0.1f);
                 } else {
 
                     StartAttack(targetGO);
@@ -108,7 +114,7 @@ namespace GameDevHQITP.Units
             }
             else
             {
-                //Debug.DrawLine(drawPos, targetPos, Color.yellow, 0.1f);
+                Debug.DrawLine(drawPos, targetPos, Color.yellow, 0.1f);
 
                 StopAttack();
                 _isAttacking = false;

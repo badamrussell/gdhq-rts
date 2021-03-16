@@ -66,7 +66,6 @@ namespace GameDevHQITP.Managers
         private void Start()
         {
             _armoryMode = EnumArmoryMenuModes.purchase;
-            // SetArmoryMenu();
 
             _healthGoodLimit = Mathf.RoundToInt(_startPlayerHealth * _healthGoodPercent);
             _healthOkayLimit =  Mathf.RoundToInt(_startPlayerHealth * _healthOkayPercent);
@@ -195,7 +194,6 @@ namespace GameDevHQITP.Managers
         
         public void OnRestart()
         {
-            Debug.Log("RESTART?");
             _isWavesComplete = false;
             
             _warbucksTotal = _startWarBucks;
@@ -252,6 +250,7 @@ namespace GameDevHQITP.Managers
             {
                 _levelStatusText.text = "LEVEL FAILED";
             }
+            
             Time.timeScale = 1f;
             _playbackPauseEnabled.SetActive(false);
             _playbackPlayEnabled.SetActive(false);
@@ -277,12 +276,20 @@ namespace GameDevHQITP.Managers
         public void OnWavesCompleted()
         {
             _isWavesComplete = true;
-            Debug.Log("All Waves Complete");
+            if (_enemyCount <= 0)
+            {
+                OnGameOver();
+            }
         }
 
         public void AddEnemy()
         {
             _enemyCount++;
+        }
+
+        public bool CanAfford(int amount)
+        {
+            return amount <= _warbucksTotal;
         }
     }
     
