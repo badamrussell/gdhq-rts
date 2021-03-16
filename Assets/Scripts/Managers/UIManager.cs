@@ -60,7 +60,8 @@ namespace GameDevHQITP.Managers
         [SerializeField] private Image[] _colorOverlays;
         [SerializeField] private ArmoryButton[] _armoryButtons;
 
-        
+        [SerializeField] private bool _isWavesComplete;
+        [SerializeField] private int _enemyCount = 0;
         
         private void Start()
         {
@@ -103,91 +104,22 @@ namespace GameDevHQITP.Managers
         
         private void OnEnable()
         {
-            // MenuChoice.OnAccept += DoMenuAction;
-            // MenuChoice.OnCancel += EnablePurchaseMode;
             BuildTowerManager.onNewWarBucksTotal += UpdateWarBucks;
-            Enemy.OnEnemyStartDeath += EarnWarBucks;
+            Enemy.OnEnemyStartDeath += HandleEnemyKilled;
         }
 
         private void OnDisable()
         {
-            // MenuChoice.OnAccept -= DoMenuAction;
-            // MenuChoice.OnCancel -= EnablePurchaseMode;
             BuildTowerManager.onNewWarBucksTotal -= UpdateWarBucks;
-            Enemy.OnEnemyStartDeath -= EarnWarBucks;
+            Enemy.OnEnemyStartDeath -= HandleEnemyKilled;
         }
-
-        // private void DoMenuAction()
-        // {
-        //     switch (_armoryMode)
-        //     {
-        //         case EnumArmoryMenuModes.dismantle:
-        //             Debug.Log("UPGRADE DISMANTLE");
-        //             break;
-        //         case EnumArmoryMenuModes.upgradeGatling:
-        //             Debug.Log("UPGRADE GATLING");
-        //             break;
-        //         case EnumArmoryMenuModes.upgradeMissile:
-        //             Debug.Log("UPGRADE MISSILE");
-        //             break;
-        //         case EnumArmoryMenuModes.purchase:
-        //         default:
-        //             break;
-        //     }
-        //
-        //     EnablePurchaseMode();
-        //     SetArmoryMenu();
-        // }
-
-        // private void SetArmoryMenu()
-        // {
-        //     switch (_armoryMode)
-        //     {
-        //         case EnumArmoryMenuModes.dismantle:
-        //             _purchaseMenu.SetActive(false);
-        //             break;
-        //         case EnumArmoryMenuModes.upgradeGatling:
-        //             _purchaseMenu.SetActive(false);
-        //             break;
-        //         case EnumArmoryMenuModes.upgradeMissile:
-        //             _purchaseMenu.SetActive(false);
-        //             break;
-        //         case EnumArmoryMenuModes.purchase:
-        //         default:
-        //             _purchaseMenu.SetActive(true);
-        //             break;
-        //     }
-        // }
 
         public void OnSelectTower(TowerConfig towerConfig, GameObject go)
         {
             _selectedTowers.Clear();
             _selectedTowers.Add(go);
-            //OnSelectedTower(go);
-
             _selectTower.Init(towerConfig, go);
-
-            //switch (towerConfig.towerType)
-            //{
-            //    case Units.TowerType.TowerGatlingGun:
-            //        _armoryMode = EnumArmoryMenuModes.upgradeGatling;
-            //        break;
-            //    case Units.TowerType.TowerMissileLauncher:
-            //        _armoryMode = EnumArmoryMenuModes.upgradeMissile;
-            //        break;
-            //    default:
-            //        _armoryMode = EnumArmoryMenuModes.purchase;
-            //        break;
-            //}
-
-            //SetArmoryMenu();
         }
-
-        // private void EnablePurchaseMode()
-        // {
-        //
-        //     _armoryMode = EnumArmoryMenuModes.purchase;
-        // }
 
         private void EnableUpgradeMode(TowerConfig towerConfig, GameObject go)
         {
@@ -264,7 +196,8 @@ namespace GameDevHQITP.Managers
         public void OnRestart()
         {
             Debug.Log("RESTART?");
-
+            _isWavesComplete = false;
+            
             _warbucksTotal = _startWarBucks;
             UpdateWarBucks(0);
             
@@ -275,6 +208,7 @@ namespace GameDevHQITP.Managers
             StartCoroutine("StartTimer");
         
             OnPlay();
+            SpawnManager.Instance.Reset();
         }
         
         public void OnPause()
@@ -301,7 +235,7 @@ namespace GameDevHQITP.Managers
         }
         public void OnFastForward()
         {
-            Time.timeScale = 8f;
+            Time.timeScale = 20f;
             _playbackPauseEnabled.SetActive(false);
             _playbackPlayEnabled.SetActive(false);
             _playbackFFEnabled.SetActive(true);
@@ -325,9 +259,30 @@ namespace GameDevHQITP.Managers
             _levelStatus.SetActive(true);
         }
         
-        private void EarnWarBucks(EnemyConfig enemyConfig, GameObject go)
+        private void HandleEnemyKilled(EnemyConfig enemyConfig, GameObject go, bool killedByPlayer)
         {
-            UpdateWarBucks(enemyConfig.warBucks);
+            if (killedByPlayer)
+            {
+                UpdateWarBucks(enemyConfig.warBucks);
+            }
+
+            _enemyCount--;
+
+            if (_enemyCount <= 0 && _isWavesComplete)
+            {
+                OnGameOver();
+            }
+        }
+
+        public void OnWavesCompleted()
+        {
+            _isWavesComplete = true;
+            Debug.Log("All Waves Complete");
+        }
+
+        public void AddEnemy()
+        {
+            _enemyCount++;
         }
     }
     

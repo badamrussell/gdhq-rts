@@ -36,7 +36,7 @@ namespace GameDevHQITP.Units
             TowerController.OnTowerHitZoneDestroyed -= RemoveTower;
         }
 
-        private void RemoveNeighbor(EnemyConfig enemyConfig, GameObject enemyGO)
+        private void RemoveNeighbor(EnemyConfig enemyConfig, GameObject enemyGO, bool killedByPlayer)
         {
             if (_targetedNeighbor == enemyGO)
             {
@@ -112,7 +112,7 @@ namespace GameDevHQITP.Units
         {
             if (!Array.Exists(_attackableTags, a => a == other.tag)) { return; }
 
-            RemoveNeighbor(null, other.gameObject);
+            RemoveNeighbor(null, other.gameObject, false);
         }
         
     }

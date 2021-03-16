@@ -77,7 +77,7 @@ namespace GameDevHQITP.Managers
             }
         }
 
-        public void Remove(EnemyConfig enemyConfig, GameObject go)
+        public void Remove(EnemyConfig enemyConfig, GameObject go, bool killedByPLayer)
         {
             if (!_pool.ContainsKey(enemyConfig.enemyType))
             {

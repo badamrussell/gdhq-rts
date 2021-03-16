@@ -27,11 +27,11 @@ namespace GameDevHQITP.Units
 
     public class Enemy : FollowTarget, IAttackable
     {
-        public static event Action<EnemyConfig, GameObject> OnEnemyEndDeath;
-        public static event Action<EnemyConfig, GameObject> OnEnemyStartDeath;
+        public static event Action<EnemyConfig, GameObject, bool> OnEnemyEndDeath;
+        public static event Action<EnemyConfig, GameObject, bool> OnEnemyStartDeath;
         public static Action<GameObject, int> OnTakeDamage;
 
-        [SerializeField] private EnemyConfig enemyConfig;
+        public EnemyConfig enemyConfig;
 
         [SerializeField] private int _warFund;
         [SerializeField] private ProgressMeter _progressMeter;
@@ -132,7 +132,7 @@ namespace GameDevHQITP.Units
 
             if (OnEnemyEndDeath != null)
             {
-                OnEnemyEndDeath(enemyConfig, gameObject);
+                OnEnemyEndDeath(enemyConfig, gameObject, false);
                 UIManager.Instance.UpdatePlayerHealth(enemyConfig.playerBaseDamage);
             }
         }
@@ -159,7 +159,7 @@ namespace GameDevHQITP.Units
         {
             if (OnEnemyStartDeath != null)
             {
-                OnEnemyStartDeath(enemyConfig, gameObject);
+                OnEnemyStartDeath(enemyConfig, gameObject, true);
             }
 
             yield return OnFadeDeath();
@@ -169,7 +169,7 @@ namespace GameDevHQITP.Units
 
             if (OnEnemyEndDeath != null)
             {
-                // OnEnemyEndDeath(enemyConfig, gameObject);
+                OnEnemyEndDeath(enemyConfig, gameObject, true);
             }
         }
 

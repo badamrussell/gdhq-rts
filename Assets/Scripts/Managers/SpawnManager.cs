@@ -23,11 +23,21 @@ namespace GameDevHQITP.Managers
             }
         }
 
-        private void Start()
+        public void Reset()
         {
             StartCoroutine(StartWaves());
+            
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                GameObject child = transform.GetChild(i).gameObject;
+                Enemy enemy = child.GetComponent<Enemy>();
+                if (child.activeSelf)
+                {
+                    PoolManager.Instance.Remove(enemy.enemyConfig, child, false);
+                }
+            }
         }
-
+        
         private IEnumerator StartWaves()
         {
             int waveCount = 0;
@@ -42,12 +52,14 @@ namespace GameDevHQITP.Managers
                     {
 
                         SpawnEnemy(enemyType);
+                        
+                        UIManager.Instance.AddEnemy();
                         yield return new WaitForSeconds(wc.spawnRate);
                     }
                 }
             }
 
-            Debug.Log("All Waves Complete");
+            UIManager.Instance.OnWavesCompleted();
         }
 
         public GameObject SpawnEnemy(EnemyType enemyType)
