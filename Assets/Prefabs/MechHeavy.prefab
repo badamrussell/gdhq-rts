@@ -564,11 +564,11 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 757078777756783454}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1
-  m_Center: {x: 0, y: 3.52, z: 0}
+  m_Radius: 2
+  m_Center: {x: 0, y: 2.51, z: 0}
 --- !u!1 &757097218918097804
 GameObject:
   m_ObjectHideFlags: 0
@@ -3584,7 +3584,7 @@ ParentConstraint:
   m_TranslationAtRest: {x: 0, y: 3.4957888, z: -0.32533112}
   m_RotationAtRest: {x: 0, y: 0, z: 0}
   m_TranslationOffsets:
-  - {x: 0, y: 1.3615748, z: -0.12671328}
+  - {x: 0, y: 1.3615748, z: -0.12671322}
   m_RotationOffsets:
   - {x: 0, y: 0, z: 0}
   m_AffectTranslationX: 1

@@ -5,6 +5,7 @@ using GameDevHQITP.ScriptableObjects;
 using GameDevHQITP.Widgets;
 using GameDevHQITP.Utility;
 using System;
+using UnityEngine.UI;
 
 namespace GameDevHQITP.Managers
 {
@@ -24,18 +25,52 @@ namespace GameDevHQITP.Managers
         [SerializeField] List<GameObject> _selectedTowers = new List<GameObject>();
 
         [SerializeField] private GameObject _purchaseMenu;
-        [SerializeField] private GameObject _upgradeMissileMenu;
-        [SerializeField] private GameObject _upgradeGatlingMenu;
-        [SerializeField] private GameObject _dismantleMenu;
 
         [SerializeField] private EnumArmoryMenuModes _armoryMode;
         [SerializeField] private SelectTower _selectTower;
 
+        [SerializeField] private int _playerHealth = 100;
+        [SerializeField] private int _startPlayerHealth = 100;
+        [SerializeField] private float _healthGoodPercent = 0.6f;
+        [SerializeField] private float _healthOkayPercent = 0.2f;
+        private int _healthGoodLimit;
+        private int _healthOkayLimit;
 
+        [SerializeField] private Color _okayColor;
+        [SerializeField] private Color _poorColor;
+        
+        [SerializeField] private Text _lifeText;
+        [SerializeField] private Text _waveText;
+        [SerializeField] private Text _versionText;
+        [SerializeField] private Text _warBucksText;
+        [SerializeField] private Text _healthStatusText;
+        [SerializeField] private Text _levelStatusText;
+        [SerializeField] private GameObject _levelStatus;
+        [SerializeField] private GameObject _playbackPauseEnabled;
+        [SerializeField] private GameObject _playbackPlayEnabled;
+        [SerializeField] private GameObject _playbackFFEnabled;
+
+        [SerializeField] private List<Image> _colorizedOverlays;
+        [SerializeField] private Image[] _colorOverlays;
+        
         private void Start()
         {
             _armoryMode = EnumArmoryMenuModes.purchase;
             SetArmoryMenu();
+
+            _healthGoodLimit = Mathf.RoundToInt(_startPlayerHealth * _healthGoodPercent);
+            _healthOkayLimit =  Mathf.RoundToInt(_startPlayerHealth * _healthOkayPercent);
+
+            _colorizedOverlays = new List<Image>();
+            foreach (Transform child in transform)
+            {               
+                Image image = child.gameObject.GetComponent<Image>();
+                if (image != null)
+                {
+                    _colorizedOverlays.Add(image);
+                }
+            }
+            OnRestart();
         }
 
         private void OnEnable()
@@ -78,28 +113,16 @@ namespace GameDevHQITP.Managers
             {
                 case EnumArmoryMenuModes.dismantle:
                     _purchaseMenu.SetActive(false);
-                    _upgradeMissileMenu.SetActive(false);
-                    _upgradeGatlingMenu.SetActive(false);
-                    _dismantleMenu.SetActive(true);
                     break;
                 case EnumArmoryMenuModes.upgradeGatling:
                     _purchaseMenu.SetActive(false);
-                    _upgradeMissileMenu.SetActive(false);
-                    _upgradeGatlingMenu.SetActive(true);
-                    _dismantleMenu.SetActive(false);
                     break;
                 case EnumArmoryMenuModes.upgradeMissile:
                     _purchaseMenu.SetActive(false);
-                    _upgradeMissileMenu.SetActive(true);
-                    _upgradeGatlingMenu.SetActive(false);
-                    _dismantleMenu.SetActive(false);
                     break;
                 case EnumArmoryMenuModes.purchase:
                 default:
                     _purchaseMenu.SetActive(true);
-                    _upgradeMissileMenu.SetActive(false);
-                    _upgradeGatlingMenu.SetActive(false);
-                    _dismantleMenu.SetActive(false);
                     break;
             }
         }
@@ -144,6 +167,107 @@ namespace GameDevHQITP.Managers
         {
 
             _armoryMode = EnumArmoryMenuModes.dismantle;
+        }
+
+        public void UpdatePlayerHealth(int damage)
+        {
+            _playerHealth -= damage;
+            _lifeText.text = _playerHealth.ToString();
+            
+            if (_playerHealth > _healthGoodLimit)
+            {
+                _healthStatusText.text = "Good";
+                ChangeOverlayColor(Color.white);
+            } else if (_playerHealth > _healthOkayLimit)
+            {
+                _healthStatusText.text = "Okay";
+                ChangeOverlayColor(_okayColor);
+            } else if (_playerHealth > 0)
+            {
+                _healthStatusText.text = "Low";
+                ChangeOverlayColor(_poorColor);
+            }
+            else
+            {
+                ChangeOverlayColor(_poorColor);
+                OnGameOver();
+            }
+        }
+
+        private void ChangeOverlayColor(Color color)
+        {
+            foreach (Image image in _colorOverlays)
+            {
+                image.color = color;
+            }
+        }
+        
+        public void UpdateWave(int value, int maxValue)
+        {
+            _waveText.text = $"{value}/{maxValue}";
+        }
+        
+        public void UpdateWarBucks(int value)
+        {
+            _warBucksText.text = value.ToString();
+        }
+        
+        public void OnRestart()
+        {
+            Debug.Log("RESTART?");
+            
+            _playerHealth = _startPlayerHealth;
+            UpdatePlayerHealth(0);
+            
+            OnPlay();
+        }
+        
+        public void OnPause()
+        {
+            if (Time.timeScale == 0f)
+            {
+                OnPlay();
+                return;
+            }
+            Time.timeScale = 0f;
+            _playbackPauseEnabled.SetActive(true);
+            _playbackPlayEnabled.SetActive(false);
+            _playbackFFEnabled.SetActive(false);
+            _levelStatus.SetActive(true);
+            _levelStatusText.text = "PAUSED";
+        }
+        public void OnPlay()
+        {
+            Time.timeScale = 1f;
+            _playbackPauseEnabled.SetActive(false);
+            _playbackPlayEnabled.SetActive(true);
+            _playbackFFEnabled.SetActive(false);
+            _levelStatus.SetActive(false);
+        }
+        public void OnFastForward()
+        {
+            Time.timeScale = 8f;
+            _playbackPauseEnabled.SetActive(false);
+            _playbackPlayEnabled.SetActive(false);
+            _playbackFFEnabled.SetActive(true);
+            _levelStatus.SetActive(false);
+        }
+
+        public void OnGameOver()
+        {
+            if (_playerHealth > 0)
+            {
+                _levelStatusText.text = "LEVEL COMPLETE";
+            }
+            else
+            {
+                _levelStatusText.text = "LEVEL FAILED";
+            }
+            Time.timeScale = 1f;
+            _playbackPauseEnabled.SetActive(false);
+            _playbackPlayEnabled.SetActive(false);
+            _playbackFFEnabled.SetActive(false);
+            _levelStatus.SetActive(true);
         }
     }
     

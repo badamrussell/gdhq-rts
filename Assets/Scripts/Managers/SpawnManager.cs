@@ -32,8 +32,11 @@ namespace GameDevHQITP.Managers
 
         private IEnumerator StartWaves()
         {
+            int waveCount = 0;
             foreach (WaveConfig wc in _waves)
             {
+                waveCount++;
+                UIManager.Instance.UpdateWave(waveCount, _waves.Length);
                 yield return new WaitForSeconds(wc.initialDelay);
                 foreach (int i in System.Linq.Enumerable.Range(0, wc.enemyPatternCount))
                 {

@@ -13,5 +13,6 @@ namespace GameDevHQITP.ScriptableObjects
         public int warBucks;
         public int defaultHealth;
         public float attackRadius;
+        public int playerBaseDamage;
     }
 }

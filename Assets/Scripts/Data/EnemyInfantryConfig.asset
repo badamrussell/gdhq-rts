@@ -17,3 +17,4 @@ MonoBehaviour:
   warBucks: 50
   defaultHealth: 200
   attackRadius: 10
+  playerBaseDamage: 5
