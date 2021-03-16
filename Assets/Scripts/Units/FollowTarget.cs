@@ -16,8 +16,6 @@ namespace GameDevHQITP.Units
 
         [SerializeField] float _rotationSpeed = 2f;
 
-        [SerializeField] float _horizontalAngleOffset = 0f;
-        [SerializeField] float _verticalAngleOffset = 0f;
         [SerializeField] protected int _baseDamagePerSec = 20;
 
         [SerializeField] float _viewAngle = 30f;

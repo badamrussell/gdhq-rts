@@ -19,7 +19,7 @@ namespace GameDevHQITP.Managers
         [SerializeField] private float _minZ = -22f;
         [SerializeField] private float _maxZ = 10f;
 
-        [SerializeField] private float _mouseEdgePanSpeed = 0.1f;
+        // [SerializeField] private float _mouseEdgePanSpeed = 0.1f;
         [SerializeField] private float _screenEdgePanningOffset = 100f;
         [SerializeField] private float _screenEdgePanningBottomOffset = 50f;
         [SerializeField] private float _screenEdgeGutter = 1f;

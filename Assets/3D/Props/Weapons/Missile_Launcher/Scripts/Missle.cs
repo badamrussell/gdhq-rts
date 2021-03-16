@@ -14,22 +14,11 @@ namespace GameDevHQ.FileBase.Missle_Launcher.Missle
         [SerializeField]
         private ParticleSystem _particle; //reference to the particle system
 
-        [SerializeField]
-        private float _launchSpeed; //launch speed of the rocket
-        [SerializeField]
-        private float _power; //power of the rocket
         [SerializeField] //fuse delay of the rocket
         private float _fuseDelay;
 
-        private Rigidbody _rigidbody; //reference to the rigidbody of the rocket
         private AudioSource _audioSource; //reference to the audiosource of the rocket
         
-        private bool _launched = false; //bool for if the rocket has launched
-        private float _initialLaunchTime = 2.0f; //initial launch time for the rocket
-        private bool _thrust; //bool to enable the rocket thrusters
-
-        private bool _fuseOut = false; //bool for if the rocket fuse
-        private bool _trackRotation = false; //bool to track rotation of the rocket
         private float _gravityOffset = 0;
 
         private GameObject _target;
@@ -37,24 +26,16 @@ namespace GameDevHQ.FileBase.Missle_Launcher.Missle
         [SerializeField] ParticleSystem _exposionParticles;
         [SerializeField] GameObject _missileGO;
         [SerializeField] MissileConfig _missileConfig;
-        [SerializeField] float _targetVerticalOffset = 7f;
 
         // Use this for initialization
         IEnumerator Start()
         {
-            _rigidbody = GetComponent<Rigidbody>(); //assign the rigidbody component 
             _audioSource = GetComponent<AudioSource>(); //assign the audiosource component
             _audioSource.pitch = Random.Range(0.7f, 1.9f); //randomize the pitch of the rocket audio
             _particle.Play(); //play the particles of the rocket
             _audioSource.Play(); //play the rocket sound
 
             yield return new WaitForSeconds(_fuseDelay); //wait for the fuse delay
-
-            _initialLaunchTime = Time.time + 1.0f; //set the initial launch time
-            _fuseOut = true; //set fuseOut to true
-            _launched = true; //set the launch bool to true 
-            _thrust = false; //set thrust bool to false
-
 
             _exposionParticles.Stop();
         }

@@ -17,7 +17,6 @@ namespace GameDevHQITP.Managers
         public static event Action<GameObject> OnUpgradeTower;
         public static event Action<GameObject> OnDismantleTower;
 
-        //public static event Action<GameObject> OnSelectedTower;
         [SerializeField] List<GameObject> _selectedTowers = new List<GameObject>();
 
         [SerializeField] private GameObject _containerGO;
@@ -25,7 +24,6 @@ namespace GameDevHQITP.Managers
 
         [SerializeField] private GameObject _upgradeGatlingItem;
         [SerializeField] private GameObject _upgradeMissileItem;
-        //[SerializeField] private GameObject _showUpgrade;
         [SerializeField] private Button _upgradeButton;
 
         [SerializeField] private TowerConfig _activeTowerConfig;

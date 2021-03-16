@@ -17361,7 +17361,6 @@ MonoBehaviour:
   _maxX: -5
   _minZ: -22
   _maxZ: 10
-  _mouseEdgePanSpeed: 0.2
   _screenEdgePanningOffset: 100
   _screenEdgePanningBottomOffset: 10
   _screenEdgeGutter: 1
@@ -23665,8 +23664,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _selectedTowers: []
-  _purchaseMenu: {fileID: 200733099}
-  _armoryMode: 0
   _selectTower: {fileID: 407494342}
   _playerHealth: 100
   _startPlayerHealth: 100
@@ -83572,7 +83569,6 @@ GameObject:
   - component: {fileID: 2109062354}
   - component: {fileID: 2109062356}
   - component: {fileID: 2109062355}
-  - component: {fileID: 2109062357}
   m_Layer: 5
   m_Name: Funds
   m_TagString: Untagged
@@ -83641,20 +83637,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2109062353}
   m_CullTransparentMesh: 0
---- !u!114 &2109062357
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2109062353}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 532d08ee023f8421fb08b3dd650e29aa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _warBucks: {fileID: 0}
-  _text: {fileID: 2109062355}
 --- !u!1 &2109461934
 GameObject:
   m_ObjectHideFlags: 0

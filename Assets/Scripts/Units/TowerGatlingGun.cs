@@ -30,16 +30,13 @@ namespace GameDevHQITP.Units
         [SerializeField] private GameObject[] _tracerGO;
         private AudioSource _audioSource; //reference to the audio source component
         private bool _startWeaponNoise = true;
-        //private bool _isAttacking = false;
         private GameObject _target;
 
         [SerializeField] private float _tracerScaleX = 0.1f;
 
         // Use this for initialization
-        new void Start()
+        void Start()
         {
-            //_gunBarrel = GameObject.Find("Barrel_to_Spin").GetComponent<Transform>(); //assigning the transform of the gun barrel to the variable
-
             _audioSource = GetComponent<AudioSource>(); //ssign the Audio Source to the reference variable
             _audioSource.playOnAwake = false; //disabling play on awake
             _audioSource.loop = true; //making sure our sound effect loops
@@ -48,7 +45,6 @@ namespace GameDevHQITP.Units
             StopAttack();
         }
 
-        // Update is called once per frame
         new void Update()
         {
             base.Update();

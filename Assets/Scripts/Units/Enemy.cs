@@ -59,14 +59,15 @@ namespace GameDevHQITP.Units
             return _targetArea;
         }
 
-        private void Start()
+        private new void Start()
         {
+            base.Start();
             _animator.SetBool("IsAlive", true);
 
             _dissolveRenderers = _parentRender.GetComponentsInChildren<Renderer>();
         }
 
-        private void Update()
+        private new void Update()
         {
             base.Update();
             if (_isAttacking)

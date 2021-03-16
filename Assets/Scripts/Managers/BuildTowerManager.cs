@@ -18,17 +18,13 @@ namespace GameDevHQITP.Managers
     {
         public static event Action<GameObject> onStartBuildMode;
         public static event Action onExitBuildMode;
-        public static event Action<GameObject> onStartTowerConstruction;
-        public static event Action<int> onNewWarBucksTotal;
-
-        public delegate void onSelectStartBuild(int index);
+        // public static event Action<int> onNewWarBucksTotal;
 
         [SerializeField] private AvailableTower[] _availableTowerPrefabs;
         [SerializeField] private GameObject _towerToBuildGO;
         [SerializeField] private GameObject _towerPlotContainer;
         [SerializeField] private GameObject _activeTowersContainer;
         [SerializeField] private GameObject _hideTowerContainer;
-        // [SerializeField] private int _warBucksTotal;
 
         private int _selectedTowerIndex = 0;
         private bool _buildModeEnabled = false;
@@ -96,7 +92,6 @@ namespace GameDevHQITP.Managers
 
         private void TryPlaceTower()
         {
-            int towerCost = 10;
             TowerConfig config = _availableTowerPrefabs[_selectedTowerIndex].towerConfig;
             
             if (UIManager.Instance.MakePurchase(config.warBucksCost))

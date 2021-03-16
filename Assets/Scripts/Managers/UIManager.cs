@@ -12,22 +12,8 @@ namespace GameDevHQITP.Managers
 {
     public class UIManager : MonoSingleton<UIManager>
     {
-
-        public enum EnumArmoryMenuModes
-        {
-            purchase,
-            upgradeMissile,
-            upgradeGatling,
-            dismantle
-        }
-
-
-        public static event Action<GameObject> OnSelectedTower;
         [SerializeField] List<GameObject> _selectedTowers = new List<GameObject>();
 
-        [SerializeField] private GameObject _purchaseMenu;
-
-        [SerializeField] private EnumArmoryMenuModes _armoryMode;
         [SerializeField] private SelectTower _selectTower;
 
         [SerializeField] private int _playerHealth = 100;
@@ -65,8 +51,6 @@ namespace GameDevHQITP.Managers
         
         private void Start()
         {
-            _armoryMode = EnumArmoryMenuModes.purchase;
-
             _healthGoodLimit = Mathf.RoundToInt(_startPlayerHealth * _healthGoodPercent);
             _healthOkayLimit =  Mathf.RoundToInt(_startPlayerHealth * _healthOkayPercent);
 
@@ -103,13 +87,11 @@ namespace GameDevHQITP.Managers
         
         private void OnEnable()
         {
-            BuildTowerManager.onNewWarBucksTotal += UpdateWarBucks;
             Enemy.OnEnemyStartDeath += HandleEnemyKilled;
         }
 
         private void OnDisable()
         {
-            BuildTowerManager.onNewWarBucksTotal -= UpdateWarBucks;
             Enemy.OnEnemyStartDeath -= HandleEnemyKilled;
         }
 
@@ -118,18 +100,6 @@ namespace GameDevHQITP.Managers
             _selectedTowers.Clear();
             _selectedTowers.Add(go);
             _selectTower.Init(towerConfig, go);
-        }
-
-        private void EnableUpgradeMode(TowerConfig towerConfig, GameObject go)
-        {
-
-            _armoryMode = EnumArmoryMenuModes.purchase;
-        }
-
-        private void EnableDismantleMode(TowerConfig towerConfig)
-        {
-
-            _armoryMode = EnumArmoryMenuModes.dismantle;
         }
 
         public void UpdatePlayerHealth(int damage)
