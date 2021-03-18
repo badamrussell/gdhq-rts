@@ -37,12 +37,27 @@ namespace GameDevHQITP.Managers
                 }
             }
         }
+
+        private float CalculateTimeForWave(int index)
+        {
+            WaveConfig wc = _waves[index];
+            if (wc == null)
+            {
+                return 0f;
+            }
+
+            Debug.Log($"{wc.initialDelay} + {wc.enemyPattern.Length} * {wc.enemyPatternCount} * {wc.spawnRate}");
+            return wc.initialDelay + (wc.enemyPattern.Length * wc.enemyPatternCount * wc.spawnRate);
+        }
         
         private IEnumerator StartWaves()
         {
             int waveCount = 0;
-            foreach (WaveConfig wc in _waves)
+            for (var wci = 0 ; wci < _waves.Length; wci++)
             {
+                WaveConfig wc = _waves[wci];
+                float waveTime = CalculateTimeForWave(wci);
+                UIManager.Instance.NewWaveStarting(waveTime);
                 waveCount++;
                 UIManager.Instance.UpdateWave(waveCount, _waves.Length);
                 yield return new WaitForSeconds(wc.initialDelay);

@@ -50,6 +50,8 @@ namespace GameDevHQITP.Managers
 
         [SerializeField] private bool _isWavesComplete;
         [SerializeField] private int _enemyCount = 0;
+
+        private float _remainingTime;
         
         private void Start()
         {
@@ -73,30 +75,46 @@ namespace GameDevHQITP.Managers
             
             _playerHealth = _startPlayerHealth;
             UpdatePlayerHealth(0);
-            
-            StartCoroutine("StartTimer");
         
             OnPlay();
             SpawnManager.Instance.Reset();
         }
 
-        private IEnumerator StartTimer()
+        public void NewWaveStarting(float secondsUntilNextWave)
         {
-            int minutes = 0;
-            int seconds = -1;
-            while (true)
+            _remainingTime = secondsUntilNextWave;
+            StopCoroutine("CountdownForNextWave");
+            StartCoroutine("CountdownForNextWave");
+        }
+        
+        private IEnumerator CountdownForNextWave()
+        {
+            if (_remainingTime == 0f)
             {
-                seconds++;
-                if (seconds == 60)
+                _timerText.text = "Final wave!";
+                yield return null;
+            }
+            
+            int timeRemaining = Mathf.RoundToInt(_remainingTime);
+            int minutes = timeRemaining / 60;
+            int seconds = timeRemaining - (minutes * 60);
+            
+            while (minutes + seconds >= 0)
+            {
+                string sec = seconds.ToString().PadLeft(2, '0' );
+                _timerText.text = $"Next wave in: {minutes}:{sec}";
+                
+                seconds--;
+                if (seconds == -1)
                 {
-                    minutes++;
-                    seconds = 0;
+                    minutes--;
+                    seconds = 59;
                 }
                 
-                string sec = seconds.ToString().PadLeft(2, '0' );
-                _timerText.text = $"{minutes}:{sec}";
                 yield return new WaitForSeconds(1f);
             }
+            
+            _timerText.text = $"Next wave starting...";
         }
         
         private void OnEnable()
