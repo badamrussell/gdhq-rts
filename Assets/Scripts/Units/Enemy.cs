@@ -91,12 +91,9 @@ namespace GameDevHQITP.Units
             _collider.enabled = true;
 
             _health = _maxHealth;
-            _progressMeter.progressValue = 1f;
+            _progressMeter.UpdateProgress(1f);
 
             _navMeshAgent.enabled = true;
-
-            _health = _maxHealth;
-            _progressMeter.progressValue = 1f;
 
             gameObject.SetActive(true);
         }
@@ -187,7 +184,7 @@ namespace GameDevHQITP.Units
             if (target != _targetArea && target != gameObject) { return; }
             _health -= damage;
 
-            _progressMeter.progressValue = (float)_health / _maxHealth;
+            _progressMeter.UpdateProgress((float)_health / _maxHealth);
 
             if (_health <= 0)
             {

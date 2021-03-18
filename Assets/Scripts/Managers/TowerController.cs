@@ -42,7 +42,7 @@ namespace GameDevHQITP.Managers
             if (_isBuilt)
             {
                 _currentHealth = _maxHealth;
-                _progressMeter.progressValue = 1f;
+                _progressMeter.UpdateProgress(1f);
 
                 _constructionTower.gameObject.SetActive(!_isBuilt);
                 _battleReadyTower.Init();
@@ -83,7 +83,7 @@ namespace GameDevHQITP.Managers
                 }
                 
                 _currentHealth += Time.deltaTime * _constructionSpeed;
-                _progressMeter.progressValue = _currentHealth / _maxHealth;
+                _progressMeter.UpdateProgress(_currentHealth / _maxHealth);
                 
                 yield return null;
             }
@@ -139,7 +139,7 @@ namespace GameDevHQITP.Managers
             if (go != _hitZone) { return; }
 
             _currentHealth -= damage;
-            _progressMeter.progressValue = _currentHealth / _maxHealth;
+            _progressMeter.UpdateProgress(_currentHealth / _maxHealth);
 
             if (_currentHealth <= 0)
             {
