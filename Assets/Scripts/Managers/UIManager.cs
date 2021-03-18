@@ -7,6 +7,8 @@ using GameDevHQITP.Utility;
 using System;
 using GameDevHQITP.Units;
 using UnityEngine.UI;
+using UnityEditor.SceneManagement;
+using UnityEngine.SceneManagement;
 
 namespace GameDevHQITP.Managers
 {
@@ -63,7 +65,19 @@ namespace GameDevHQITP.Managers
                     _colorizedOverlays.Add(image);
                 }
             }
-            OnRestart();
+            
+            _isWavesComplete = false;
+            
+            _warbucksTotal = _startWarBucks;
+            UpdateWarBucks(0);
+            
+            _playerHealth = _startPlayerHealth;
+            UpdatePlayerHealth(0);
+            
+            StartCoroutine("StartTimer");
+        
+            OnPlay();
+            SpawnManager.Instance.Reset();
         }
 
         private IEnumerator StartTimer()
@@ -164,19 +178,7 @@ namespace GameDevHQITP.Managers
         
         public void OnRestart()
         {
-            _isWavesComplete = false;
-            
-            _warbucksTotal = _startWarBucks;
-            UpdateWarBucks(0);
-            
-            _playerHealth = _startPlayerHealth;
-            UpdatePlayerHealth(0);
-            
-            StopCoroutine("StartTimer");
-            StartCoroutine("StartTimer");
-        
-            OnPlay();
-            SpawnManager.Instance.Reset();
+            SceneManager.LoadScene("Start_Level");
         }
         
         public void OnPause()

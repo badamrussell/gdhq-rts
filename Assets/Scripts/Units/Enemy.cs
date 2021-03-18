@@ -100,10 +100,10 @@ namespace GameDevHQITP.Units
 
         public void InitiateDeath()
         {
-            _animator.SetBool("IsAlive", false);
             _collider.enabled = false;
             _navMeshAgent.isStopped = true;
             _navMeshAgent.enabled = false;
+            _animator.SetBool("IsAlive", false);
             StartCoroutine(OnDeath());
         }
 
