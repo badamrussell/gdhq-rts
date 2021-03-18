@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using GameDevHQITP.Utility;
 using GameDevHQITP.Units;
@@ -9,7 +10,9 @@ namespace GameDevHQITP.Managers
 {
     public class SpawnManager : MonoSingleton<SpawnManager>
     {
-
+        
+        public static event Action<EnemyType> OnEnemySpawned;
+        
         [SerializeField] private Transform _startPoint;
         [SerializeField] private Transform _endPoint;
 
@@ -53,13 +56,15 @@ namespace GameDevHQITP.Managers
         private IEnumerator StartWaves()
         {
             int waveCount = 0;
+            float startTime = Time.time;
+
             for (var wci = 0 ; wci < _waves.Length; wci++)
             {
                 WaveConfig wc = _waves[wci];
                 float waveTime = CalculateTimeForWave(wci);
-                UIManager.Instance.NewWaveStarting(waveTime);
                 waveCount++;
-                UIManager.Instance.UpdateWave(waveCount, _waves.Length);
+                
+                UIManager.Instance.WaveStarted(waveCount, _waves.Length, waveTime);
                 yield return new WaitForSeconds(wc.initialDelay);
                 foreach (int i in System.Linq.Enumerable.Range(0, wc.enemyPatternCount))
                 {
@@ -67,14 +72,19 @@ namespace GameDevHQITP.Managers
                     {
 
                         SpawnEnemy(enemyType);
+                        if (OnEnemySpawned != null)
+                        {
+                            OnEnemySpawned(enemyType);
+                        }
                         
-                        UIManager.Instance.AddEnemy();
                         yield return new WaitForSeconds(wc.spawnRate);
                     }
                 }
+                
+                yield return new WaitForSeconds(1f);
             }
 
-            UIManager.Instance.OnWavesCompleted();
+            GameManager.Instance.OnWavesCompleted();
         }
 
         public GameObject SpawnEnemy(EnemyType enemyType)

@@ -87,7 +87,7 @@ namespace GameDevHQITP.Managers
             _animator.SetBool("IsDismantle", false);
             _animator.SetBool("IsUpgrade", false);
             
-            _upgradeButton.interactable = UIManager.Instance.CanAfford(_activeTowerConfig.upgradeCost) && _activeTowerConfig.upgradePrefab != null;
+            _upgradeButton.interactable = GameManager.Instance.CanAfford(_activeTowerConfig.upgradeCost) && _activeTowerConfig.upgradePrefab != null;
         }
 
         public void OnHide()
@@ -123,7 +123,7 @@ namespace GameDevHQITP.Managers
 
         public void OnConfirmUpgrade()
         {
-            if (UIManager.Instance.MakePurchase(_activeTowerConfig.warBucksCost))
+            if (GameManager.Instance.MakePurchase(_activeTowerConfig.warBucksCost))
             {
                 OnUpgradeTower(_selectedTowers[0]);
             }

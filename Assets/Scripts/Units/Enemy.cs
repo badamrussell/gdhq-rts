@@ -137,7 +137,7 @@ namespace GameDevHQITP.Units
             if (OnEnemyEndDeath != null)
             {
                 OnEnemyEndDeath(enemyConfig, gameObject, false);
-                UIManager.Instance.UpdatePlayerHealth(enemyConfig.playerBaseDamage);
+                GameManager.Instance.HandlePlayerHealthChange(enemyConfig.playerBaseDamage);
             }
         }
 

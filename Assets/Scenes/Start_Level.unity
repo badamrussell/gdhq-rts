@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.62032515, g: 0.58680993, b: 0.5983204, a: 1}
+  m_IndirectSpecularColor: {r: 0.6402023, g: 0.60547256, b: 0.6168556, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -23665,13 +23665,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _selectedTowers: []
   _selectTower: {fileID: 407494342}
-  _playerHealth: 100
-  _startPlayerHealth: 100
-  _healthGoodPercent: 0.6
-  _healthOkayPercent: 0.2
-  _startWarBucks: 1000
-  _okayColor: {r: 0.39215687, g: 1, b: 0.39215687, a: 1}
-  _poorColor: {r: 1, g: 0.39215687, b: 0.39215687, a: 1}
   _lifeText: {fileID: 783571177}
   _waveText: {fileID: 640746102}
   _versionText: {fileID: 1367709903}
@@ -23683,7 +23676,6 @@ MonoBehaviour:
   _playbackPauseEnabled: {fileID: 1390762800}
   _playbackPlayEnabled: {fileID: 142299666}
   _playbackFFEnabled: {fileID: 230579418}
-  _colorizedOverlays: []
   _colorOverlays:
   - {fileID: 1706649507}
   - {fileID: 350660924}
@@ -23694,8 +23686,6 @@ MonoBehaviour:
   _armoryButtons:
   - {fileID: 150529103}
   - {fileID: 1416097953}
-  _isWavesComplete: 0
-  _enemyCount: 0
 --- !u!1001 &595690249
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27370,6 +27360,7 @@ GameObject:
   - component: {fileID: 763400256}
   - component: {fileID: 763400258}
   - component: {fileID: 763400257}
+  - component: {fileID: 763400255}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -27377,6 +27368,27 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &763400255
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 763400254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f17fc68e6bc444e7e9a384767400de98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerHealth: 100
+  _startPlayerHealth: 100
+  _healthGoodPercent: 0.6
+  _healthOkayPercent: 0.2
+  _startWarBucks: 1000
+  _okayColor: {r: 0, g: 0.7058824, b: 0, a: 1}
+  _poorColor: {r: 0.7058824, g: 0, b: 0, a: 1}
+  _isWavesComplete: 0
+  _enemyCount: 0
 --- !u!4 &763400256
 Transform:
   m_ObjectHideFlags: 0

@@ -94,7 +94,7 @@ namespace GameDevHQITP.Managers
         {
             TowerConfig config = _availableTowerPrefabs[_selectedTowerIndex].towerConfig;
             
-            if (UIManager.Instance.MakePurchase(config.warBucksCost))
+            if (GameManager.Instance.MakePurchase(config.warBucksCost))
             {
                 GameObject go = Instantiate(config.prefab, _selectedPlotPosition, Quaternion.identity);
                 go.transform.parent = _activeTowersContainer.transform;
